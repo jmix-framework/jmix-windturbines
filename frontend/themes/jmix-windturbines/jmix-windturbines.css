@@ -1,0 +1,47 @@
+html {
+    --lumo-primary-color-50pct: hsla(214, 0%, 0%, 0.5);
+    --lumo-primary-color-10pct: hsla(214, 0%, 0%, 0.1);
+    --lumo-error-color-50pct: rgba(229, 44, 67, 0.5);
+    --lumo-error-color-10pct: rgba(229, 44, 67, 0.1);
+    --lumo-primary-color: hsl(214, 0%, 0%);
+    --lumo-primary-text-color: hsl(214, 0%, 0%);
+    --lumo-error-color: rgb(229, 44, 67);
+    --lumo-error-text-color: rgb(229, 44, 67);
+}
+
+
+.white-card {
+    background-color: white;
+    border-radius: var(--lumo-border-radius-s);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.call-button {
+    margin: 0;
+    height: auto;
+    padding: 0;
+    line-height: inherit;
+    font-size: inherit;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+html {
+    background-color: #eee;
+}
+
+.finding-card {
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
+
+
+.cut-overflow-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

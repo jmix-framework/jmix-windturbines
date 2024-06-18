@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://turbineDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="turbineDc"
+                  class="io.jmix.windturbines.entity.Turbine">
+            <fetchPlan extends="_base">
+                <property name="manufacturer" fetchPlan="_instance_name"/>
+                <property name="operator" fetchPlan="_base"/>
+                <property name="maintenanceTasks" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+            <collection id="maintenanceTasksDc" property="maintenanceTasks"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <tabSheet id="contentTabSheet" width="100%" themeNames="centered">
+            <tab id="detailsTab" label="msg://details">
+                <accordion id="mainAccordion" width="100%">
+                    <accordionPanel summaryText="msg://details" classNames="white-card mb-m" opened="true">
+                        <formLayout id="detailsForm" dataContainer="turbineDc">
+                            <textField id="turbineIdField" property="turbineId"/>
+                            <select id="statusField" property="status"/>
+                            <textArea id="locationField" property="location"/>
+                            <datePicker id="installationDateField" property="installationDate"/>
+                            <datePicker id="lastMaintenanceDateField" property="lastMaintenanceDate"/>
+                        </formLayout>
+                    </accordionPanel>
+                    <accordionPanel summaryText="msg://technicalData" classNames="white-card mb-m">
+                        <formLayout id="technicalDataForm" dataContainer="turbineDc">
+                            <entityPicker id="manufacturerField" property="manufacturer">
+                                <actions>
+                                    <action id="entityLookup" type="entity_lookup"/>
+                                    <action id="entityClear" type="entity_clear"/>
+                                </actions>
+                            </entityPicker>
+                            <textField id="modelField" property="model"/>
+                            <textField id="heightField" property="height"/>
+                            <textField id="rotorDiameterField" property="rotorDiameter"/>
+                        </formLayout>
+                    </accordionPanel>
+                </accordion>
+            </tab>
+            <tab id="operatorTab" label="msg://operator">
+                <formLayout id="operatorForm" dataContainer="turbineDc" classNames="white-card">
+                    <textField id="operatorNameField" property="operator.name"/>
+                    <textField id="operatorContactPersonField" property="operator.contactPerson"/>
+                    <textField id="operatorEmailField" property="operator.email"/>
+                    <textField id="operatorPhoneField" property="operator.phone"/>
+                    <textArea id="operatorAddressField" property="operator.address"/>
+                </formLayout>
+            </tab>
+            <tab id="maintenanceTasksTab" label="msg://maintenance">
+                <vbox width="100%" alignItems="CENTER" height="100%">
+                    <span id="emptyMaintenanceTaskBox"
+                          text="msg://maintenanceTasks.emptyMessage"
+                          visible="false"
+                          themeNames="badge error"/>
+                    <virtualList id="maintenanceTasksVirtualList"
+                                 itemsContainer="maintenanceTasksDc"
+                                 height="100%"
+                                 width="100%"/>
+                </vbox>
+            </tab>
+        </tabSheet>
+        <hbox id="detailActions">
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

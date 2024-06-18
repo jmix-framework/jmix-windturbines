@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://inspectionDetailView.title"
+      focusComponent="mainAccordion">
+    <data>
+        <instance id="inspectionDc"
+                  class="io.jmix.windturbines.entity.inspection.Inspection">
+            <fetchPlan extends="_base">
+                <property name="findings" fetchPlan="_base"/>
+                <property name="technican" fetchPlan="_base"/>
+                <property name="recommendations" fetchPlan="_base">
+                    <property name="relatedFinding" fetchPlan="_base"/>
+                </property>
+            </fetchPlan>
+            <loader/>
+            <collection id="findingsDc" property="findings"/>
+            <collection id="recommendationsDc" property="recommendations"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="prevAction" text="msg://prev" icon="ARROW_LEFT"/>
+        <action id="nextAction" text="msg://next" icon="ARROW_RIGHT" actionVariant="PRIMARY"/>
+        <action id="finishAction" text="msg://finish" icon="CHECK" actionVariant="PRIMARY" />
+        <action id="createFindingAction" text="msg://createFinding" icon="PLUS" actionVariant="PRIMARY" />
+        <action id="createRecommendationAction" text="msg://createRecommendation" icon="PLUS" actionVariant="PRIMARY" />
+    </actions>
+    <layout>
+        <accordion id="mainAccordion" width="100%">
+            <accordionPanel summaryText="msg://inspectionDetails" classNames="white-card mb-m">
+                <formLayout id="detailsForm" dataContainer="inspectionDc">
+                    <entityPicker id="turbineField" property="turbine" readOnly="true">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <select id="typeField" property="type" readOnly="true"/>
+                    <datePicker id="maintenanceTaskDateField" property="maintenanceTaskDate"/>
+                    <entityPicker id="technicanField" property="technican">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                </formLayout>
+            </accordionPanel>
+            <accordionPanel summaryText="msg://checklist" classNames="white-card mb-m">
+                <formLayout id="checklistForm" dataContainer="inspectionDc">
+                    <select id="rotorBladesAnswerField"
+                            property="rotorBladesAnswer"
+                            themeNames="helper-above-field"
+                            helperText="msg://rotorBladesQuestion"/>
+                    <textArea label="msg://empty" height="4em" id="rotorBladesCommentField"
+                              property="rotorBladesComment"/>
+                    <select id="gearboxOilLevelAnswerField"
+                            themeNames="helper-above-field"
+                            helperText="msg://gearboxOilLevelQuestion"
+                            property="gearboxOilLevelAnswer"/>
+                    <textArea label="msg://empty" height="4em" id="gearboxOilLevelCommentField"
+                              property="gearboxOilLevelComment"/>
+                    <radioButtonGroup id="generatorCheckAnswerField"
+                                      themeNames="helper-above-field"
+                                      helperText="msg://generatorCheckQuestion"
+                                      property="generatorCheckAnswer"/>
+                    <textArea label="msg://empty" height="4em" id="generatorCheckCommentField"
+                              property="generatorCheckComment"/>
+                    <select id="controlSystemStatusField"
+                            themeNames="helper-above-field"
+                            helperText="msg://controlSystemStatusQuestion"
+                            property="controlSystemStatus"/>
+                    <textArea label="msg://empty" height="4em" id="controlSystemCommentField"
+                              property="controlSystemComment"/>
+                </formLayout>
+            </accordionPanel>
+            <accordionPanel summaryText="msg://findings" classNames="white-card mb-m">
+                <hbox width="100%" justifyContent="END">
+                    <button id="createFindingBtn" action="createFindingAction" alignSelf="END"/>
+                </hbox>
+                <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%" />
+            </accordionPanel>
+            <accordionPanel summaryText="msg://recommendations" classNames="white-card mb-m">
+                <hbox width="100%" justifyContent="END">
+                    <button id="createRecommendationBtn" action="createRecommendationAction" alignSelf="END"/>
+                </hbox>
+                <virtualList id="recommendationsVirtualList" itemsContainer="recommendationsDc" width="100%" />
+            </accordionPanel>
+        </accordion>
+        <hbox id="detailActions" alignSelf="END">
+            <button id="prevBtn" action="prevAction" enabled="false"/>
+            <button id="nextBtn" action="nextAction"/>
+            <button id="finishBtn" action="finishAction" visible="false"/>
+        </hbox>
+    </layout>
+</view>

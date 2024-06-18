@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://inspectionRecommendationDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="inspectionRecommendationDc"
+                  class="io.jmix.windturbines.entity.inspection.InspectionRecommendation">
+            <fetchPlan extends="_base">
+                <property name="relatedFinding" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="inspectionRecommendationDc">
+            <textArea id="descriptionField" height="9.5em" property="description"/>
+            <select id="priorityField" property="priority"/>
+            <entityComboBox id="relatedFindingField" property="relatedFinding" />
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>
