@@ -23,16 +23,6 @@ public class InspectionRecommendationDetailView extends StandardDetailView<Inspe
         this.findingsDc = findingsDc;
     }
 
-    @Subscribe
-    public void onReady(final ReadyEvent event) {
-//        relatedFindingField.setItems(findingsDc);
-//        relatedFindingField.setValue(getEditedEntity().getRelatedFinding());
-    }
-
-    @Subscribe
-    public void onInit(final InitEvent event) {
-//        relatedFindingField.setItems(findingsDc);
-    }
 
     @Subscribe
     public void onBeforeShow(final BeforeShowEvent event) {
