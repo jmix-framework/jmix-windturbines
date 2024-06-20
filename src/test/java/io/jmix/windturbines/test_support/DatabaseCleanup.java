@@ -11,6 +11,7 @@ import io.jmix.windturbines.entity.Operator;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
+import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -64,6 +65,7 @@ public class DatabaseCleanup {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        performDeletion(InspectionRecommendation.class, jdbcTemplate);
         performDeletion(InspectionFinding.class, jdbcTemplate);
         performDeletion(Inspection.class, jdbcTemplate);
         performDeletion(MaintenanceTask.class, jdbcTemplate);

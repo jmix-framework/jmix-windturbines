@@ -97,7 +97,7 @@ class InspectionFindingCardTest {
         }
 
         @Test
-        void given_title_whenRenderComponent_then_titleIsAbbreviated() {
+        void given_title_whenRenderComponent_then_titleIsShown() {
 
             // given
             InspectionFinding inspectionFinding = entityTestData.saveWithDefaults(new InspectionFindingData(inspection), it -> {
@@ -111,11 +111,11 @@ class InspectionFindingCardTest {
 
             // then
             assertThat(componentText(inspectionFindingCard, "title"))
-                    .isEqualTo("Rotor b...");
+                    .isEqualTo("Rotor blade crack");
         }
 
         @Test
-        void given_description_whenRenderComponent_then_descriptionIsAbbreviated() {
+        void given_description_whenRenderComponent_then_descriptionIsShown() {
 
             // given
             InspectionFinding inspectionFinding = entityTestData.saveWithDefaults(new InspectionFindingData(inspection), it -> {
