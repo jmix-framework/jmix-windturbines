@@ -21,12 +21,15 @@ import io.jmix.flowui.view.View;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import io.jmix.windturbines.view.inspectionrecommendation.InspectionRecommendationDetailView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 public class InspectionRecommendationCard extends VerticalLayout {
 
+    private static final Logger log = LoggerFactory.getLogger(InspectionRecommendationCard.class);
     private final InspectionRecommendation recommendation;
     private final UiComponents uiComponents;
     private final Dialogs dialogs;
@@ -132,13 +135,16 @@ public class InspectionRecommendationCard extends VerticalLayout {
                 {
                     DialogWindow<InspectionRecommendationDetailView> build = dialogWindows.detail(originView, InspectionRecommendation.class)
                             .withViewClass(InspectionRecommendationDetailView.class)
-                            .withParentDataContext(dataContext)
-                            .withContainer(recommendationsDc)
                             .editEntity(recommendation)
-                            .build();
-                    build.getView().setFindingsDc(findingsDc);
-
-                    build
+                            .withParentDataContext(dataContext)
+                            .withViewConfigurer(view -> {
+                                        log.info("[View Configurer] setting findings to view");
+                                        log.info("[View Configurer] recommendation: {}", recommendation);
+                                        log.info("[View Configurer] relatedFinding: {}", recommendation.getRelatedFinding());
+                                        view.setFindings(findingsDc.getDisconnectedItems());
+                                    }
+                            )
+                            .withContainer(recommendationsDc)
                             .open();
                 }
         );

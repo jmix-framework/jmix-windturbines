@@ -164,11 +164,11 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
     public void onCreateRecommendationAction(final ActionPerformedEvent event) {
         DialogWindow<InspectionRecommendationDetailView> dialogWindow = dialogWindows.detail(this, InspectionRecommendation.class)
                 .withViewClass(InspectionRecommendationDetailView.class)
+                .withViewConfigurer(view -> view.setFindings(findingsDc.getDisconnectedItems()))
                 .withParentDataContext(dataContext)
                 .withContainer(recommendationsDc)
                 .build();
-
-        dialogWindow.getView().setFindingsDc(findingsDc);
+//        dialogWindow.getView().setFindings(findingsDc.getDisconnectedItems());
         dialogWindow.open();
     }
 
