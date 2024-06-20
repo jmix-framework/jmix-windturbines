@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://maintenanceTaskListView.title"
+      focusComponent="contentTabSheet">
+    <data>
+        <collection id="maintenanceTasksDc"
+                    class="io.jmix.windturbines.entity.MaintenanceTask">
+            <fetchPlan extends="_base">
+                <property name="technican" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="maintenanceTasksDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from MaintenanceTask e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <tabSheet id="contentTabSheet" width="100%" themeNames="centered" height="100%">
+            <tab id="myTasksTab" label="msg://myTasks">
+                <vbox width="100%" alignItems="CENTER" height="100%">
+                    <virtualList id="myMaintenanceTasksVirtualList"
+                                 width="100%"
+                                 height="100%"
+                                 itemsContainer="maintenanceTasksDc"
+                                 alignSelf="CENTER"/>
+                </vbox>
+            </tab>
+            <tab id="allTasksTab" label="msg://allTasks">
+                <vbox width="100%" alignItems="CENTER" height="100%">
+                    <virtualList id="allMaintenanceTasksVirtualList"
+                                 width="100%"
+                                 height="100%"
+                                 itemsContainer="maintenanceTasksDc"
+                                 alignSelf="CENTER"/>
+                </vbox>
+            </tab>
+        </tabSheet>
+
+    </layout>
+</view>

@@ -4,6 +4,8 @@
     <menu id="application" title="msg://io.jmix.windturbines/menu.application.title" opened="true">
         <item view="User.list" title="msg://io.jmix.windturbines.view.user/UserListView.title"/>
         <item view="Turbine.list" title="msg://io.jmix.windturbines.view.turbine/turbineListView.title"/>
+        <item view="MaintenanceTask.list"
+              title="msg://io.jmix.windturbines.view.maintenancetask/maintenanceTaskListView.title"/>
     </menu>
 
 </menu-config>
