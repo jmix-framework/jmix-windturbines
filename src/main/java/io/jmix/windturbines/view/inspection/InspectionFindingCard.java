@@ -12,12 +12,14 @@ import io.jmix.flowui.DialogWindows;
 import io.jmix.flowui.Dialogs;
 import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.action.DialogAction;
+import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.kit.action.ActionVariant;
 import io.jmix.flowui.model.CollectionPropertyContainer;
 import io.jmix.flowui.model.DataContext;
 import io.jmix.flowui.view.ReadOnlyAwareView;
 import io.jmix.flowui.view.View;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
+import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class InspectionFindingCard extends VerticalLayout {
     private final DialogWindows dialogWindows;
     private final Messages messages;
     private final CollectionPropertyContainer<InspectionFinding> findingsDc;
+    private final CollectionPropertyContainer<InspectionRecommendation> recommendationsDc;
     private final View<?> originView;
     private final boolean readOnly;
 
@@ -41,7 +44,10 @@ public class InspectionFindingCard extends VerticalLayout {
             DialogWindows dialogWindows,
             Messages messages,
             CollectionPropertyContainer<InspectionFinding> findingsDc,
-            View<?> originView, boolean readOnly) {
+            CollectionPropertyContainer<InspectionRecommendation> recommendationsDc,
+            View<?> originView,
+            boolean readOnly
+    ) {
         this.finding = finding;
         this.uiComponents = uiComponents;
         this.dialogs = dialogs;
@@ -49,6 +55,7 @@ public class InspectionFindingCard extends VerticalLayout {
         this.dialogWindows = dialogWindows;
         this.messages = messages;
         this.findingsDc = findingsDc;
+        this.recommendationsDc = recommendationsDc;
         this.originView = originView;
         this.readOnly = readOnly;
 
@@ -149,10 +156,7 @@ public class InspectionFindingCard extends VerticalLayout {
                         .withActions(
                                 new DialogAction(DialogAction.Type.OK)
                                         .withVariant(ActionVariant.DANGER)
-                                        .withHandler(actionPerformedEvent -> {
-                                            findingsDc.getMutableItems().remove(finding);
-                                            dataContext.remove(dataContext.merge(finding));
-                                        }),
+                                        .withHandler(this::removeFinding),
                                 new DialogAction(DialogAction.Type.CANCEL)
                         )
                         .open()
@@ -168,11 +172,17 @@ public class InspectionFindingCard extends VerticalLayout {
         add(secondRow);
     }
 
-    private VerticalLayout createVerticalLayout() {
-        VerticalLayout layout = uiComponents.create(VerticalLayout.class);
-        layout.setSpacing(false);
-        layout.setPadding(false);
-        return layout;
+    private void removeFinding(ActionPerformedEvent event) {
+        findingsDc.getMutableItems().remove(finding);
+        dataContext.remove(dataContext.merge(finding));
+
+        List<InspectionRecommendation> relatedRecommendations = recommendationsDc.getMutableItems().stream()
+                .filter(it -> finding.equals(it.getRelatedFinding()))
+                .toList();
+        relatedRecommendations.forEach(recommendation -> {
+            recommendationsDc.getMutableItems().remove(recommendation);
+            dataContext.remove(dataContext.merge(recommendation));
+        });
     }
 
     private HorizontalLayout createHorizontalLayout() {

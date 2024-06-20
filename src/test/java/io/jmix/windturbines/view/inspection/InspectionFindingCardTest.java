@@ -20,6 +20,7 @@ import io.jmix.windturbines.entity.Operator;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
+import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import io.jmix.windturbines.entity.inspection.Severity;
 import io.jmix.windturbines.test_data.EntityTestData;
 import io.jmix.windturbines.test_data.entity.*;
@@ -241,7 +242,7 @@ class InspectionFindingCardTest {
             }
 
             @Test
-            void when_performRemoval_then_itemIsRemovedFromDataContainer() {
+            void when_performRemoval_then_itemIsRemoved() {
 
                 // given
                 detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
@@ -262,6 +263,34 @@ class InspectionFindingCardTest {
                 // and
                 assertThat(detailView.getDataContext().getRemoved())
                         .contains(inspectionFinding);
+            }
+            @Test
+            void when_performRemoval_then_relatedRecommendationsAreRemoved() {
+
+                // given
+                detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
+
+                // and
+                InspectionRecommendation relatedRecommendation = entityTestData.saveWithDefaults(new InspectionRecommendationData(inspection, inspectionFinding));
+                detailView.getDataContext().merge(relatedRecommendation);
+                detailView.getRecommendationsDc().getMutableItems().add(relatedRecommendation);
+
+                // when
+                var inspectionFindingCard = renderComponent(detailView, inspectionFinding);
+
+                // and
+                removeBtn(inspectionFindingCard).click();
+
+                // and
+                dialogs.openedOptionDialog().closeWith(DialogAction.Type.OK);
+
+                // then
+                assertThat(detailView.getRecommendationsDc().getMutableItems())
+                        .doesNotContain(relatedRecommendation);
+
+                // and
+                assertThat(detailView.getDataContext().getRemoved())
+                        .contains(relatedRecommendation);
             }
 
             @Test
@@ -451,6 +480,7 @@ class InspectionFindingCardTest {
                 dialogWindows,
                 messages,
                 detailView.getFindingsDc(),
+                detailView.getRecommendationsDc(),
                 detailView,
                 detailView.isReadOnly()
         );

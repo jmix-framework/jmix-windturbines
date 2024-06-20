@@ -17,11 +17,11 @@ public class InspectionFinding extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Inspection inspection;
 
+    @InstanceName
     @Column(name = "TITLE", nullable = false)
     @NotNull
     private String title;
 
-    @InstanceName
     @Column(name = "DESCRIPTION")
     @Lob
     private String description;

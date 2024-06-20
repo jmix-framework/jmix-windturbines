@@ -126,6 +126,7 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
                         dialogWindows,
                         messages,
                         findingsDc,
+                        recommendationsDc,
                         this,
                         isReadOnly()
                 ));
@@ -161,16 +162,14 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
 
     @Subscribe("createRecommendationAction")
     public void onCreateRecommendationAction(final ActionPerformedEvent event) {
-        DialogWindow<InspectionRecommendationDetailView> build = dialogWindows.detail(this, InspectionRecommendation.class)
+        DialogWindow<InspectionRecommendationDetailView> dialogWindow = dialogWindows.detail(this, InspectionRecommendation.class)
                 .withViewClass(InspectionRecommendationDetailView.class)
+                .withViewConfigurer(view -> view.setFindings(findingsDc.getDisconnectedItems()))
                 .withParentDataContext(dataContext)
                 .withContainer(recommendationsDc)
                 .build();
-
-        build.getView().setFindingsDc(findingsDc);
-
-        build
-                .open();
+//        dialogWindow.getView().setFindings(findingsDc.getDisconnectedItems());
+        dialogWindow.open();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,6 +177,10 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected CollectionPropertyContainer<InspectionFinding> getFindingsDc() {
         return findingsDc;
+    }
+
+    protected CollectionPropertyContainer<InspectionRecommendation> getRecommendationsDc() {
+        return recommendationsDc;
     }
 
     protected DataContext getDataContext() {

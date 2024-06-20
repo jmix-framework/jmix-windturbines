@@ -11,9 +11,6 @@
             <loader/>
         </instance>
     </data>
-    <facets>
-        <dataLoadCoordinator auto="true"/>
-    </facets>
     <actions>
         <action id="saveAction" type="detail_saveClose"/>
         <action id="closeAction" type="detail_close"/>
@@ -22,7 +19,7 @@
         <formLayout id="form" dataContainer="inspectionRecommendationDc">
             <textArea id="descriptionField" height="9.5em" property="description"/>
             <select id="priorityField" property="priority"/>
-            <entityComboBox id="relatedFindingField" property="relatedFinding" />
+            <select id="relatedFindingField" property="relatedFinding" emptySelectionAllowed="true" />
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
