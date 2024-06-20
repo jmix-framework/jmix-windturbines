@@ -46,8 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         classes = {
                 JmixWindturbinesApplication.class,
                 FlowuiTestAssistConfiguration.class,
-                TestDialogsConfiguration.class,
-                TestWindowBuilderProcessorConfiguration.class
+                TestDialogsConfiguration.class
         })
 class InspectionFindingCardTest {
 
@@ -65,12 +64,6 @@ class InspectionFindingCardTest {
     private EntityTestData entityTestData;
     @Autowired
     private DialogWindows dialogWindows;
-    @Autowired
-    private TestDetailWindowBuilderProcessor testDetailWindowBuilderProcessor;
-    @Autowired
-    private TestLookupWindowBuilderProcessor testLookupWindowBuilderProcessor;
-    @Autowired
-    private TestWindowBuilderProcessor testWindowBuilderProcessor;
 
     private Inspection inspection;
     private InspectionDetailView detailView;
@@ -84,8 +77,7 @@ class InspectionFindingCardTest {
         Turbine turbine = entityTestData.saveWithDefaults(new TurbineData(manufacturer, operator));
         inspection = entityTestData.saveWithDefaults(new ScheduledInspectionData(turbine, null));
 
-
-        clearDialogs();
+        dialogs.clear();
     }
 
     @Nested
@@ -487,24 +479,9 @@ class InspectionFindingCardTest {
     }
 
     private <T> T findDialogByType(Class<T> viewClass) {
-        return getDialogWindowsTrackingList()
-                .stream()
-                .map(it -> it.dialogWindowOfType(viewClass))
-                .filter(Objects::nonNull)
+        return dialogWindows.getOpenedDialogWindows().getDialogs()
+                .stream().map(d -> (T) d)
                 .findFirst()
                 .orElse(null);
-    }
-
-    public List<DialogWindowsTracking> getDialogWindowsTrackingList() {
-        return List.of(
-                testDetailWindowBuilderProcessor.getDialogWindowsTracking(),
-                testLookupWindowBuilderProcessor.getDialogWindowsTracking(),
-                testWindowBuilderProcessor.getDialogWindowsTracking()
-        );
-    }
-
-    private void clearDialogs() {
-        getDialogWindowsTrackingList().forEach(DialogWindowsTracking::clear);
-        dialogs.clear();
     }
 }
