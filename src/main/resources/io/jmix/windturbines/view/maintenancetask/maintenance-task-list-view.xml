@@ -15,6 +15,17 @@
                 </query>
             </loader>
         </collection>
+        <collection id="myMaintenanceTasksDc"
+                    class="io.jmix.windturbines.entity.MaintenanceTask">
+            <fetchPlan extends="_base">
+                <property name="technican" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="myMaintenanceTasksDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from MaintenanceTask e where e.technican.id = :current_user_id]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -26,16 +37,16 @@
     <layout>
         <tabSheet id="contentTabSheet" width="100%" themeNames="centered" height="100%">
             <tab id="myTasksTab" label="msg://myTasks">
-                <vbox width="100%" alignItems="CENTER" height="100%">
+                <vbox width="100%" alignItems="CENTER" height="100%" padding="false" spacing="false">
                     <virtualList id="myMaintenanceTasksVirtualList"
                                  width="100%"
                                  height="100%"
-                                 itemsContainer="maintenanceTasksDc"
+                                 itemsContainer="myMaintenanceTasksDc"
                                  alignSelf="CENTER"/>
                 </vbox>
             </tab>
             <tab id="allTasksTab" label="msg://allTasks">
-                <vbox width="100%" alignItems="CENTER" height="100%">
+                <vbox width="100%" alignItems="CENTER" height="100%" padding="false" spacing="false">
                     <virtualList id="allMaintenanceTasksVirtualList"
                                  width="100%"
                                  height="100%"

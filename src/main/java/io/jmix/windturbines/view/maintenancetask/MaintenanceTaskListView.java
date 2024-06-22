@@ -1,10 +1,15 @@
 package io.jmix.windturbines.view.maintenancetask;
 
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.contextmenu.MenuItem;
+import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -27,7 +32,6 @@ import java.util.List;
 @Route(value = "maintenanceTasks", layout = MainView.class)
 @ViewController("MaintenanceTask.list")
 @ViewDescriptor("maintenance-task-list-view.xml")
-@LookupComponent("maintenanceTasksDataGrid")
 @DialogMode(width = "64em")
 public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
     @Autowired
@@ -39,8 +43,17 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
     @Autowired
     private DatatypeFormatter datatypeFormatter;
 
+    @Supply(to = "allMaintenanceTasksVirtualList", subject = "renderer")
+    private Renderer<MaintenanceTask> allMaintenanceTasksVirtualListRenderer() {
+        return maintenanceTaskRenderer();
+    }
+
     @Supply(to = "myMaintenanceTasksVirtualList", subject = "renderer")
     private Renderer<MaintenanceTask> myMaintenanceTasksVirtualListRenderer() {
+        return maintenanceTaskRenderer();
+    }
+
+    private ComponentRenderer<VerticalLayout, MaintenanceTask> maintenanceTaskRenderer() {
         return new ComponentRenderer<>(maintenanceTask -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
@@ -137,4 +150,5 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
         layout.setPadding(false);
         return layout;
     }
+
 }

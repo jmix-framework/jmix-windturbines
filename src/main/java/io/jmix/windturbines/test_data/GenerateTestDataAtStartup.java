@@ -77,43 +77,47 @@ public class GenerateTestDataAtStartup {
             it.setStatus(TurbineStatus.OPERATING);
             it.setLocation("Santa Barbara, California");
         });
-        addInspectionsForTurbine(vestasV150, null);
+        addInspectionsForTurbine(vestasV150);
         Turbine siemensSG5 = entityTestData.saveWithDefaults(new TurbineData(siemens, windtech), it -> {
             it.setTurbineId("#892920");
             it.setModel("SG 5.8-155");
             it.setStatus(TurbineStatus.MAINTENANCE);
             it.setLocation("Palm Springs, California");
         });
-        addInspectionsForTurbine(siemensSG5, null);
+        addInspectionsForTurbine(siemensSG5);
         Turbine vestasV162 = entityTestData.saveWithDefaults(new TurbineData(vestas, ecopower), it -> {
             it.setTurbineId("#132003");
             it.setModel("V162-6.0 MW");
             it.setStatus(TurbineStatus.OPERATING);
             it.setLocation("Amarillo, Texas");
         });
-        addInspectionsForTurbine(vestasV162, null);
+        addInspectionsForTurbine(vestasV162);
         Turbine vestasV160 = entityTestData.saveWithDefaults(new TurbineData(vestas, skywind), it -> {
             it.setTurbineId("#738902");
             it.setModel("V160-4.2 MW");
             it.setStatus(TurbineStatus.IDLE);
             it.setLocation("Santa Barbara, California");
         });
-        addInspectionsForTurbine(vestasV160, null);
+        addInspectionsForTurbine(vestasV160);
         Turbine geHaliade = entityTestData.saveWithDefaults(new TurbineData(ge, renewableDynamics), it -> {
             it.setTurbineId("#236601");
             it.setModel("Haliade-X 12 MW");
             it.setStatus(TurbineStatus.OPERATING);
             it.setLocation("Cheyenne, Wyoming");
         });
-        addInspectionsForTurbine(geHaliade, null);
+        addInspectionsForTurbine(geHaliade);
     }
 
-    private void addInspectionsForTurbine(Turbine turbine, User technican) {
+    private void addInspectionsForTurbine(Turbine turbine) {
+
+        List<User> users = entityTestData.loadAll(User.class);
 
         IntStream.range(0, faker().number().numberBetween(3, 10))
-                .forEach(i ->
-                        withLikelihoodOf(0.3, () -> completedInspection(turbine, technican))
-                            .orElseGet(() -> scheduledInspection(turbine, technican))
+                .forEach(i -> {
+                            User technican = withLikelihoodOf(0.2, () -> randomOfList(users)).orElse(null);
+                            withLikelihoodOf(0.3, () -> completedInspection(turbine, technican))
+                                    .orElseGet(() -> scheduledInspection(turbine, technican));
+                        }
                 );
     }
 
