@@ -5,10 +5,7 @@ import io.jmix.core.Metadata;
 import io.jmix.core.MetadataTools;
 import io.jmix.core.SaveContext;
 import io.jmix.core.security.SystemAuthenticator;
-import io.jmix.windturbines.entity.MaintenanceTask;
-import io.jmix.windturbines.entity.Manufacturer;
-import io.jmix.windturbines.entity.Operator;
-import io.jmix.windturbines.entity.Turbine;
+import io.jmix.windturbines.entity.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
@@ -72,6 +69,7 @@ public class DatabaseCleanup {
         performDeletion(Turbine.class, jdbcTemplate);
         performDeletion(Manufacturer.class, jdbcTemplate);
         performDeletion(Operator.class, jdbcTemplate);
+        performDeletionWhere(User.class, "username != 'admin'", jdbcTemplate);
     }
 
 

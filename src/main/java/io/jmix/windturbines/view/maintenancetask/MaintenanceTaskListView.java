@@ -1,15 +1,10 @@
 package io.jmix.windturbines.view.maintenancetask;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.contextmenu.MenuItem;
-import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -138,6 +133,7 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
         );
         return button;
     }
+
     private VerticalLayout createVerticalLayout() {
         VerticalLayout layout = uiComponents.create(VerticalLayout.class);
         layout.setSpacing(false);
