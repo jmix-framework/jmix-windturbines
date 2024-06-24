@@ -7,8 +7,14 @@ html {
     --lumo-primary-text-color: hsl(214, 0%, 0%);
     --lumo-error-color: rgb(229, 44, 67);
     --lumo-error-text-color: rgb(229, 44, 67);
+
+    --theme-gradient: linear-gradient(73deg, rgb(5, 154, 102) 11.99%, #66fa3b 88.79%);
 }
 
+
+.jmix-main-view-header {
+    background: var(--theme-gradient);
+}
 
 .white-card {
     background-color: white;

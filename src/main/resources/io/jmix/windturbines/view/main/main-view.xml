@@ -5,13 +5,9 @@
         <action id="logout" type="logout"/>
     </actions>
     <appLayout>
-        <navigationBar>
+        <navigationBar touchOptimized="true">
             <header id="header" classNames="jmix-main-view-header">
-                <drawerToggle id="drawerToggle"
-                              classNames="jmix-main-view-drawer-toggle"
-                              themeNames="contrast"
-                              ariaLabel="msg://drawerToggle.ariaLabel"/>
-                <h1 id="viewTitle" classNames="jmix-main-view-title"/>
+                <tabs id="mainMenuTabs" width="100%" themeNames="equal-width-tabs hide-scroll-buttons" />
             </header>
         </navigationBar>
         <drawerLayout>

@@ -42,13 +42,19 @@
         <dataLoadCoordinator auto="true"/>
     </facets>
     <layout expand="turbinesVirtualList">
-        <textField id="searchField"
-                   width="100%"
-                   placeholder="msg://search"
-                   clearButtonVisible="true"/>
-        <hr />
-        <virtualList id="turbinesVirtualList" width="100%"
-                     itemsContainer="turbinesDc"
-                     alignSelf="CENTER"/>
+        <tabSheet id="contentTabSheet" width="100%" themeNames="centered" height="100%">
+            <tab id="turbinesTab" label="msg://turbineListView.title">
+                <vbox width="100%" alignItems="CENTER" height="100%" padding="false" spacing="false">
+                    <textField id="searchField"
+                               width="100%"
+                               placeholder="msg://search"
+                               clearButtonVisible="true"/>
+                    <virtualList id="turbinesVirtualList" width="100%"
+                                 itemsContainer="turbinesDc"
+                                 alignSelf="CENTER"/>
+
+                </vbox>
+            </tab>
+        </tabSheet>
     </layout>
 </view>

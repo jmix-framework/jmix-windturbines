@@ -21,6 +21,7 @@
         <dataLoadCoordinator auto="true"/>
     </facets>
     <actions>
+        <action id="closeAction" type="detail_close"/>
         <action id="prevAction" text="msg://prev" icon="ARROW_LEFT"/>
         <action id="nextAction" text="msg://next" icon="ARROW_RIGHT" actionVariant="PRIMARY"/>
         <action id="finishAction" text="msg://finish" icon="CHECK" actionVariant="PRIMARY" />
@@ -89,6 +90,7 @@
             </accordionPanel>
         </accordion>
         <hbox id="detailActions" alignSelf="END">
+            <button id="closeBtn" action="closeAction" />
             <button id="prevBtn" action="prevAction" enabled="false"/>
             <button id="nextBtn" action="nextAction"/>
             <button id="finishBtn" action="finishAction" visible="false"/>
