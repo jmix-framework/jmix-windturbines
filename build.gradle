@@ -16,6 +16,9 @@ version = '0.0.1-SNAPSHOT'
 repositories {
     mavenCentral()
     maven {
+        url 'https://maven.vaadin.com/vaadin-addons'
+    }
+    maven {
         url 'https://global.repo.jmix.io/repository/public'
     }
 }
@@ -32,6 +35,8 @@ dependencies {
     implementation 'io.jmix.flowui:jmix-flowui-themes'
     implementation 'io.jmix.datatools:jmix-datatools-starter'
     implementation 'io.jmix.datatools:jmix-datatools-flowui-starter'
+
+    implementation 'de.f0rce.signaturepad:signature-widget:3.1.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 

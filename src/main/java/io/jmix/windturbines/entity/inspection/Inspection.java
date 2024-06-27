@@ -1,12 +1,15 @@
 package io.jmix.windturbines.entity.inspection;
 
 import io.jmix.core.DeletePolicy;
+import io.jmix.core.FileRef;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.windturbines.entity.MaintenanceTask;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JmixEntity
@@ -47,6 +50,51 @@ public class Inspection extends MaintenanceTask {
 
     @Column(name = "CONTROL_SYSTEM_COMMENT")
     private String controlSystemComment;
+
+    @Column(name = "OPERATOR_REP_NAME")
+    private String operatorRepName;
+
+    @Column(name = "OPERATOR_REP_SIGNATURE", length = 1024)
+    private FileRef operatorRepSignature;
+
+    @Column(name = "OPERATOR_REP_SIGNED_AT")
+    private OffsetDateTime operatorRepSignedAt;
+
+    @Column(name = "OPERATOR_CONFIRMATION", nullable = false)
+    @NotNull
+    private Boolean operatorConfirmation = false;
+
+    public Boolean getOperatorConfirmation() {
+        return operatorConfirmation;
+    }
+
+    public void setOperatorConfirmation(Boolean operatorConfirmation) {
+        this.operatorConfirmation = operatorConfirmation;
+    }
+
+    public OffsetDateTime getOperatorRepSignedAt() {
+        return operatorRepSignedAt;
+    }
+
+    public void setOperatorRepSignedAt(OffsetDateTime operatorRepSignedAt) {
+        this.operatorRepSignedAt = operatorRepSignedAt;
+    }
+
+    public FileRef getOperatorRepSignature() {
+        return operatorRepSignature;
+    }
+
+    public void setOperatorRepSignature(FileRef operatorRepSignature) {
+        this.operatorRepSignature = operatorRepSignature;
+    }
+
+    public String getOperatorRepName() {
+        return operatorRepName;
+    }
+
+    public void setOperatorRepName(String operatorRepName) {
+        this.operatorRepName = operatorRepName;
+    }
 
     public List<InspectionRecommendation> getRecommendations() {
         return recommendations;
