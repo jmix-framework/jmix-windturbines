@@ -24,9 +24,9 @@
         <action id="closeAction" type="detail_close"/>
         <action id="prevAction" text="msg://prev" icon="ARROW_LEFT"/>
         <action id="nextAction" text="msg://next" icon="ARROW_RIGHT" actionVariant="PRIMARY"/>
-        <action id="finishAction" text="msg://finish" icon="CHECK" actionVariant="PRIMARY" />
-        <action id="createFindingAction" text="msg://createFinding" icon="PLUS" actionVariant="PRIMARY" />
-        <action id="createRecommendationAction" text="msg://createRecommendation" icon="PLUS" actionVariant="PRIMARY" />
+        <action id="finishAction" text="msg://finish" icon="CHECK" actionVariant="PRIMARY"/>
+        <action id="createFindingAction" text="msg://createFinding" icon="PLUS" actionVariant="PRIMARY"/>
+        <action id="createRecommendationAction" text="msg://createRecommendation" icon="PLUS" actionVariant="PRIMARY"/>
     </actions>
     <layout>
         <accordion id="mainAccordion" width="100%">
@@ -80,17 +80,35 @@
                 <hbox width="100%" justifyContent="END">
                     <button id="createFindingBtn" action="createFindingAction" alignSelf="END"/>
                 </hbox>
-                <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%" />
+                <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%"/>
             </accordionPanel>
             <accordionPanel summaryText="msg://recommendations" classNames="white-card mb-m">
                 <hbox width="100%" justifyContent="END">
                     <button id="createRecommendationBtn" action="createRecommendationAction" alignSelf="END"/>
                 </hbox>
-                <virtualList id="recommendationsVirtualList" itemsContainer="recommendationsDc" width="100%" />
+                <virtualList id="recommendationsVirtualList" itemsContainer="recommendationsDc" width="100%"/>
+            </accordionPanel>
+            <accordionPanel summaryText="msg://complete" classNames="white-card mb-m">
+                <vbox id="signatureDetails">
+                    <image id="storedSignatureImage"
+                           property="operatorRepSignature"
+                           dataContainer="inspectionDc"
+                           height="300px"
+                           width="100%"
+                           visible="false"
+                    />
+                </vbox>
+                <vbox id="signaturePadWrapper" width="100%" padding="false" spacing="false"/>
+                <formLayout id="signatureForm" dataContainer="inspectionDc">
+                    <textField id="operatorRepNameField" property="operatorRepName"/>
+                    <dateTimePicker id="operatorRepSignedAtField" dataContainer="inspectionDc"
+                                    property="operatorRepSignedAt" visible="false"/>
+                    <checkbox id="operatorConfirmationField" property="operatorConfirmation"/>
+                </formLayout>
             </accordionPanel>
         </accordion>
         <hbox id="detailActions" alignSelf="END">
-            <button id="closeBtn" action="closeAction" />
+            <button id="closeBtn" action="closeAction"/>
             <button id="prevBtn" action="prevAction" enabled="false"/>
             <button id="nextBtn" action="nextAction"/>
             <button id="finishBtn" action="finishAction" visible="false"/>
