@@ -29,9 +29,7 @@ import io.jmix.flowui.model.CollectionPropertyContainer;
 import io.jmix.flowui.model.DataContext;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.TaskStatus;
-import io.jmix.windturbines.entity.inspection.Inspection;
-import io.jmix.windturbines.entity.inspection.InspectionFinding;
-import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
+import io.jmix.windturbines.entity.inspection.*;
 import io.jmix.windturbines.view.inspectionrecommendation.InspectionRecommendationDetailView;
 import io.jmix.windturbines.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,11 +51,11 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
     @ViewComponent
     private JmixRadioButtonGroup<Integer> generatorCheckAnswerField;
     @ViewComponent
-    private JmixSelect<Object> rotorBladesAnswerField;
+    private JmixSelect<RotorBladesAnswer> rotorBladesAnswerField;
     @ViewComponent
-    private JmixSelect<Object> gearboxOilLevelAnswerField;
+    private JmixSelect<GearboxOilLevelAnswer> gearboxOilLevelAnswerField;
     @ViewComponent
-    private JmixSelect<Object> controlSystemStatusField;
+    private JmixSelect<YesNoAnswer> controlSystemStatusField;
     @ViewComponent
     private JmixAccordion mainAccordion;
     @ViewComponent
