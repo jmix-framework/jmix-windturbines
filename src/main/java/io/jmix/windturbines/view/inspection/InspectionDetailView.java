@@ -1,7 +1,6 @@
 package io.jmix.windturbines.view.inspection;
 
 import com.vaadin.flow.component.accordion.Accordion;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
@@ -28,7 +27,6 @@ import io.jmix.flowui.kit.action.ActionVariant;
 import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.model.CollectionPropertyContainer;
 import io.jmix.flowui.model.DataContext;
-import io.jmix.flowui.util.OperationResult;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.inspection.Inspection;
@@ -36,8 +34,6 @@ import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import io.jmix.windturbines.view.inspectionrecommendation.InspectionRecommendationDetailView;
 import io.jmix.windturbines.view.main.MainView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;
@@ -209,21 +205,23 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
             return;
         }
 
+        completeInspection();
+    }
+
+    protected void completeInspection() {
         dialogs.createOptionDialog()
                 .withHeader(messages.getMessage("finishConfirmation.header"))
                 .withText(messages.getMessage("finishConfirmation.text"))
                 .withActions(
                         new DialogAction(DialogAction.Type.YES)
-                                .withHandler(e -> completeInspection())
+                                .withHandler(e -> {
+                                    getEditedEntity().setTaskStatus(TaskStatus.COMPLETED);
+                                    closeWithSave();
+                                })
                                 .withVariant(ActionVariant.PRIMARY),
                         new DialogAction(DialogAction.Type.NO)
                 )
                 .open();
-    }
-
-    private void completeInspection() {
-        getEditedEntity().setTaskStatus(TaskStatus.COMPLETED);
-        closeWithSave();
     }
 
     @Supply(to = "findingsVirtualList", subject = "renderer")
@@ -299,4 +297,7 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
         return dataContext;
     }
 
+    public void setSignatureImage(String signatureImage) {
+        signature.setImage(signatureImage);
+    }
 }
