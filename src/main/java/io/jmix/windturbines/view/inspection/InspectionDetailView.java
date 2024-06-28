@@ -203,10 +203,6 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
             return;
         }
 
-        completeInspection();
-    }
-
-    protected void completeInspection() {
         dialogs.createOptionDialog()
                 .withHeader(messages.getMessage("finishConfirmation.header"))
                 .withText(messages.getMessage("finishConfirmation.text"))
