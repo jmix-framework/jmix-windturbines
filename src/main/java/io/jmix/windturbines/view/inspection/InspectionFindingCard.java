@@ -16,10 +16,12 @@ import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.kit.action.ActionVariant;
 import io.jmix.flowui.model.CollectionPropertyContainer;
 import io.jmix.flowui.model.DataContext;
+import io.jmix.flowui.view.DialogWindow;
 import io.jmix.flowui.view.ReadOnlyAwareView;
 import io.jmix.flowui.view.View;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
+import io.jmix.windturbines.view.inspectionfinding.InspectionFindingDetailView;
 
 import java.util.List;
 
@@ -125,11 +127,19 @@ public class InspectionFindingCard extends VerticalLayout {
         editBtn.setIcon(VaadinIcon.PENCIL.create());
         editBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         editBtn.addClickListener(e ->
-                dialogWindows.detail(originView, InspectionFinding.class)
-                        .withParentDataContext(dataContext)
-                        .withContainer(findingsDc)
-                        .editEntity(finding)
-                        .open()
+                {
+                    DialogWindow<InspectionFindingDetailView> dialogWindow = dialogWindows.detail(originView, InspectionFinding.class)
+                            .withViewClass(InspectionFindingDetailView.class)
+                            .withParentDataContext(dataContext)
+                            .withContainer(findingsDc)
+                            .editEntity(finding)
+                            .build();
+
+                    dialogWindow.setHeight("90%");
+                    dialogWindow.setWidth("90%");
+                    dialogWindow.open();
+                }
+
         );
         editBtn.setVisible(!readOnly);
 

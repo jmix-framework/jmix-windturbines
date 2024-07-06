@@ -8,6 +8,7 @@ import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.windturbines.entity.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
+import io.jmix.windturbines.entity.inspection.InspectionFindingEvidence;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -63,6 +64,7 @@ public class DatabaseCleanup {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         performDeletion(InspectionRecommendation.class, jdbcTemplate);
+        performDeletion(InspectionFindingEvidence.class, jdbcTemplate);
         performDeletion(InspectionFinding.class, jdbcTemplate);
         performDeletion(Inspection.class, jdbcTemplate);
         performDeletion(MaintenanceTask.class, jdbcTemplate);

@@ -5,8 +5,11 @@
     <data>
         <instance id="inspectionFindingDc"
                   class="io.jmix.windturbines.entity.inspection.InspectionFinding">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="evidences" fetchPlan="_base"/>
+            </fetchPlan>
             <loader/>
+            <collection id="evidencesDc" property="evidences"/>
         </instance>
     </data>
     <facets>
@@ -16,12 +19,31 @@
         <action id="saveAction" type="detail_saveClose"/>
         <action id="closeAction" type="detail_close"/>
     </actions>
-    <layout>
-        <formLayout id="form" dataContainer="inspectionFindingDc">
-            <textField id="titleField" property="title"/>
-            <textArea id="descriptionField" height="12em" property="description"/>
-            <select id="severityField" property="severity"/>
-        </formLayout>
+    <layout expand="contentTabSheet">
+        <tabSheet id="contentTabSheet" width="100%">
+            <tab id="formTab" label="msg://finding">
+                <formLayout id="form" dataContainer="inspectionFindingDc">
+                    <textField id="titleField" property="title"/>
+                    <textArea id="descriptionField" height="15em" property="description"/>
+                    <select id="severityField" property="severity"/>
+                </formLayout>
+            </tab>
+            <tab id="evidencesTab" label="msg://evidences">
+                <vbox width="100%">
+                    <fileStorageUploadField id="upload"
+                                            dropAllowed="false"
+                                            acceptedFileTypes=".png,.jpg,.jpeg"
+                                            maxFileSize="100000000"
+                                            uploadIcon="PICTURE"
+                                            clearButtonVisible="false"
+                                            fileStoragePutMode="MANUAL"
+                    />
+
+                    <div id="evidencesListWrapper"/>
+                </vbox>
+            </tab>
+        </tabSheet>
+
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>
