@@ -39,8 +39,6 @@ public class InspectionFindingDetailView extends StandardDetailView<InspectionFi
     private TemporaryStorage temporaryStorage;
     @Autowired
     private FileStorage fileStorage;
-    @Autowired
-    private Notifications notifications;
     @ViewComponent
     private CollectionPropertyContainer<InspectionFindingEvidence> evidencesDc;
     @ViewComponent
@@ -70,9 +68,7 @@ public class InspectionFindingDetailView extends StandardDetailView<InspectionFi
             InspectionFindingEvidence inspectionFindingEvidence = dataContext.create(InspectionFindingEvidence.class);
             inspectionFindingEvidence.setFile(fileRef);
             inspectionFindingEvidence.setInspectionFinding(getEditedEntity());
-            evidencesDc.getMutableItems().add(
-                    inspectionFindingEvidence
-            );
+            evidencesDc.getMutableItems().add(inspectionFindingEvidence);
 
             renderEvidenceList();
         }
@@ -146,6 +142,4 @@ public class InspectionFindingDetailView extends StandardDetailView<InspectionFi
 
         return imageContainer;
     }
-
-
 }
