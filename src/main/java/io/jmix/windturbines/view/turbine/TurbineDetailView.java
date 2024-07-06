@@ -140,7 +140,7 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
             mainLayout.add(secondRow);
 
             mainLayout.addClickListener(event ->
-                    viewNavigators.detailView(MaintenanceTask.class)
+                    viewNavigators.detailView(this, MaintenanceTask.class)
                             .withReadOnly(maintenanceTask.getTaskStatus().equals(TaskStatus.COMPLETED))
                             .editEntity(maintenanceTask)
                             .navigate()
@@ -157,7 +157,7 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
         button.setIcon(VaadinIcon.CHEVRON_RIGHT.create());
         button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         button.addClickListener(e ->
-                viewNavigators.detailView(MaintenanceTask.class)
+                viewNavigators.detailView(this, MaintenanceTask.class)
                         .withReadOnly(maintenanceTask.getTaskStatus().equals(TaskStatus.COMPLETED))
                         .editEntity(maintenanceTask)
                         .navigate()

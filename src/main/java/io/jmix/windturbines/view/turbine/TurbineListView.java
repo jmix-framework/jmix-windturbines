@@ -101,7 +101,7 @@ public class TurbineListView extends StandardListView<Turbine> {
             mainLayout.add(secondRow);
 
             mainLayout.addClickListener(event ->
-                    viewNavigators.detailView(Turbine.class)
+                    viewNavigators.detailView(this, Turbine.class)
                             .withReadOnly(true)
                             .editEntity(turbine)
                             .navigate()
@@ -117,7 +117,7 @@ public class TurbineListView extends StandardListView<Turbine> {
         button.setIcon(VaadinIcon.CHEVRON_RIGHT.create());
         button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         button.addClickListener(e ->
-                viewNavigators.detailView(Turbine.class)
+                viewNavigators.detailView(this, Turbine.class)
                         .withReadOnly(true)
                         .editEntity(turbine)
                         .navigate()

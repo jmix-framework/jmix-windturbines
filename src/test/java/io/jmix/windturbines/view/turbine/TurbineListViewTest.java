@@ -221,7 +221,7 @@ public class TurbineListViewTest {
     }
 
     private <V extends View<?>> V navigateTo(Class<V> viewClass) {
-        viewNavigators.view(viewClass).navigate();
+        viewNavigators.view(UiTestUtils.getCurrentView(), viewClass).navigate();
         return UiTestUtils.getCurrentView();
     }
 

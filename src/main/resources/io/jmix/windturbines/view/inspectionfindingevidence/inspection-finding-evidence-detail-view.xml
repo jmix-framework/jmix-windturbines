@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://inspectionFindingEvidenceDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="inspectionFindingEvidenceDc"
+                  class="io.jmix.windturbines.entity.inspection.InspectionFindingEvidence">
+            <fetchPlan extends="_base"/>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+       <image dataContainer="inspectionFindingEvidenceDc"
+              property="file"
+              width="100%"
+       />
+        <hbox id="detailActions">
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

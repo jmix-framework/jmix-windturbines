@@ -1,10 +1,15 @@
 package io.jmix.windturbines.entity.inspection;
 
+import io.jmix.core.DeletePolicy;
+import io.jmix.core.entity.annotation.OnDelete;
+import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.windturbines.entity.StandardEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
 
 @JmixEntity
 @Table(name = "INSPECTION_FINDING", indexes = {
@@ -29,6 +34,19 @@ public class InspectionFinding extends StandardEntity {
     @Column(name = "SEVERITY", nullable = false)
     @NotNull
     private Integer severity;
+
+    @OnDelete(DeletePolicy.CASCADE)
+    @Composition
+    @OneToMany(mappedBy = "inspectionFinding")
+    private List<InspectionFindingEvidence> evidences;
+
+    public List<InspectionFindingEvidence> getEvidences() {
+        return evidences;
+    }
+
+    public void setEvidences(List<InspectionFindingEvidence> evidences) {
+        this.evidences = evidences;
+    }
 
     public String getTitle() {
         return title;

@@ -1,5 +1,6 @@
 package io.jmix.windturbines.view.main;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.AbstractIcon;
 import com.vaadin.flow.component.icon.SvgIcon;
@@ -33,7 +34,7 @@ public class MainView extends StandardMainView {
     private Tab maintenanceTaskTab;
 
     @Subscribe
-    public void onInit(final InitEvent event) {
+    public void onAttachEvent(final AttachEvent event) {
         mainMenu();
     }
 
@@ -62,11 +63,11 @@ public class MainView extends StandardMainView {
         if (e.getSelectedTab() != null) {
             Tab selectedTab = e.getSelectedTab();
             if (selectedTab.equals(turbineTab)) {
-                    viewNavigators.listView(Turbine.class)
+                    viewNavigators.listView(this, Turbine.class)
                             .navigate();
             }
             if (selectedTab.equals(maintenanceTaskTab)) {
-                    viewNavigators.listView(MaintenanceTask.class)
+                    viewNavigators.listView(this, MaintenanceTask.class)
                             .navigate();
             }
         }

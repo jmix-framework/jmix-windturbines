@@ -131,7 +131,7 @@ public class InspectionDetailViewTest {
     }
 
     private <V extends View<?>, E> V navigateTo(Class<V> viewClass, E entity, Class<E> entityClass) {
-        viewNavigators.detailView(entityClass)
+        viewNavigators.detailView(UiTestUtils.getCurrentView(), entityClass)
                 .withViewClass(viewClass)
                 .editEntity(entity)
                 .navigate();
