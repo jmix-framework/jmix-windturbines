@@ -10,15 +10,21 @@ import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
+import io.jmix.data.impl.jpql.DomainModelBuilder;
+import io.jmix.flowui.Notifications;
+import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.app.main.StandardMainView;
-import io.jmix.flowui.view.Subscribe;
-import io.jmix.flowui.view.ViewComponent;
-import io.jmix.flowui.view.ViewController;
-import io.jmix.flowui.view.ViewDescriptor;
+import io.jmix.flowui.component.main.JmixListMenu;
+import io.jmix.flowui.kit.component.main.ListMenu;
+import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.MaintenanceTask;
 import io.jmix.windturbines.entity.Turbine;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Route("")
 @ViewController("MainView")
@@ -29,17 +35,42 @@ public class MainView extends StandardMainView {
     private ViewNavigators viewNavigators;
     @ViewComponent
     private Tabs mainMenuTabs;
+    @ViewComponent
+    private JmixListMenu menu;
+    @Autowired
+    private Notifications notifications;
+    @ViewComponent
+    private MessageBundle messageBundle;
+    @Autowired
+    private UiComponents uiComponents;
 
     private Tab turbineTab;
     private Tab maintenanceTaskTab;
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
-        mainMenu();
+        initMobileMenu();
+        createNotificationsMenuEntry();
+    }
+
+    private void createNotificationsMenuEntry() {
+        Span notificationsBadge = uiComponents.create(Span.class);
+        notificationsBadge.getElement().getThemeList().addAll(List.of("badge", "pill"));
+        notificationsBadge.setText(new Random().nextInt(10) + "");
+
+        menu.addMenuItem(
+                ListMenu.MenuItem.create("notifications")
+                        .withTitle(messageBundle.getMessage("notifications"))
+                        .withSuffixComponent(notificationsBadge)
+                        .withClickHandler(e -> notifications.create(messageBundle.getMessage("notImplemented"))
+                                .withType(Notifications.Type.WARNING)
+                                .show()
+                        )
+        );
     }
 
 
-    private void mainMenu() {
+    private void initMobileMenu() {
         StreamResource iconResource = new StreamResource("code-branch.svg",
                 () -> getClass().getResourceAsStream("/META-INF/resources/icons/turbine.svg"));
         SvgIcon icon = new SvgIcon(iconResource);

@@ -8,8 +8,20 @@ import static io.jmix.windturbines.test_data.RandomValues.withRandomSuffix;
 
 public class TechnicanData implements TestDataProvider<User> {
 
-    private String DEFAULT_FIRST_NAME = "Tech";
-    private String DEFAULT_LAST_NAME = "Nician";
+    private final String firstName;
+    private final String lastName;
+    private final String DEFAULT_FIRST_NAME = "Tech";
+    private final String DEFAULT_LAST_NAME = "Nician";
+
+    public TechnicanData(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public TechnicanData() {
+        this.firstName = DEFAULT_FIRST_NAME;
+        this.lastName = DEFAULT_LAST_NAME;
+    }
 
     @Override
     public Class<User> getEntityClass() {
@@ -19,13 +31,13 @@ public class TechnicanData implements TestDataProvider<User> {
     @Override
     public void accept(User user) {
         user.setActive(true);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         String email = "%s@windturbines.com".formatted(
-                withRandomSuffix("%s.%s".formatted(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME)
+                withRandomSuffix("%s.%s".formatted(firstName, lastName)
                 )
         );
         user.setEmail(email);
-        user.setFirstName(DEFAULT_FIRST_NAME);
-        user.setLastName(DEFAULT_LAST_NAME);
         user.setUsername(email);
     }
 }

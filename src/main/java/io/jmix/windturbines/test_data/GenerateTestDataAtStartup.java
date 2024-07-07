@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,9 +22,11 @@ public class GenerateTestDataAtStartup {
 
     private static final Logger log = LoggerFactory.getLogger(GenerateTestDataAtStartup.class);
     private final EntityTestData entityTestData;
+    private final PasswordEncoder passwordEncoder;
 
-    public GenerateTestDataAtStartup(EntityTestData entityTestData) {
+    public GenerateTestDataAtStartup(EntityTestData entityTestData, PasswordEncoder passwordEncoder) {
         this.entityTestData = entityTestData;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Authenticated
@@ -40,6 +43,20 @@ public class GenerateTestDataAtStartup {
             log.info("Test data already exists, skipping generation");
             return;
         }
+
+
+        User mike = entityTestData.saveWithDefaults(new TechnicanData("Mike", "Smith"), it -> {
+            it.setUsername("mike");
+            it.setPassword(passwordEncoder.encode("mike"));
+        });
+        entityTestData.saveWithDefaults(new TechnicanRoleData(mike));
+
+        User tom = entityTestData.saveWithDefaults(new TechnicanData("Tom", "Delany"), it -> {
+            it.setUsername("tom");
+            it.setPassword(passwordEncoder.encode("tom"));
+        });
+        entityTestData.saveWithDefaults(new TechnicanRoleData(tom));
+
 
         Manufacturer vestas = entityTestData.saveWithDefaults(new ManufacturerData("Vestas"));
         Manufacturer siemens = entityTestData.saveWithDefaults(new ManufacturerData("Siemens"));

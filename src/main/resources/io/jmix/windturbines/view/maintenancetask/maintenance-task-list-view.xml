@@ -22,7 +22,7 @@
             </fetchPlan>
             <loader id="myMaintenanceTasksDl" readOnly="true">
                 <query>
-                    <![CDATA[select e from MaintenanceTask e where e.technican.id = :current_user_id]]>
+                    <![CDATA[select e from MaintenanceTask e where e.technican.id = :current_user_id order by e.maintenanceTaskDate ASC ]]>
                 </query>
             </loader>
         </collection>
