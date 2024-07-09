@@ -45,17 +45,17 @@ public class GenerateTestDataAtStartup {
         }
 
 
-        User mike = entityTestData.saveWithDefaults(new TechnicanData("Mike", "Smith"), it -> {
+        User mike = entityTestData.saveWithDefaults(new TechnicianData("Mike", "Smith"), it -> {
             it.setUsername("mike");
             it.setPassword(passwordEncoder.encode("mike"));
         });
-        entityTestData.saveWithDefaults(new TechnicanRoleData(mike));
+        entityTestData.saveWithDefaults(new TechnicianRoleData(mike));
 
-        User tom = entityTestData.saveWithDefaults(new TechnicanData("Tom", "Delany"), it -> {
+        User tom = entityTestData.saveWithDefaults(new TechnicianData("Tom", "Delany"), it -> {
             it.setUsername("tom");
             it.setPassword(passwordEncoder.encode("tom"));
         });
-        entityTestData.saveWithDefaults(new TechnicanRoleData(tom));
+        entityTestData.saveWithDefaults(new TechnicianRoleData(tom));
 
 
         Manufacturer vestas = entityTestData.saveWithDefaults(new ManufacturerData("Vestas"));
@@ -131,16 +131,16 @@ public class GenerateTestDataAtStartup {
 
         IntStream.range(0, faker().number().numberBetween(3, 10))
                 .forEach(i -> {
-                            User technican = withLikelihoodOf(0.2, () -> randomOfList(users)).orElse(null);
-                            withLikelihoodOf(0.3, () -> completedInspection(turbine, technican))
-                                    .orElseGet(() -> scheduledInspection(turbine, technican));
+                            User technician = withLikelihoodOf(0.2, () -> randomOfList(users)).orElse(null);
+                            withLikelihoodOf(0.3, () -> completedInspection(turbine, technician))
+                                    .orElseGet(() -> scheduledInspection(turbine, technician));
                         }
                 );
     }
 
-    private Inspection completedInspection(Turbine turbine, User technican) {
+    private Inspection completedInspection(Turbine turbine, User technician) {
         Inspection inspection = entityTestData.saveWithDefaults(
-                new InspectionData(turbine, technican), it -> it.setInspectionDate(randomPastLocalDate(2 * 365))
+                new InspectionData(turbine, technician), it -> it.setInspectionDate(randomPastLocalDate(2 * 365))
         );
         IntStream.range(0, faker().number().numberBetween(0, 5))
                 .forEach(i -> entityTestData.saveWithDefaults(new InspectionFindingData(inspection)));
@@ -152,8 +152,8 @@ public class GenerateTestDataAtStartup {
         return new Faker();
     }
 
-    private Inspection scheduledInspection(Turbine turbine, User technican) {
-        return entityTestData.saveWithDefaults(new ScheduledInspectionData(turbine, technican), it -> it.setInspectionDate(randomFutureLocalDateTime(365).toLocalDate())
+    private Inspection scheduledInspection(Turbine turbine, User technician) {
+        return entityTestData.saveWithDefaults(new ScheduledInspectionData(turbine, technician), it -> it.setInspectionDate(randomFutureLocalDateTime(365).toLocalDate())
         );
     }
 }

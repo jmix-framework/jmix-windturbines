@@ -124,7 +124,7 @@ public class InspectionDetailViewTest {
                 .isEqualTo(vestasV150);
         assertThat(fieldValue(detailView, "inspectionDateField"))
                 .isEqualTo(MAINTENANCE_TASK_DATE);
-        assertThat(fieldValue(detailView, "technicanField"))
+        assertThat(fieldValue(detailView, "technicianField"))
                 .isEqualTo(null);
     }
 

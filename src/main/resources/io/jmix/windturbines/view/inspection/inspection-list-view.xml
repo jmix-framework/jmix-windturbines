@@ -7,7 +7,7 @@
         <collection id="inspectionsDc"
                     class="io.jmix.windturbines.entity.inspection.Inspection">
             <fetchPlan extends="_base">
-                <property name="technican" fetchPlan="_base"/>
+                <property name="technician" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="inspectionsDl" readOnly="true">
                 <query>
@@ -18,11 +18,11 @@
         <collection id="myInspectionsDc"
                     class="io.jmix.windturbines.entity.inspection.Inspection">
             <fetchPlan extends="_base">
-                <property name="technican" fetchPlan="_base"/>
+                <property name="technician" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="myInspectionsDl" readOnly="true">
                 <query>
-                    <![CDATA[select e from Inspection e where e.technican.id = :current_user_id order by e.inspectionDate ASC ]]>
+                    <![CDATA[select e from Inspection e where e.technician.id = :current_user_id order by e.inspectionDate ASC ]]>
                 </query>
             </loader>
         </collection>

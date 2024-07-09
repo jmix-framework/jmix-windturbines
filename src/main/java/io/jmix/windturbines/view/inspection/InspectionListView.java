@@ -53,7 +53,7 @@ public class InspectionListView extends StandardListView<Inspection> {
     private CurrentAuthentication currentAuthentication;
     @Autowired
     private Notifications notifications;
-    @Autowired
+    @ViewComponent
     private MessageBundle messageBundle;
     @Autowired
     private DataManager dataManager;
@@ -112,7 +112,7 @@ public class InspectionListView extends StandardListView<Inspection> {
 
             String text = "%s - %s".formatted(
                     inspection.getInspectionDate(),
-                    Optional.ofNullable(inspection.getTechnican())
+                    Optional.ofNullable(inspection.getTechnician())
                             .map(User::getDisplayName)
                             .orElse("Not assigned")
             );
@@ -185,6 +185,16 @@ public class InspectionListView extends StandardListView<Inspection> {
             secondRow.setAlignItems(FlexComponent.Alignment.STRETCH);
             secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
 
+            Span secondRowText = uiComponents.create(Span.class);
+
+
+            String text = "%s - %s".formatted(
+                    inspection.getTurbine().getLocation(),
+                    inspection.getTurbine().getManufacturer().getName()
+            );
+
+            secondRowText.setText(text);
+            secondRow.addAndExpand(secondRowText);
 
             HorizontalLayout detailButtonLayout = createHorizontalLayout();
             detailButtonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
@@ -234,7 +244,7 @@ public class InspectionListView extends StandardListView<Inspection> {
                                 new DialogAction(DialogAction.Type.OK)
                                         .withVariant(ActionVariant.PRIMARY)
                                         .withHandler(event -> {
-                                            inspection.setTechnican(currentUser());
+                                            inspection.setTechnician(currentUser());
                                             dataManager.save(inspection);
                                             notifications.create(messageBundle.getMessage("inspectionAssigned"))
                                                     .withType(Notifications.Type.SUCCESS)

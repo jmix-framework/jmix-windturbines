@@ -1,20 +1,17 @@
 package io.jmix.windturbines.test_data.entity;
 
-import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.security.role.assignment.RoleAssignmentRoleType;
 import io.jmix.securitydata.entity.RoleAssignmentEntity;
 import io.jmix.windturbines.entity.User;
-import io.jmix.windturbines.security.TechnicanRole;
+import io.jmix.windturbines.security.TechnicianRole;
 import io.jmix.windturbines.test_data.TestDataProvider;
 
-import static io.jmix.windturbines.test_data.RandomValues.withRandomSuffix;
+public class TechnicianRoleData implements TestDataProvider<RoleAssignmentEntity> {
 
-public class TechnicanRoleData implements TestDataProvider<RoleAssignmentEntity> {
+    private final User technician;
 
-    private final User technican;
-
-    public TechnicanRoleData(User technican) {
-        this.technican = technican;
+    public TechnicianRoleData(User technician) {
+        this.technician = technician;
     }
 
     @Override
@@ -25,7 +22,7 @@ public class TechnicanRoleData implements TestDataProvider<RoleAssignmentEntity>
     @Override
     public void accept(RoleAssignmentEntity roleAssignmentEntity) {
         roleAssignmentEntity.setRoleType(RoleAssignmentRoleType.RESOURCE);
-        roleAssignmentEntity.setRoleCode(TechnicanRole.CODE);
-        roleAssignmentEntity.setUsername(technican.getUsername());
+        roleAssignmentEntity.setRoleCode(TechnicianRole.CODE);
+        roleAssignmentEntity.setUsername(technician.getUsername());
     }
 }

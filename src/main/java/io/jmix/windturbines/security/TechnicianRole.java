@@ -16,9 +16,9 @@ import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import io.jmix.windturbines.entity.inspection.InspectionFindingEvidence;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 
-@ResourceRole(name = "Technican", code = TechnicanRole.CODE)
-public interface TechnicanRole extends UiMinimalRole {
-    String CODE = "technican";
+@ResourceRole(name = "Technician", code = TechnicianRole.CODE)
+public interface TechnicianRole extends UiMinimalRole {
+    String CODE = "technician";
 
     @MenuPolicy(menuIds = {"Inspection.list", "Turbine.list"})
     @ViewPolicy(viewIds = {"Inspection.list", "Turbine.list", "MainView", "InspectionRecommendation.detail", "InspectionFinding.detail", "Inspection.detail", "Turbine.detail"})
@@ -52,7 +52,7 @@ public interface TechnicanRole extends UiMinimalRole {
     @EntityPolicy(entityClass = InspectionFindingEvidence.class, actions = EntityPolicyAction.ALL)
     void inspectionFindingEvidence();
 
-    @EntityAttributePolicy(entityClass = Inspection.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityAttributePolicy(entityClass = Inspection.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Inspection.class, actions = {EntityPolicyAction.READ, EntityPolicyAction.UPDATE, EntityPolicyAction.CREATE})
     void inspection();
 }

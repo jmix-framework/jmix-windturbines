@@ -17,11 +17,11 @@ import static io.jmix.windturbines.test_data.RandomValues.*;
 public class InspectionData implements TestDataProvider<Inspection> {
 
     private final Turbine turbine;
-    private final User technican;
+    private final User technician;
 
-    public InspectionData(Turbine turbine, User technican) {
+    public InspectionData(Turbine turbine, User technician) {
         this.turbine = turbine;
-        this.technican = technican;
+        this.technician = technician;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class InspectionData implements TestDataProvider<Inspection> {
     public void accept(Inspection inspection) {
         Faker faker = new Faker();
         inspection.setTurbine(turbine);
-        inspection.setTechnican(technican);
+        inspection.setTechnician(technician);
         inspection.setInspectionDate(LocalDate.now());
         inspection.setTaskStatus(faker.options().option(TaskStatus.values()));
 

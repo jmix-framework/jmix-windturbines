@@ -22,7 +22,7 @@
             <column name="INSPECTION_DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="TECHNICAN_ID" type="UUID"/>
+            <column name="TECHNICIAN_ID" type="UUID"/>
             <column name="TURBINE_ID" type="UUID">
                 <constraints nullable="false"/>
             </column>
@@ -255,8 +255,8 @@
                                  referencedTableName="OPERATOR"/>
     </changeSet>
     <changeSet id="14" author="jmix-windturbines">
-        <addForeignKeyConstraint baseColumnNames="TECHNICAN_ID" baseTableName="INSPECTION"
-                                 constraintName="FK_INSPECTION_ON_TECHNICAN" referencedColumnNames="ID"
+        <addForeignKeyConstraint baseColumnNames="TECHNICIAN_ID" baseTableName="INSPECTION"
+                                 constraintName="FK_INSPECTION_ON_TECHNICIAN" referencedColumnNames="ID"
                                  referencedTableName="USER_"/>
     </changeSet>
     <changeSet id="15" author="jmix-windturbines">

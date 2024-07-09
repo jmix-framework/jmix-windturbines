@@ -7,7 +7,7 @@
                   class="io.jmix.windturbines.entity.inspection.Inspection">
             <fetchPlan extends="_base">
                 <property name="findings" fetchPlan="_base"/>
-                <property name="technican" fetchPlan="_base"/>
+                <property name="technician" fetchPlan="_base"/>
                 <property name="recommendations" fetchPlan="_base">
                     <property name="relatedFinding" fetchPlan="_base"/>
                 </property>
@@ -39,7 +39,7 @@
                         </actions>
                     </entityPicker>
                     <datePicker id="inspectionDateField" property="inspectionDate"/>
-                    <entityPicker id="technicanField" property="technican">
+                    <entityPicker id="technicianField" property="technician">
                         <actions>
                             <action id="entityLookup" type="entity_lookup"/>
                             <action id="entityClear" type="entity_clear"/>

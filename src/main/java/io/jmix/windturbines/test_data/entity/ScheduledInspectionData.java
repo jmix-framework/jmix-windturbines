@@ -13,11 +13,11 @@ import java.time.LocalDate;
 public class ScheduledInspectionData implements TestDataProvider<Inspection> {
 
     private final Turbine turbine;
-    private final User technican;
+    private final User technician;
 
-    public ScheduledInspectionData(Turbine turbine, User technican) {
+    public ScheduledInspectionData(Turbine turbine, User technician) {
         this.turbine = turbine;
-        this.technican = technican;
+        this.technician = technician;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ScheduledInspectionData implements TestDataProvider<Inspection> {
     @Override
     public void accept(Inspection inspection) {
         inspection.setTurbine(turbine);
-        inspection.setTechnican(technican);
+        inspection.setTechnician(technician);
         inspection.setInspectionDate(LocalDate.now());
         inspection.setTaskStatus(new Faker().options().option(TaskStatus.SCHEDULED, TaskStatus.DEFERRED));
     }

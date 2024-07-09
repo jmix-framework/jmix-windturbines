@@ -27,9 +27,9 @@ public class Inspection extends StandardEntity {
     @Column(name = "INSPECTION_DATE", nullable = false)
     private LocalDate inspectionDate;
 
-    @JoinColumn(name = "TECHNICAN_ID")
+    @JoinColumn(name = "TECHNICIAN_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User technican;
+    private User technician;
 
     @JoinColumn(name = "TURBINE_ID", nullable = false)
     @NotNull
@@ -225,12 +225,12 @@ public class Inspection extends StandardEntity {
         this.turbine = turbine;
     }
 
-    public User getTechnican() {
-        return technican;
+    public User getTechnician() {
+        return technician;
     }
 
-    public void setTechnican(User technican) {
-        this.technican = technican;
+    public void setTechnician(User technician) {
+        this.technician = technician;
     }
 
     @InstanceName

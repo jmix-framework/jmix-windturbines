@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ExtendWith(AuthenticatedAsAdmin.class)
-public class TechnicanRoleTest {
+public class TechnicianRoleTest {
 
 
     @Autowired
@@ -78,11 +78,11 @@ public class TechnicanRoleTest {
             it.setLocation("Santa Barbara, California");
         });
 
-        mike = entityTestData.saveWithDefaults(new TechnicanData());
-        entityTestData.saveWithDefaults(new TechnicanRoleData(mike));
+        mike = entityTestData.saveWithDefaults(new TechnicianData());
+        entityTestData.saveWithDefaults(new TechnicianRoleData(mike));
 
-        tom = entityTestData.saveWithDefaults(new TechnicanData());
-        entityTestData.saveWithDefaults(new TechnicanRoleData(tom));
+        tom = entityTestData.saveWithDefaults(new TechnicianData());
+        entityTestData.saveWithDefaults(new TechnicianRoleData(tom));
 
         mikeVestasV150TodayInspection = entityTestData.saveWithDefaults(new InspectionData(vestasV150, mike), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
