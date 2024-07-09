@@ -5,6 +5,7 @@ import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.windturbines.entity.inspection.Inspection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -59,18 +60,18 @@ public class Turbine extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Operator operator;
 
-    @OrderBy("maintenanceTaskDate DESC")
+    @OrderBy("inspectionDate DESC")
     @OnDelete(DeletePolicy.CASCADE)
     @Composition
     @OneToMany(mappedBy = "turbine")
-    private List<MaintenanceTask> maintenanceTasks;
+    private List<Inspection> inspections;
 
-    public List<MaintenanceTask> getMaintenanceTasks() {
-        return maintenanceTasks;
+    public List<Inspection> getInspections() {
+        return inspections;
     }
 
-    public void setMaintenanceTasks(List<MaintenanceTask> maintenanceTaskTasks) {
-        this.maintenanceTasks = maintenanceTaskTasks;
+    public void setInspections(List<Inspection> inspections) {
+        this.inspections = inspections;
     }
 
     public String getLocation() {

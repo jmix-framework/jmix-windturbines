@@ -94,7 +94,7 @@ public class InspectionDetailViewTest {
         });
 
         inspection = entityTestData.saveWithDefaults(new ScheduledInspectionData(vestasV150, null), it -> {
-            it.setMaintenanceTaskDate(MAINTENANCE_TASK_DATE);
+            it.setInspectionDate(MAINTENANCE_TASK_DATE);
             it.setTaskStatus(TaskStatus.SCHEDULED);
         });
 
@@ -122,9 +122,7 @@ public class InspectionDetailViewTest {
         // then
         assertThat(fieldValue(detailView, "turbineField"))
                 .isEqualTo(vestasV150);
-        assertThat(fieldValue(detailView, "typeField"))
-                .isEqualTo(TaskType.INSPECTION);
-        assertThat(fieldValue(detailView, "maintenanceTaskDateField"))
+        assertThat(fieldValue(detailView, "inspectionDateField"))
                 .isEqualTo(MAINTENANCE_TASK_DATE);
         assertThat(fieldValue(detailView, "technicanField"))
                 .isEqualTo(null);
@@ -236,8 +234,8 @@ public class InspectionDetailViewTest {
             InspectionDetailView detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
 
             // given
-            LocalDate newMaintenanceTaskDate = LocalDate.now().minusDays(1);
-            maintenanceTaskDateField(detailView).setValue(newMaintenanceTaskDate);
+            LocalDate newInspectionDate = LocalDate.now().minusDays(1);
+            inspectionDateField(detailView).setValue(newInspectionDate);
 
             // and
             next(detailView).click();
@@ -265,8 +263,8 @@ public class InspectionDetailViewTest {
             InspectionDetailView detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
 
             // given
-            LocalDate newMaintenanceTaskDate = LocalDate.now().minusDays(1);
-            maintenanceTaskDateField(detailView).setValue(newMaintenanceTaskDate);
+            LocalDate newInspectionDate = LocalDate.now().minusDays(1);
+            inspectionDateField(detailView).setValue(newInspectionDate);
 
             // and
             next(detailView).click();
@@ -300,8 +298,8 @@ public class InspectionDetailViewTest {
                     .isEqualTo(TaskStatus.COMPLETED);
 
             // and
-            assertThat(savedInspection.getMaintenanceTaskDate())
-                    .isEqualTo(newMaintenanceTaskDate);
+            assertThat(savedInspection.getInspectionDate())
+                    .isEqualTo(newInspectionDate);
             assertThat(savedInspection.getOperatorConfirmation())
                     .isTrue();
             assertThat(savedInspection.getOperatorRepSignature())
@@ -330,8 +328,8 @@ public class InspectionDetailViewTest {
         return UiTestUtils.getComponent(detailView, "mainAccordion");
     }
 
-    private static DatePicker maintenanceTaskDateField(InspectionDetailView detailView) {
-        return datePicker(detailView, "maintenanceTaskDateField");
+    private static DatePicker inspectionDateField(InspectionDetailView detailView) {
+        return datePicker(detailView, "inspectionDateField");
     }
 
     private JmixCheckbox operatorConfirmationField(InspectionDetailView detailView) {

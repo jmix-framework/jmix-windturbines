@@ -38,8 +38,7 @@
                             <action id="entityClear" type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <select id="typeField" property="type" readOnly="true"/>
-                    <datePicker id="maintenanceTaskDateField" property="maintenanceTaskDate"/>
+                    <datePicker id="inspectionDateField" property="inspectionDate"/>
                     <entityPicker id="technicanField" property="technican">
                         <actions>
                             <action id="entityLookup" type="entity_lookup"/>

@@ -1,7 +1,6 @@
 package io.jmix.windturbines.test_data.entity;
 
 import io.jmix.windturbines.entity.TaskStatus;
-import io.jmix.windturbines.entity.TaskType;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.User;
 import io.jmix.windturbines.entity.inspection.GearboxOilLevelAnswer;
@@ -33,11 +32,9 @@ public class InspectionData implements TestDataProvider<Inspection> {
     @Override
     public void accept(Inspection inspection) {
         Faker faker = new Faker();
-
-        inspection.setType(TaskType.INSPECTION);
         inspection.setTurbine(turbine);
         inspection.setTechnican(technican);
-        inspection.setMaintenanceTaskDate(LocalDate.now());
+        inspection.setInspectionDate(LocalDate.now());
         inspection.setTaskStatus(faker.options().option(TaskStatus.values()));
 
         inspection.setRotorBladesAnswer(faker.options().option(RotorBladesAnswer.values()));

@@ -67,7 +67,7 @@ public class DatabaseCleanup {
         performDeletion(InspectionFindingEvidence.class, jdbcTemplate);
         performDeletion(InspectionFinding.class, jdbcTemplate);
         performDeletion(Inspection.class, jdbcTemplate);
-        performDeletion(MaintenanceTask.class, jdbcTemplate);
+        performDeletion(Inspection.class, jdbcTemplate);
         performDeletion(Turbine.class, jdbcTemplate);
         performDeletion(Manufacturer.class, jdbcTemplate);
         performDeletion(Operator.class, jdbcTemplate);

@@ -10,6 +10,25 @@
             <column name="ID" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSPECTION"/>
             </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="timestamp with time zone"/>
+            <column name="INSPECTION_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TECHNICAN_ID" type="UUID"/>
+            <column name="TURBINE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="ROTOR_BLADES_ANSWER" type="VARCHAR(255)"/>
             <column name="ROTOR_BLADES_COMMENT" type="VARCHAR(255)"/>
             <column name="GEARBOX_OIL_LEVEL_ANSWER" type="VARCHAR(255)"/>
@@ -18,6 +37,12 @@
             <column name="GENERATOR_CHECK_COMMENT" type="VARCHAR(255)"/>
             <column name="CONTROL_SYSTEM_STATUS" type="VARCHAR(255)"/>
             <column name="CONTROL_SYSTEM_COMMENT" type="VARCHAR(255)"/>
+            <column name="OPERATOR_REP_NAME" type="VARCHAR(255)"/>
+            <column name="OPERATOR_REP_SIGNATURE" type="VARCHAR(1024)"/>
+            <column name="OPERATOR_REP_SIGNED_AT" type="timestamp with time zone"/>
+            <column name="OPERATOR_CONFIRMATION" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
     <changeSet id="2" author="jmix-windturbines">
@@ -47,6 +72,28 @@
         </createTable>
     </changeSet>
     <changeSet id="3" author="jmix-windturbines">
+        <createTable tableName="INSPECTION_FINDING_EVIDENCE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSPECTION_FINDING_EVIDENCE"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="timestamp with time zone"/>
+            <column name="INSPECTION_FINDING_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FILE_" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="jmix-windturbines">
         <createTable tableName="INSPECTION_RECOMMENDATION">
             <column name="ID" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSPECTION_RECOMMENDATION"/>
@@ -68,36 +115,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="RELATED_FINDING_ID" type="UUID"/>
-        </createTable>
-    </changeSet>
-    <changeSet id="4" author="jmix-windturbines">
-        <createTable tableName="MAINTENANCE_TASK">
-            <column name="ID" type="UUID">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_MAINTENANCE_TASK"/>
-            </column>
-            <column name="DTYPE" type="VARCHAR(31)"/>
-            <column name="VERSION" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="CREATED_BY" type="VARCHAR(255)"/>
-            <column name="CREATED_DATE" type="timestamp with time zone"/>
-            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
-            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
-            <column name="DELETED_BY" type="VARCHAR(255)"/>
-            <column name="DELETED_DATE" type="timestamp with time zone"/>
-            <column name="MAINTENANCE_TASK_DATE" type="DATE">
-                <constraints nullable="false"/>
-            </column>
-            <column name="TYPE_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="TECHNICAN_ID" type="UUID"/>
-            <column name="TURBINE_ID" type="UUID">
-                <constraints nullable="false"/>
-            </column>
-            <column name="TASK_STATUS" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
     </changeSet>
     <changeSet id="5" author="jmix-windturbines">
@@ -183,6 +200,16 @@
         </createTable>
     </changeSet>
     <changeSet id="8" author="jmix-windturbines">
+        <createIndex indexName="IDX_INSPECTION_FINDING_EVIDENCE_INSPECTION_FINDING"
+                     tableName="INSPECTION_FINDING_EVIDENCE">
+            <column name="INSPECTION_FINDING_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INSPECTION_FINDING_ID" baseTableName="INSPECTION_FINDING_EVIDENCE"
+                                 constraintName="FK_INSPECTION_FINDING_EVIDENCE_ON_INSPECTION_FINDING"
+                                 referencedColumnNames="ID" referencedTableName="INSPECTION_FINDING"/>
+    </changeSet>
+    <changeSet id="9" author="jmix-windturbines">
         <createIndex indexName="IDX_INSPECTION_FINDING_INSPECTION" tableName="INSPECTION_FINDING">
             <column name="INSPECTION_ID"/>
         </createIndex>
@@ -191,7 +218,7 @@
                                  constraintName="FK_INSPECTION_FINDING_ON_INSPECTION" referencedColumnNames="ID"
                                  referencedTableName="INSPECTION"/>
     </changeSet>
-    <changeSet id="9" author="jmix-windturbines">
+    <changeSet id="10" author="jmix-windturbines">
         <createIndex indexName="IDX_INSPECTION_RECOMMENDATION_INSPECTION" tableName="INSPECTION_RECOMMENDATION">
             <column name="INSPECTION_ID"/>
         </createIndex>
@@ -200,7 +227,7 @@
                                  constraintName="FK_INSPECTION_RECOMMENDATION_ON_INSPECTION" referencedColumnNames="ID"
                                  referencedTableName="INSPECTION"/>
     </changeSet>
-    <changeSet id="10" author="jmix-windturbines">
+    <changeSet id="11" author="jmix-windturbines">
         <createIndex indexName="IDX_INSPECTION_RECOMMENDATION_RELATED_FINDING" tableName="INSPECTION_RECOMMENDATION">
             <column name="RELATED_FINDING_ID"/>
         </createIndex>
@@ -209,25 +236,7 @@
                                  constraintName="FK_INSPECTION_RECOMMENDATION_ON_RELATED_FINDING"
                                  referencedColumnNames="ID" referencedTableName="INSPECTION_FINDING"/>
     </changeSet>
-    <changeSet id="11" author="jmix-windturbines">
-        <createIndex indexName="IDX_MAINTENANCE_TASK_TECHNICAN" tableName="MAINTENANCE_TASK">
-            <column name="TECHNICAN_ID"/>
-        </createIndex>
-
-        <addForeignKeyConstraint baseColumnNames="TECHNICAN_ID" baseTableName="MAINTENANCE_TASK"
-                                 constraintName="FK_MAINTENANCE_TASK_ON_TECHNICAN" referencedColumnNames="ID"
-                                 referencedTableName="USER_"/>
-    </changeSet>
     <changeSet id="12" author="jmix-windturbines">
-        <createIndex indexName="IDX_MAINTENANCE_TASK_TURBINE" tableName="MAINTENANCE_TASK">
-            <column name="TURBINE_ID"/>
-        </createIndex>
-
-        <addForeignKeyConstraint baseColumnNames="TURBINE_ID" baseTableName="MAINTENANCE_TASK"
-                                 constraintName="FK_MAINTENANCE_TASK_ON_TURBINE" referencedColumnNames="ID"
-                                 referencedTableName="TURBINE"/>
-    </changeSet>
-    <changeSet id="13" author="jmix-windturbines">
         <createIndex indexName="IDX_TURBINE_MANUFACTURER" tableName="TURBINE">
             <column name="MANUFACTURER_ID"/>
         </createIndex>
@@ -236,7 +245,7 @@
                                  constraintName="FK_TURBINE_ON_MANUFACTURER" referencedColumnNames="ID"
                                  referencedTableName="MANUFACTURER"/>
     </changeSet>
-    <changeSet id="14" author="jmix-windturbines">
+    <changeSet id="13" author="jmix-windturbines">
         <createIndex indexName="IDX_TURBINE_OPERATOR" tableName="TURBINE">
             <column name="OPERATOR_ID"/>
         </createIndex>
@@ -245,8 +254,14 @@
                                  constraintName="FK_TURBINE_ON_OPERATOR" referencedColumnNames="ID"
                                  referencedTableName="OPERATOR"/>
     </changeSet>
+    <changeSet id="14" author="jmix-windturbines">
+        <addForeignKeyConstraint baseColumnNames="TECHNICAN_ID" baseTableName="INSPECTION"
+                                 constraintName="FK_INSPECTION_ON_TECHNICAN" referencedColumnNames="ID"
+                                 referencedTableName="USER_"/>
+    </changeSet>
     <changeSet id="15" author="jmix-windturbines">
-        <addForeignKeyConstraint baseColumnNames="ID" baseTableName="INSPECTION" constraintName="FK_INSPECTION_ON_ID"
-                                 referencedColumnNames="ID" referencedTableName="MAINTENANCE_TASK"/>
+        <addForeignKeyConstraint baseColumnNames="TURBINE_ID" baseTableName="INSPECTION"
+                                 constraintName="FK_INSPECTION_ON_TURBINE" referencedColumnNames="ID"
+                                 referencedTableName="TURBINE"/>
     </changeSet>
 </databaseChangeLog>

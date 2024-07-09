@@ -2,13 +2,18 @@ package io.jmix.windturbines.entity.inspection;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.FileRef;
+import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
-import io.jmix.windturbines.entity.MaintenanceTask;
+import io.jmix.core.metamodel.datatype.DatatypeFormatter;
+import io.jmix.windturbines.entity.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -16,7 +21,26 @@ import java.util.List;
 @Table(name = "INSPECTION")
 @Entity
 @PrimaryKeyJoinColumn(name = "ID")
-public class Inspection extends MaintenanceTask {
+public class Inspection extends StandardEntity {
+
+    @NotNull
+    @Column(name = "INSPECTION_DATE", nullable = false)
+    private LocalDate inspectionDate;
+
+    @JoinColumn(name = "TECHNICAN_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User technican;
+
+    @JoinColumn(name = "TURBINE_ID", nullable = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Turbine turbine;
+
+    @NotNull
+    @Column(name = "TASK_STATUS", nullable = false)
+    private String taskStatus;
+
+
     @OnDelete(DeletePolicy.CASCADE)
     @Composition
     @OneToMany(mappedBy = "inspection")
@@ -174,5 +198,46 @@ public class Inspection extends MaintenanceTask {
 
     public void setFindings(List<InspectionFinding> findings) {
         this.findings = findings;
+    }
+
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus == null ? null : TaskStatus.fromId(taskStatus);
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus == null ? null : taskStatus.getId();
+    }
+
+    public void setInspectionDate(LocalDate inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
+
+    public LocalDate getInspectionDate() {
+        return inspectionDate;
+    }
+
+    public Turbine getTurbine() {
+        return turbine;
+    }
+
+    public void setTurbine(Turbine turbine) {
+        this.turbine = turbine;
+    }
+
+    public User getTechnican() {
+        return technican;
+    }
+
+    public void setTechnican(User technican) {
+        this.technican = technican;
+    }
+
+    @InstanceName
+    @DependsOnProperties({"inspectionDate", "turbine"})
+    public String getInstanceName(MetadataTools metadataTools, DatatypeFormatter datatypeFormatter) {
+        return String.format("%s - %s",
+                datatypeFormatter.formatLocalDate(inspectionDate),
+                metadataTools.format(turbine));
     }
 }

@@ -140,7 +140,7 @@ public class GenerateTestDataAtStartup {
 
     private Inspection completedInspection(Turbine turbine, User technican) {
         Inspection inspection = entityTestData.saveWithDefaults(
-                new InspectionData(turbine, technican), it -> it.setMaintenanceTaskDate(randomPastLocalDate(2 * 365))
+                new InspectionData(turbine, technican), it -> it.setInspectionDate(randomPastLocalDate(2 * 365))
         );
         IntStream.range(0, faker().number().numberBetween(0, 5))
                 .forEach(i -> entityTestData.saveWithDefaults(new InspectionFindingData(inspection)));
@@ -153,7 +153,7 @@ public class GenerateTestDataAtStartup {
     }
 
     private Inspection scheduledInspection(Turbine turbine, User technican) {
-        return entityTestData.saveWithDefaults(new ScheduledInspectionData(turbine, technican), it -> it.setMaintenanceTaskDate(randomFutureLocalDateTime(365).toLocalDate())
+        return entityTestData.saveWithDefaults(new ScheduledInspectionData(turbine, technican), it -> it.setInspectionDate(randomFutureLocalDateTime(365).toLocalDate())
         );
     }
 }

@@ -8,10 +8,10 @@
             <fetchPlan extends="_base">
                 <property name="manufacturer" fetchPlan="_instance_name"/>
                 <property name="operator" fetchPlan="_base"/>
-                <property name="maintenanceTasks" fetchPlan="_base"/>
+                <property name="inspections" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
-            <collection id="maintenanceTasksDc" property="maintenanceTasks"/>
+            <collection id="inspectionsDc" property="inspections"/>
         </instance>
     </data>
     <facets>
@@ -57,14 +57,14 @@
                     <textArea id="operatorAddressField" property="operator.address"/>
                 </formLayout>
             </tab>
-            <tab id="maintenanceTasksTab" label="msg://maintenance">
+            <tab id="inspectionsTab" label="msg://inspections">
                 <vbox width="100%" alignItems="CENTER" height="100%">
-                    <span id="emptyMaintenanceTaskBox"
-                          text="msg://maintenanceTasks.emptyMessage"
+                    <span id="emptyInspectionBox"
+                          text="msg://inspections.emptyMessage"
                           visible="false"
                           themeNames="badge error"/>
-                    <virtualList id="maintenanceTasksVirtualList"
-                                 itemsContainer="maintenanceTasksDc"
+                    <virtualList id="inspectionsVirtualList"
+                                 itemsContainer="inspectionsDc"
                                  height="100%"
                                  width="100%"/>
                 </vbox>

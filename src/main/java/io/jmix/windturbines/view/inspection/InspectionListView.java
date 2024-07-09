@@ -1,4 +1,4 @@
-package io.jmix.windturbines.view.maintenancetask;
+package io.jmix.windturbines.view.inspection;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -24,22 +24,21 @@ import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.action.DialogAction;
 import io.jmix.flowui.component.tabsheet.JmixTabSheet;
 import io.jmix.flowui.kit.action.ActionVariant;
-import io.jmix.flowui.model.DataContext;
 import io.jmix.flowui.view.*;
-import io.jmix.windturbines.entity.MaintenanceTask;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.User;
+import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
-@Route(value = "maintenanceTasks", layout = MainView.class)
-@ViewController("MaintenanceTask.list")
-@ViewDescriptor("maintenance-task-list-view.xml")
+@Route(value = "inspections", layout = MainView.class)
+@ViewController("Inspection.list")
+@ViewDescriptor("inspection-list-view.xml")
 @DialogMode(width = "64em")
-public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
+public class InspectionListView extends StandardListView<Inspection> {
     @Autowired
     private ViewNavigators viewNavigators;
     @Autowired
@@ -60,17 +59,17 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
     private DataManager dataManager;
     @ViewComponent
     private JmixTabSheet contentTabSheet;
-    @ViewComponent("contentTabSheet.myTasksTab")
-    private Tab contentTabSheetMyTasksTab;
+    @ViewComponent("contentTabSheet.myInspectionsTab")
+    private Tab contentTabSheetMyInspectionsTab;
 
-    @Supply(to = "allMaintenanceTasksVirtualList", subject = "renderer")
-    private Renderer<MaintenanceTask> allMaintenanceTasksVirtualListRenderer() {
-        return new ComponentRenderer<>(maintenanceTask -> {
+    @Supply(to = "allInspectionsVirtualList", subject = "renderer")
+    private Renderer<Inspection> allInspectionsVirtualListRenderer() {
+        return new ComponentRenderer<>(inspection -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
             mainLayout.addClassNames();
             mainLayout.setWidth("99%");
-            mainLayout.setId("maintenanceTask-" + maintenanceTask.getId());
+            mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
                     LumoUtility.Margin.Bottom.MEDIUM,
                     LumoUtility.Padding.SMALL,
@@ -86,18 +85,18 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
             calendarIcon.addClassName(LumoUtility.Margin.Right.SMALL);
             firstRow.add(calendarIcon);
 
-            Span maintenanceTaskDate = uiComponents.create(Span.class);
-            maintenanceTaskDate.setText(datatypeFormatter.formatLocalDate(maintenanceTask.getMaintenanceTaskDate()));
-            firstRow.add(maintenanceTaskDate);
+            Span inspectionDate = uiComponents.create(Span.class);
+            inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
+            firstRow.add(inspectionDate);
 
             HorizontalLayout statusLayout = createHorizontalLayout();
             statusLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", maintenanceTask.getTaskStatus().getBadgeThemeName()));
+            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
-            status.setText(messages.getMessage(maintenanceTask.getTaskStatus()));
+            status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);
             firstRow.add(statusLayout);
 
@@ -112,8 +111,8 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
 
 
             String text = "%s - %s".formatted(
-                    messages.getMessage(maintenanceTask.getType()),
-                    Optional.ofNullable(maintenanceTask.getTechnican())
+                    inspection.getInspectionDate(),
+                    Optional.ofNullable(inspection.getTechnican())
                             .map(User::getDisplayName)
                             .orElse("Not assigned")
             );
@@ -125,7 +124,7 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
             HorizontalLayout assignButtonLayout = createHorizontalLayout();
             assignButtonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-            Button assignButton = assignButton(maintenanceTask);
+            Button assignButton = assignButton(inspection);
             assignButtonLayout.add(assignButton);
             secondRow.add(assignButtonLayout);
             secondRow.expand(secondRowText);
@@ -136,18 +135,18 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
         });
     }
 
-    @Supply(to = "myMaintenanceTasksVirtualList", subject = "renderer")
-    private Renderer<MaintenanceTask> myMaintenanceTasksVirtualListRenderer() {
-        return maintenanceTaskRenderer();
+    @Supply(to = "myInspectionsVirtualList", subject = "renderer")
+    private Renderer<Inspection> myInspectionsVirtualListRenderer() {
+        return inspectionsRenderer();
     }
 
-    private ComponentRenderer<VerticalLayout, MaintenanceTask> maintenanceTaskRenderer() {
-        return new ComponentRenderer<>(maintenanceTask -> {
+    private ComponentRenderer<VerticalLayout, Inspection> inspectionsRenderer() {
+        return new ComponentRenderer<>(inspection -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
             mainLayout.addClassNames();
             mainLayout.setWidth("99%");
-            mainLayout.setId("maintenanceTask-" + maintenanceTask.getId());
+            mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
                     LumoUtility.Margin.Bottom.MEDIUM,
                     LumoUtility.Padding.SMALL,
@@ -164,18 +163,18 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
             calendarIcon.addClassName(LumoUtility.Margin.Right.SMALL);
             firstRow.add(calendarIcon);
 
-            Span maintenanceTaskDate = uiComponents.create(Span.class);
-            maintenanceTaskDate.setText(datatypeFormatter.formatLocalDate(maintenanceTask.getMaintenanceTaskDate()));
-            firstRow.add(maintenanceTaskDate);
+            Span inspectionDate = uiComponents.create(Span.class);
+            inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
+            firstRow.add(inspectionDate);
 
             HorizontalLayout statusLayout = createHorizontalLayout();
             statusLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", maintenanceTask.getTaskStatus().getBadgeThemeName()));
+            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
-            status.setText(messages.getMessage(maintenanceTask.getTaskStatus()));
+            status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);
             firstRow.add(statusLayout);
 
@@ -186,25 +185,20 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
             secondRow.setAlignItems(FlexComponent.Alignment.STRETCH);
             secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
 
-            Span type = uiComponents.create(Span.class);
-            type.setText(messages.getMessage(maintenanceTask.getType()));
-            secondRow.add(type);
-
 
             HorizontalLayout detailButtonLayout = createHorizontalLayout();
             detailButtonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-            Button detailsButton = detailsButton(maintenanceTask);
+            Button detailsButton = detailsButton(inspection);
             detailButtonLayout.add(detailsButton);
             secondRow.add(detailButtonLayout);
-            secondRow.expand(type);
 
             mainLayout.add(secondRow);
 
             mainLayout.addClickListener(event ->
-                    viewNavigators.detailView(this, MaintenanceTask.class)
-                            .withReadOnly(maintenanceTask.getTaskStatus().equals(TaskStatus.COMPLETED))
-                            .editEntity(maintenanceTask)
+                    viewNavigators.detailView(this, Inspection.class)
+                            .withReadOnly(inspection.getTaskStatus().equals(TaskStatus.COMPLETED))
+                            .editEntity(inspection)
                             .navigate()
             );
 
@@ -213,39 +207,39 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
     }
 
 
-    private Button detailsButton(MaintenanceTask maintenanceTask) {
+    private Button detailsButton(Inspection inspection) {
         Button button = uiComponents.create(Button.class);
         button.setId("detailsButton");
         button.setIcon(VaadinIcon.CHEVRON_RIGHT.create());
         button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         button.addClickListener(e ->
-                viewNavigators.detailView(this, MaintenanceTask.class)
-                        .withReadOnly(maintenanceTask.getTaskStatus().equals(TaskStatus.COMPLETED))
-                        .editEntity(maintenanceTask)
+                viewNavigators.detailView(this, Inspection.class)
+                        .withReadOnly(inspection.getTaskStatus().equals(TaskStatus.COMPLETED))
+                        .editEntity(inspection)
                         .navigate()
         );
         return button;
     }
 
-    private Button assignButton(MaintenanceTask maintenanceTask) {
+    private Button assignButton(Inspection inspection) {
         Button button = uiComponents.create(Button.class);
         button.setId("assignButton");
         button.setIcon(VaadinIcon.CHECK.create());
         button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         button.addClickListener(e ->
                 dialogs.createOptionDialog()
-                        .withHeader(messageBundle.getMessage("assignMaintenanceTaskHeader"))
-                        .withText(messageBundle.getMessage("assignMaintenanceTaskText"))
+                        .withHeader(messageBundle.getMessage("assignInspectionHeader"))
+                        .withText(messageBundle.getMessage("assignInspectionText"))
                         .withActions(
                                 new DialogAction(DialogAction.Type.OK)
                                         .withVariant(ActionVariant.PRIMARY)
                                         .withHandler(event -> {
-                                            maintenanceTask.setTechnican(currentUser());
-                                            dataManager.save(maintenanceTask);
-                                            notifications.create(messageBundle.getMessage("maintenanceTaskAssigned"))
+                                            inspection.setTechnican(currentUser());
+                                            dataManager.save(inspection);
+                                            notifications.create(messageBundle.getMessage("inspectionAssigned"))
                                                     .withType(Notifications.Type.SUCCESS)
                                                     .show();
-                                            contentTabSheet.setSelectedTab(contentTabSheetMyTasksTab);
+                                            contentTabSheet.setSelectedTab(contentTabSheetMyInspectionsTab);
                                             getViewData().loadAll();
                                         }),
                                 new DialogAction(DialogAction.Type.CANCEL)
@@ -271,5 +265,4 @@ public class MaintenanceTaskListView extends StandardListView<MaintenanceTask> {
         layout.setPadding(false);
         return layout;
     }
-
 }
