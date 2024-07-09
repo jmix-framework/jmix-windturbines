@@ -128,10 +128,20 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
             HorizontalLayout detailButtonLayout = createHorizontalLayout();
             detailButtonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
+            Span secondRowText = uiComponents.create(Span.class);
+
+
+            String text = "%s - %s".formatted(
+                    inspection.getTurbine().getLocation(),
+                    inspection.getTurbine().getManufacturer().getName()
+            );
+
+            secondRowText.setText(text);
+            secondRow.addAndExpand(secondRowText);
+
             Button detailsButton = detailsButton(inspection);
             detailButtonLayout.add(detailsButton);
             secondRow.add(detailButtonLayout);
-
             mainLayout.add(secondRow);
 
             mainLayout.addClickListener(event ->
