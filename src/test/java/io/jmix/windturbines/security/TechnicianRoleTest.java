@@ -6,8 +6,6 @@ import io.jmix.core.security.AccessDeniedException;
 import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.windturbines.entity.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
-import io.jmix.windturbines.entity.inspection.InspectionFinding;
-import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import io.jmix.windturbines.test_data.EntityTestData;
 import io.jmix.windturbines.test_data.entity.*;
 import io.jmix.windturbines.test_support.AuthenticatedAsAdmin;
