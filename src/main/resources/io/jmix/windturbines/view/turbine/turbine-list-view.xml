@@ -41,7 +41,7 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
     </facets>
-    <layout expand="turbinesVirtualList">
+    <layout expand="turbinesVirtualList" spacing="false" padding="false">
         <tabSheet id="contentTabSheet" width="100%" themeNames="centered" height="100%">
             <tab id="turbinesTab" label="msg://turbineListView.title">
                 <vbox width="100%" alignItems="CENTER" height="100%" padding="false" spacing="false">

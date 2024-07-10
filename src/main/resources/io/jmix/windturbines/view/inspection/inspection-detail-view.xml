@@ -28,7 +28,7 @@
         <action id="createFindingAction" text="msg://createFinding" icon="PLUS" actionVariant="PRIMARY"/>
         <action id="createRecommendationAction" text="msg://createRecommendation" icon="PLUS" actionVariant="PRIMARY"/>
     </actions>
-    <layout>
+    <layout spacing="false" padding="false">
         <accordion id="mainAccordion" width="100%">
             <accordionPanel summaryText="msg://inspectionDetails" classNames="white-card mb-m">
                 <formLayout id="detailsForm" dataContainer="inspectionDc">

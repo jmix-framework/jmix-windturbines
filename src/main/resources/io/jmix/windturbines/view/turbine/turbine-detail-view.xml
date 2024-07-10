@@ -20,7 +20,7 @@
     <actions>
         <action id="closeAction" type="detail_close"/>
     </actions>
-    <layout>
+    <layout spacing="false" padding="false">
         <tabSheet id="contentTabSheet" width="100%" themeNames="centered">
             <tab id="detailsTab" label="msg://details">
                 <accordion id="mainAccordion" width="100%">
