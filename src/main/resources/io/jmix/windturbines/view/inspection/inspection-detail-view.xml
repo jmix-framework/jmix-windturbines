@@ -7,7 +7,7 @@
                   class="io.jmix.windturbines.entity.inspection.Inspection">
             <fetchPlan extends="_base">
                 <property name="findings" fetchPlan="_base"/>
-                <property name="technican" fetchPlan="_base"/>
+                <property name="technician" fetchPlan="_base"/>
                 <property name="recommendations" fetchPlan="_base">
                     <property name="relatedFinding" fetchPlan="_base"/>
                 </property>
@@ -28,7 +28,7 @@
         <action id="createFindingAction" text="msg://createFinding" icon="PLUS" actionVariant="PRIMARY"/>
         <action id="createRecommendationAction" text="msg://createRecommendation" icon="PLUS" actionVariant="PRIMARY"/>
     </actions>
-    <layout>
+    <layout spacing="false" padding="false">
         <accordion id="mainAccordion" width="100%">
             <accordionPanel summaryText="msg://inspectionDetails" classNames="white-card mb-m">
                 <formLayout id="detailsForm" dataContainer="inspectionDc">
@@ -38,9 +38,8 @@
                             <action id="entityClear" type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <select id="typeField" property="type" readOnly="true"/>
-                    <datePicker id="maintenanceTaskDateField" property="maintenanceTaskDate"/>
-                    <entityPicker id="technicanField" property="technican">
+                    <datePicker id="inspectionDateField" property="inspectionDate"/>
+                    <entityPicker id="technicianField" property="technician">
                         <actions>
                             <action id="entityLookup" type="entity_lookup"/>
                             <action id="entityClear" type="entity_clear"/>

@@ -18,8 +18,8 @@ import io.jmix.flowui.app.main.StandardMainView;
 import io.jmix.flowui.component.main.JmixListMenu;
 import io.jmix.flowui.kit.component.main.ListMenu;
 import io.jmix.flowui.view.*;
-import io.jmix.windturbines.entity.MaintenanceTask;
 import io.jmix.windturbines.entity.Turbine;
+import io.jmix.windturbines.entity.inspection.Inspection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class MainView extends StandardMainView {
     private UiComponents uiComponents;
 
     private Tab turbineTab;
-    private Tab maintenanceTaskTab;
+    private Tab inspectionsTab;
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
@@ -74,10 +74,10 @@ public class MainView extends StandardMainView {
         StreamResource iconResource = new StreamResource("code-branch.svg",
                 () -> getClass().getResourceAsStream("/META-INF/resources/icons/turbine.svg"));
         SvgIcon icon = new SvgIcon(iconResource);
-        maintenanceTaskTab = createTab("Tasks", "maintenanceTasks", VaadinIcon.CHECK_SQUARE.create());
+        inspectionsTab = createTab("Inspections", "inspections", VaadinIcon.CHECK_SQUARE.create());
         turbineTab = createTab("Turbines", "turbines", icon);
         mainMenuTabs.add(
-                maintenanceTaskTab,
+                inspectionsTab,
                 turbineTab
         );
     }
@@ -97,8 +97,8 @@ public class MainView extends StandardMainView {
                     viewNavigators.listView(this, Turbine.class)
                             .navigate();
             }
-            if (selectedTab.equals(maintenanceTaskTab)) {
-                    viewNavigators.listView(this, MaintenanceTask.class)
+            if (selectedTab.equals(inspectionsTab)) {
+                    viewNavigators.listView(this, Inspection.class)
                             .navigate();
             }
         }

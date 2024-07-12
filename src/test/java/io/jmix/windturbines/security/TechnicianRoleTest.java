@@ -6,8 +6,6 @@ import io.jmix.core.security.AccessDeniedException;
 import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.windturbines.entity.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
-import io.jmix.windturbines.entity.inspection.InspectionFinding;
-import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
 import io.jmix.windturbines.test_data.EntityTestData;
 import io.jmix.windturbines.test_data.entity.*;
 import io.jmix.windturbines.test_support.AuthenticatedAsAdmin;
@@ -27,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ExtendWith(AuthenticatedAsAdmin.class)
-public class TechnicanRoleTest {
+public class TechnicianRoleTest {
 
 
     @Autowired
@@ -78,15 +76,15 @@ public class TechnicanRoleTest {
             it.setLocation("Santa Barbara, California");
         });
 
-        mike = entityTestData.saveWithDefaults(new TechnicanData());
-        entityTestData.saveWithDefaults(new TechnicanRoleData(mike));
+        mike = entityTestData.saveWithDefaults(new TechnicianData());
+        entityTestData.saveWithDefaults(new TechnicianRoleData(mike));
 
-        tom = entityTestData.saveWithDefaults(new TechnicanData());
-        entityTestData.saveWithDefaults(new TechnicanRoleData(tom));
+        tom = entityTestData.saveWithDefaults(new TechnicianData());
+        entityTestData.saveWithDefaults(new TechnicianRoleData(tom));
 
         mikeVestasV150TodayInspection = entityTestData.saveWithDefaults(new InspectionData(vestasV150, mike), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
-            it.setMaintenanceTaskDate(LocalDate.now());
+            it.setInspectionDate(LocalDate.now());
         });
 
         vestasV160 = entityTestData.saveWithDefaults(new TurbineData(vestas, skywind), it -> {
@@ -98,7 +96,7 @@ public class TechnicanRoleTest {
 
         mikeVestasV160TomorrowInspection = entityTestData.saveWithDefaults(new InspectionData(vestasV160, mike), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
-            it.setMaintenanceTaskDate(LocalDate.now().plusDays(1));
+            it.setInspectionDate(LocalDate.now().plusDays(1));
         });
 
         siemensSG5 = entityTestData.saveWithDefaults(new TurbineData(siemens, windtech), it -> {
@@ -111,73 +109,10 @@ public class TechnicanRoleTest {
 
         tomSiemensSG5NextWeekInspection = entityTestData.saveWithDefaults(new InspectionData(siemensSG5, tom), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
-            it.setMaintenanceTaskDate(LocalDate.now().plusDays(7));
+            it.setInspectionDate(LocalDate.now().plusDays(7));
         });
 
         systemAuthenticator.begin(mike.getUsername());
-    }
-
-    @Nested
-    class MaintenanceTaskPermissions {
-
-        @Test
-        void readAllowed() {
-            // expect
-            assertThat(dataManager.load(MaintenanceTask.class)
-                    .all().list())
-                    .containsExactlyInAnyOrder(
-                            mikeVestasV150TodayInspection,
-                            mikeVestasV160TomorrowInspection,
-                            tomSiemensSG5NextWeekInspection
-                    );
-        }
-
-        @Test
-        void createAllowed() {
-
-            // given
-            MaintenanceTask maintenanceTask = entityTestData.createWithDefaults(new MaintenanceTaskData(vestasV150, mike));
-
-            // when
-            dataManager.save(maintenanceTask);
-
-            // then
-            assertThat(entityTestData.reload(Id.of(maintenanceTask)))
-                    .isEqualTo(maintenanceTask);
-        }
-
-        @Test
-        void updateAllowed() {
-
-            // given
-            MaintenanceTask maintenanceTask = entityTestData.saveWithDefaults(new MaintenanceTaskData(vestasV150, mike));
-
-            // and
-            MaintenanceTask reloadedMaintenanceTask = entityTestData.reload(Id.of(maintenanceTask));
-            reloadedMaintenanceTask.setTaskStatus(TaskStatus.COMPLETED);
-
-            // when
-            dataManager.save(reloadedMaintenanceTask);
-
-            // then
-            assertThat(entityTestData.reload(Id.of(maintenanceTask)).getTaskStatus())
-                    .isEqualTo(TaskStatus.COMPLETED);
-        }
-
-        @Test
-        void deletionForbidden() {
-
-            // given
-            MaintenanceTask maintenanceTask = entityTestData.saveWithDefaults(new MaintenanceTaskData(vestasV150, mike));
-
-            // when
-            assertThatThrownBy(() -> dataManager.remove(entityTestData.reload(Id.of(maintenanceTask))))
-                    .isInstanceOf(AccessDeniedException.class);
-
-            // then
-            assertThat(entityTestData.reload(Id.of(maintenanceTask)))
-                    .isEqualTo(maintenanceTask);
-        }
     }
 
     @Nested
@@ -200,11 +135,9 @@ public class TechnicanRoleTest {
 
             // given
             Inspection inspection = entityTestData.createWithDefaults(new InspectionData(vestasV150, mike));
-            InspectionFinding inspectionFinding = entityTestData.createWithDefaults(new InspectionFindingData(inspection));
-            InspectionRecommendation inspectionRecommendation = entityTestData.createWithDefaults(new InspectionRecommendationData(inspection, inspectionFinding));
 
             // when
-            dataManager.save(inspection, inspectionFinding, inspectionRecommendation);
+            dataManager.save(inspection);
 
             // then
             assertThat(entityTestData.reload(Id.of(inspection)))
@@ -217,13 +150,15 @@ public class TechnicanRoleTest {
             // given
             Inspection inspection = entityTestData.saveWithDefaults(new InspectionData(vestasV150, mike));
 
-            // when
-            MaintenanceTask reloadedInspection = entityTestData.reload(Id.of(inspection));
+            // and
+            Inspection reloadedInspection = entityTestData.reload(Id.of(inspection));
             reloadedInspection.setTaskStatus(TaskStatus.COMPLETED);
+
+            // when
             dataManager.save(reloadedInspection);
 
             // then
-            assertThat(entityTestData.reload(Id.of(reloadedInspection)).getTaskStatus())
+            assertThat(entityTestData.reload(Id.of(inspection)).getTaskStatus())
                     .isEqualTo(TaskStatus.COMPLETED);
         }
 
@@ -231,15 +166,15 @@ public class TechnicanRoleTest {
         void deletionForbidden() {
 
             // given
-            MaintenanceTask maintenanceTask = entityTestData.saveWithDefaults(new InspectionData(vestasV150, mike));
+            Inspection inspection = entityTestData.saveWithDefaults(new InspectionData(vestasV150, mike));
 
             // when
-            assertThatThrownBy(() -> dataManager.remove(entityTestData.reload(Id.of(maintenanceTask))))
+            assertThatThrownBy(() -> dataManager.remove(entityTestData.reload(Id.of(inspection))))
                     .isInstanceOf(AccessDeniedException.class);
 
             // then
-            assertThat(entityTestData.reload(Id.of(maintenanceTask)))
-                    .isEqualTo(maintenanceTask);
+            assertThat(entityTestData.reload(Id.of(inspection)))
+                    .isEqualTo(inspection);
         }
     }
 

@@ -2,23 +2,22 @@ package io.jmix.windturbines.test_data.entity;
 
 import io.jmix.windturbines.entity.User;
 import io.jmix.windturbines.test_data.TestDataProvider;
-import net.datafaker.Faker;
 
 import static io.jmix.windturbines.test_data.RandomValues.withRandomSuffix;
 
-public class TechnicanData implements TestDataProvider<User> {
+public class TechnicianData implements TestDataProvider<User> {
 
     private final String firstName;
     private final String lastName;
     private final String DEFAULT_FIRST_NAME = "Tech";
     private final String DEFAULT_LAST_NAME = "Nician";
 
-    public TechnicanData(String firstName, String lastName) {
+    public TechnicianData(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public TechnicanData() {
+    public TechnicianData() {
         this.firstName = DEFAULT_FIRST_NAME;
         this.lastName = DEFAULT_LAST_NAME;
     }

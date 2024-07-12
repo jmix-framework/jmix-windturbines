@@ -21,9 +21,9 @@ import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.component.virtuallist.JmixVirtualList;
 import io.jmix.flowui.view.*;
-import io.jmix.windturbines.entity.MaintenanceTask;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.Turbine;
+import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -46,9 +46,9 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
     @Autowired
     private DatatypeFormatter datatypeFormatter;
     @ViewComponent
-    private Span emptyMaintenanceTaskBox;
+    private Span emptyInspectionBox;
     @ViewComponent
-    private JmixVirtualList<MaintenanceTask> maintenanceTasksVirtualList;
+    private JmixVirtualList<Inspection> inspectionsVirtualList;
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
@@ -57,9 +57,9 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
 
     @Subscribe
     public void onReady(final ReadyEvent event) {
-        if (CollectionUtils.isEmpty(getEditedEntity().getMaintenanceTasks())) {
-            emptyMaintenanceTaskBox.setVisible(true);
-            maintenanceTasksVirtualList.setVisible(false);
+        if (CollectionUtils.isEmpty(getEditedEntity().getInspections())) {
+            emptyInspectionBox.setVisible(true);
+            inspectionsVirtualList.setVisible(false);
         }
     }
 
@@ -78,14 +78,14 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
         return btn;
     }
 
-    @Supply(to = "maintenanceTasksVirtualList", subject = "renderer")
-    private Renderer<MaintenanceTask> maintenanceTasksVirtualListRenderer() {
-        return new ComponentRenderer<>(maintenanceTask -> {
+    @Supply(to = "inspectionsVirtualList", subject = "renderer")
+    private Renderer<Inspection> inspectionsVirtualListRenderer() {
+        return new ComponentRenderer<>(inspection -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
             mainLayout.addClassNames();
             mainLayout.setWidth("99%");
-            mainLayout.setId("maintenanceTask-" + maintenanceTask.getId());
+            mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
                     LumoUtility.Margin.Bottom.MEDIUM,
                     LumoUtility.Padding.SMALL,
@@ -102,18 +102,18 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
             calendarIcon.addClassName(LumoUtility.Margin.Right.SMALL);
             firstRow.add(calendarIcon);
 
-            Span maintenanceTaskDate = uiComponents.create(Span.class);
-            maintenanceTaskDate.setText(datatypeFormatter.formatLocalDate(maintenanceTask.getMaintenanceTaskDate()));
-            firstRow.add(maintenanceTaskDate);
+            Span inspectionDate = uiComponents.create(Span.class);
+            inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
+            firstRow.add(inspectionDate);
 
             HorizontalLayout statusLayout = createHorizontalLayout();
             statusLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", maintenanceTask.getTaskStatus().getBadgeThemeName()));
+            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
-            status.setText(messages.getMessage(maintenanceTask.getTaskStatus()));
+            status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);
             firstRow.add(statusLayout);
 
@@ -124,25 +124,30 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
             secondRow.setAlignItems(FlexComponent.Alignment.STRETCH);
             secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
 
-            Span type = uiComponents.create(Span.class);
-            type.setText(messages.getMessage(maintenanceTask.getType()));
-            secondRow.add(type);
-
 
             HorizontalLayout detailButtonLayout = createHorizontalLayout();
             detailButtonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-            Button detailsButton = detailsButton(maintenanceTask);
+            Span secondRowText = uiComponents.create(Span.class);
+
+
+            String text = "%s - %s".formatted(
+                    inspection.getTurbine().getLocation(),
+                    inspection.getTurbine().getManufacturer().getName()
+            );
+
+            secondRowText.setText(text);
+            secondRow.addAndExpand(secondRowText);
+
+            Button detailsButton = detailsButton(inspection);
             detailButtonLayout.add(detailsButton);
             secondRow.add(detailButtonLayout);
-            secondRow.expand(type);
-
             mainLayout.add(secondRow);
 
             mainLayout.addClickListener(event ->
-                    viewNavigators.detailView(this, MaintenanceTask.class)
-                            .withReadOnly(maintenanceTask.getTaskStatus().equals(TaskStatus.COMPLETED))
-                            .editEntity(maintenanceTask)
+                    viewNavigators.detailView(this, Inspection.class)
+                            .withReadOnly(inspection.getTaskStatus().equals(TaskStatus.COMPLETED))
+                            .editEntity(inspection)
                             .navigate()
             );
 
@@ -151,15 +156,15 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
     }
 
 
-    private Button detailsButton(MaintenanceTask maintenanceTask) {
+    private Button detailsButton(Inspection inspection) {
         Button button = uiComponents.create(Button.class);
         button.setId("detailsButton");
         button.setIcon(VaadinIcon.CHEVRON_RIGHT.create());
         button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         button.addClickListener(e ->
-                viewNavigators.detailView(this, MaintenanceTask.class)
-                        .withReadOnly(maintenanceTask.getTaskStatus().equals(TaskStatus.COMPLETED))
-                        .editEntity(maintenanceTask)
+                viewNavigators.detailView(this, Inspection.class)
+                        .withReadOnly(inspection.getTaskStatus().equals(TaskStatus.COMPLETED))
+                        .editEntity(inspection)
                         .navigate()
         );
         return button;

@@ -12,8 +12,8 @@ The online demo of the Jmix Wind Turbines application is available at <https://d
     * [Technical Details](#technical-details)
     * [Running Locally](#running-locally)
 - [Application Overview](#application-overview)
-    * [Tasks](#tasks)
-        + [Viewing Tasks](#viewing-tasks)
+    * [Inspections](#tasks)
+        + [Viewing Inspections](#viewing-tasks)
     * [Wind Turbine Management](#wind-turbine-management)
         + [Search and Details](#search-and-details)
     * [Inspections](#inspections)
@@ -47,9 +47,9 @@ You can run the containerized application locally as follows:
 
 Jmix Wind Turbines is an application that manages the inspection and maintenance of wind turbines at a wind farm. The application includes the following key functionalities:
 
-### Tasks
+### Inspections
 
-#### Viewing Tasks
+#### Viewing Inspections
 
 The application shows a list of all pending inspection and maintenance tasks, categorized under different tabs for easier management. This allows technicians to efficiently manage their workload and prioritize tasks.
 

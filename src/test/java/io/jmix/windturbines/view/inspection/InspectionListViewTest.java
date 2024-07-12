@@ -1,8 +1,7 @@
-package io.jmix.windturbines.view.maintenancetask;
+package io.jmix.windturbines.view.inspection;
 
 import com.vaadin.flow.component.virtuallist.VirtualList;
 import io.jmix.core.DataManager;
-import io.jmix.core.FetchPlan;
 import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.data.items.ContainerDataProvider;
@@ -13,7 +12,6 @@ import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.test_data.EntityTestData;
 import io.jmix.windturbines.test_data.entity.*;
 import io.jmix.windturbines.test_support.DatabaseCleanup;
-import io.jmix.windturbines.view.turbine.TurbineListView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -34,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @UiTest
 @SpringBootTest(classes = {JmixWindturbinesApplication.class, FlowuiTestAssistConfiguration.class})
-class MaintenanceTaskListViewTest {
+class InspectionListViewTest {
 
     @Autowired
     DataManager dataManager;
@@ -52,8 +50,8 @@ class MaintenanceTaskListViewTest {
     private Turbine siemensSG5;
     private User mike;
     private User tom;
-    private MaintenanceTask mikeVestasV160TomorrowInspection;
-    private MaintenanceTask mikeVestasV150TodayInspection;
+    private Inspection mikeVestasV160TomorrowInspection;
+    private Inspection mikeVestasV150TodayInspection;
     private Inspection tomSiemensSG5NextWeekInspection;
 
 
@@ -82,15 +80,15 @@ class MaintenanceTaskListViewTest {
             it.setLocation("Santa Barbara, California");
         });
 
-        mike = entityTestData.saveWithDefaults(new TechnicanData());
-        entityTestData.saveWithDefaults(new TechnicanRoleData(mike));
+        mike = entityTestData.saveWithDefaults(new TechnicianData());
+        entityTestData.saveWithDefaults(new TechnicianRoleData(mike));
 
-        tom = entityTestData.saveWithDefaults(new TechnicanData());
-        entityTestData.saveWithDefaults(new TechnicanRoleData(tom));
+        tom = entityTestData.saveWithDefaults(new TechnicianData());
+        entityTestData.saveWithDefaults(new TechnicianRoleData(tom));
 
         mikeVestasV150TodayInspection = entityTestData.saveWithDefaults(new InspectionData(vestasV150, mike), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
-            it.setMaintenanceTaskDate(LocalDate.now());
+            it.setInspectionDate(LocalDate.now());
         });
 
         vestasV160 = entityTestData.saveWithDefaults(new TurbineData(vestas, skywind), it -> {
@@ -102,7 +100,7 @@ class MaintenanceTaskListViewTest {
 
         mikeVestasV160TomorrowInspection = entityTestData.saveWithDefaults(new InspectionData(vestasV160, mike), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
-            it.setMaintenanceTaskDate(LocalDate.now().plusDays(1));
+            it.setInspectionDate(LocalDate.now().plusDays(1));
         });
 
         siemensSG5 = entityTestData.saveWithDefaults(new TurbineData(siemens, windtech), it -> {
@@ -115,13 +113,13 @@ class MaintenanceTaskListViewTest {
 
         tomSiemensSG5NextWeekInspection = entityTestData.saveWithDefaults(new InspectionData(siemensSG5, tom), it -> {
             it.setTaskStatus(TaskStatus.SCHEDULED);
-            it.setMaintenanceTaskDate(LocalDate.now().plusDays(7));
+            it.setInspectionDate(LocalDate.now().plusDays(7));
         });
 
     }
 
     @Nested
-    class MyMaintenanceTasks {
+    class MyInspections {
 
         @BeforeEach
         void setUp() {
@@ -129,13 +127,13 @@ class MaintenanceTaskListViewTest {
         }
 
         @Test
-        void when_openListView_then_myMaintenanceTasksAreDisplayed() {
+        void when_openListView_then_myInspectionsAreDisplayed() {
 
             // given
-            MaintenanceTaskListView listView = navigateTo(MaintenanceTaskListView.class);
+            InspectionListView listView = navigateTo(InspectionListView.class);
 
             // expect
-            assertThat(myMaintenanceTasksVirtualListData(listView))
+            assertThat(myInspectionsVirtualListData(listView))
                     .containsExactlyInAnyOrder(mikeVestasV150TodayInspection, mikeVestasV160TomorrowInspection)
                     .doesNotContain(tomSiemensSG5NextWeekInspection);
         }
@@ -147,7 +145,7 @@ class MaintenanceTaskListViewTest {
     }
 
     @Nested
-    class AllMaintenanceTasks {
+    class AllInspections {
 
         @BeforeEach
         void setUp() {
@@ -155,13 +153,13 @@ class MaintenanceTaskListViewTest {
         }
 
         @Test
-        void when_openListView_then_allMaintenanceTasksAreDisplayed() {
+        void when_openListView_then_allInspectionsAreDisplayed() {
 
             // given
-            MaintenanceTaskListView listView = navigateTo(MaintenanceTaskListView.class);
+            InspectionListView listView = navigateTo(InspectionListView.class);
 
             // expect
-            assertThat(allMaintenanceTasksVirtualListData(listView))
+            assertThat(allInspectionsVirtualListData(listView))
                     .containsExactlyInAnyOrder(
                             mikeVestasV150TodayInspection,
                             mikeVestasV160TomorrowInspection,
@@ -180,20 +178,20 @@ class MaintenanceTaskListViewTest {
         return UiTestUtils.getCurrentView();
     }
 
-    private static List<MaintenanceTask> myMaintenanceTasksVirtualListData(MaintenanceTaskListView listView) {
-        VirtualList<MaintenanceTask> virtualList = myMaintenanceTasksVirtualList(listView);
-        return ((ContainerDataProvider<MaintenanceTask>) virtualList.getDataProvider()).getContainer().getItems();
+    private static List<Inspection> myInspectionsVirtualListData(InspectionListView listView) {
+        VirtualList<Inspection> virtualList = myInspectionsVirtualList(listView);
+        return ((ContainerDataProvider<Inspection>) virtualList.getDataProvider()).getContainer().getItems();
     }
 
-    private static VirtualList<MaintenanceTask> myMaintenanceTasksVirtualList(MaintenanceTaskListView listView) {
-        return UiTestUtils.getComponent(listView, "myMaintenanceTasksVirtualList");
+    private static VirtualList<Inspection> myInspectionsVirtualList(InspectionListView listView) {
+        return UiTestUtils.getComponent(listView, "myInspectionsVirtualList");
     }
-    private static List<MaintenanceTask> allMaintenanceTasksVirtualListData(MaintenanceTaskListView listView) {
-        VirtualList<MaintenanceTask> virtualList = allMaintenanceTasksVirtualList(listView);
-        return ((ContainerDataProvider<MaintenanceTask>) virtualList.getDataProvider()).getContainer().getItems();
+    private static List<Inspection> allInspectionsVirtualListData(InspectionListView listView) {
+        VirtualList<Inspection> virtualList = allInspectionsVirtualList(listView);
+        return ((ContainerDataProvider<Inspection>) virtualList.getDataProvider()).getContainer().getItems();
     }
 
-    private static VirtualList<MaintenanceTask> allMaintenanceTasksVirtualList(MaintenanceTaskListView listView) {
-        return UiTestUtils.getComponent(listView, "allMaintenanceTasksVirtualList");
+    private static VirtualList<Inspection> allInspectionsVirtualList(InspectionListView listView) {
+        return UiTestUtils.getComponent(listView, "allInspectionsVirtualList");
     }
 }
