@@ -40,7 +40,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    runtimeOnly 'org.hsqldb:hsqldb'
 
     implementation 'net.datafaker:datafaker:2.2.2'
 
@@ -48,6 +47,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'io.jmix.flowui:jmix-flowui-test-assist'
+    implementation 'org.postgresql:postgresql'
 }
 
 test {
@@ -59,8 +59,8 @@ vaadin {
 }
 
 tasks.named("bootBuildImage") {
-    imageName = "docker.io/jmix/${project.name}"
-    publish = true
+    imageName = "docker.io/jmix/${project.name}:local"
+    publish = false
     docker {
         publishRegistry {
             username = System.getenv("DOCKER_HUB_LOGIN")

@@ -1,0 +1,19 @@
+services:
+  jmix-windturbines:
+    container_name: jmix-windturbines-app
+    image: jmix/jmix-windturbines
+    depends_on:
+      - postgres
+    environment:
+      - MAIN_DATASOURCE_URL=jdbc:postgresql://postgres/windturbines
+      - MAIN_DATASOURCE_USERNAME=postgres
+      - MAIN_DATASOURCE_PASSWORD=postgres
+    ports:
+      - "8080:8080"
+  postgres:
+    container_name: jmix-bookstore-db
+    image: postgres:16.3-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=windturbines
