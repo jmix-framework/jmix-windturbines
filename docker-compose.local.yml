@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: jmix-bookstore-db
+    image: postgres:16.3-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=windturbines
+    ports:
+      - "5432:5432"
