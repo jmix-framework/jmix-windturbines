@@ -59,8 +59,8 @@ vaadin {
 }
 
 tasks.named("bootBuildImage") {
-    imageName = "docker.io/jmix/${project.name}:local"
-    publish = false
+    imageName = "docker.io/jmix/${project.name}"
+    publish = true
     docker {
         publishRegistry {
             username = System.getenv("DOCKER_HUB_LOGIN")
