@@ -12,3 +12,18 @@
 h3.page-title {
     color: white;
 }
+
+ {
+
+}
+
+.main-menu-tabs vaadin-tab[selected] {
+    color: #235FD5;
+}
+
+.main-menu-tabs vaadin-tab[selected] vaadin-icon {
+    fill: #235FD5 !important;
+}
+.main-menu-tabs vaadin-tab vaadin-icon {
+    fill: #5B6A87FF !important;
+}

@@ -12,18 +12,6 @@
     color: white;
 }
 
-.jmix-main-view-drawer-toggle {
-    color: white !important;
-    margin-left: -13px;
-}
-
-
-.light-background {
-    background: linear-gradient(180deg, #EBF2FC 0%, #DBE8FD 100%);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    height: 100%;
-}
 
 .turbine-list-white-card {
     width: auto !important;
