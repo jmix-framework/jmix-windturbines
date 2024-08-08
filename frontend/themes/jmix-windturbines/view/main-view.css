@@ -1,0 +1,14 @@
+.jmix-main-view-header {
+    background: white;
+}
+
+
+#MainView {
+    background: linear-gradient(0deg, #DBE8FD 30%, #1A60CC 61.5%, #154287 100%);
+    /*padding:10px;*/
+}
+
+
+h3.page-title {
+    color: white;
+}
