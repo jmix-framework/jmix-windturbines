@@ -1,0 +1,29 @@
+#searchField::part(input-field) {
+    background: #1D3982;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+#searchField {
+    width: 100%;
+}
+
+#searchField > [slot="prefix"], #searchField::part(clear-button), #searchField > input {
+    color: white;
+}
+
+.jmix-main-view-drawer-toggle {
+    color: white !important;
+}
+
+
+.light-background {
+    background: linear-gradient(180deg, #EBF2FC 0%, #DBE8FD 100%);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 100%;
+}
+
+.turbine-list-white-card {
+    width: auto !important;
+}

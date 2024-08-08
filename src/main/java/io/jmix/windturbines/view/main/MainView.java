@@ -10,7 +10,6 @@ import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
-import io.jmix.data.impl.jpql.DomainModelBuilder;
 import io.jmix.flowui.Notifications;
 import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
@@ -23,7 +22,6 @@ import io.jmix.windturbines.entity.inspection.Inspection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Route("")
@@ -71,15 +69,19 @@ public class MainView extends StandardMainView {
 
 
     private void initMobileMenu() {
-        StreamResource iconResource = new StreamResource("code-branch.svg",
-                () -> getClass().getResourceAsStream("/META-INF/resources/icons/turbine.svg"));
-        SvgIcon icon = new SvgIcon(iconResource);
-        inspectionsTab = createTab("Inspections", "inspections", VaadinIcon.CHECK_SQUARE.create());
-        turbineTab = createTab("Turbines", "turbines", icon);
+        inspectionsTab = createTab("Inspections", "inspections", icon("inspection.svg"));
+        turbineTab = createTab("Turbines", "turbines", icon("turbine.svg"));
         mainMenuTabs.add(
                 inspectionsTab,
                 turbineTab
         );
+    }
+
+    private SvgIcon icon(String filename) {
+        StreamResource iconResource = new StreamResource(filename,
+                () -> getClass().getResourceAsStream("/META-INF/resources/icons/%s".formatted(filename)));
+        SvgIcon icon = new SvgIcon(iconResource);
+        return icon;
     }
 
     private Tab createTab(String title, String id, AbstractIcon icon) {

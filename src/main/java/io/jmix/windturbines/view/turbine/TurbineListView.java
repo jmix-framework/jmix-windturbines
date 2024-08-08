@@ -38,15 +38,13 @@ public class TurbineListView extends StandardListView<Turbine> {
         return new ComponentRenderer<>(turbine -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
-            mainLayout.addClassNames();
-            mainLayout.setWidth("99%");
             mainLayout.setId("turbine-" + turbine.getId());
             mainLayout.addClassNames(
-                    LumoUtility.Margin.Bottom.MEDIUM,
-                    LumoUtility.Padding.SMALL,
+                    LumoUtility.Margin.MEDIUM,
                     LumoUtility.Gap.MEDIUM,
                     "white-card",
-                    "cursor-pointer"
+                    "cursor-pointer",
+                    "turbine-list-white-card"
             );
 
 
