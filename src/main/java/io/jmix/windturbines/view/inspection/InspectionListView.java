@@ -66,16 +66,26 @@ public class InspectionListView extends StandardListView<Inspection> {
     private Renderer<Inspection> allInspectionsVirtualListRenderer() {
         return new ComponentRenderer<>(inspection -> {
 
+//            VerticalLayout mainLayout = createVerticalLayout();
+//            mainLayout.addClassNames();
+//            mainLayout.setWidth("99%");
+//            mainLayout.setId("inspection-" + inspection.getId());
+//            mainLayout.addClassNames(
+//                    LumoUtility.Margin.Bottom.MEDIUM,
+//                    LumoUtility.Padding.SMALL,
+//                    LumoUtility.Gap.MEDIUM,
+//                    "white-card"
+//            );
+
             VerticalLayout mainLayout = createVerticalLayout();
-            mainLayout.addClassNames();
-            mainLayout.setWidth("99%");
             mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
-                    LumoUtility.Margin.Bottom.MEDIUM,
-                    LumoUtility.Padding.SMALL,
-                    LumoUtility.Gap.MEDIUM,
-                    "white-card"
+                    LumoUtility.Margin.MEDIUM,
+                    "white-card",
+                    "cursor-pointer",
+                    "turbine-list-white-card"
             );
+
             HorizontalLayout firstRow = createHorizontalLayout();
             firstRow.setWidthFull();
             firstRow.setAlignItems(FlexComponent.Alignment.STRETCH);
@@ -94,7 +104,7 @@ public class InspectionListView extends StandardListView<Inspection> {
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
+            status.getElement().getThemeList().addAll(List.of("badge", "pill", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);
@@ -144,16 +154,14 @@ public class InspectionListView extends StandardListView<Inspection> {
         return new ComponentRenderer<>(inspection -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
-            mainLayout.addClassNames();
-            mainLayout.setWidth("99%");
             mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
-                    LumoUtility.Margin.Bottom.MEDIUM,
-                    LumoUtility.Padding.SMALL,
-                    LumoUtility.Gap.MEDIUM,
+                    LumoUtility.Margin.MEDIUM,
                     "white-card",
-                    "cursor-pointer"
+                    "cursor-pointer",
+                    "turbine-list-white-card"
             );
+
             HorizontalLayout firstRow = createHorizontalLayout();
             firstRow.setWidthFull();
             firstRow.setAlignItems(FlexComponent.Alignment.STRETCH);
@@ -172,7 +180,7 @@ public class InspectionListView extends StandardListView<Inspection> {
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
+            status.getElement().getThemeList().addAll(List.of("badge", "pill", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);

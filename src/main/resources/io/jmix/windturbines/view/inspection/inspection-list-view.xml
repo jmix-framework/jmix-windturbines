@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
-      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
       title="msg://inspectionsListView.title"
       focusComponent="contentTabSheet">
     <data>
@@ -31,56 +30,60 @@
         <dataLoadCoordinator auto="true"/>
     </facets>
     <layout spacing="false" padding="false">
-        <tabSheet id="contentTabSheet" width="100%" themeNames="centered" height="100%">
+        <vbox classNames="layout-header">
+            <hbox width="100%" alignItems="CENTER" expand="spacer">
+                <drawerToggle id="drawerToggle"
+                              classNames="jmix-main-view-drawer-toggle"
+                              themeNames="contrast"/>
+                <span id="spacer"/>
+                <svgIcon resource="icons/notification.svg"/>
+            </hbox>
+            <h3 classNames="page-title" text="msg://inspectionsListView.title"/>
+        </vbox>
+        <tabSheet id="contentTabSheet" width="100%" themeNames="centered minimal" height="100%"
+                  classNames="inspection-list-tab-sheet">
             <tab id="myInspectionsTab" label="msg://myInspections">
-                <vbox width="100%" height="100%" padding="false" spacing="false">
-                    <details id="myInspectionsFilter" summaryText="msg://filter" width="100%" themeNames="filled">
-                        <propertyFilter property="taskStatus"
-                                        operation="EQUAL"
-                                        dataLoader="myInspectionsDl"
-                                        labelPosition="TOP"
-                                        label="msg://taskStatusFilter"
-                                        width="100%"
-                        />
-                        <propertyFilter property="inspectionDate"
-                                        operation="EQUAL"
-                                        dataLoader="myInspectionsDl"
-                                        labelPosition="TOP"
-                                        label="msg://inspectionDateFilter"
-                                        width="100%"
-                        />
-                    </details>
-                    <virtualList id="myInspectionsVirtualList"
-                                 width="100%"
-                                 height="100%"
-                                 itemsContainer="myInspectionsDc"
-                                 alignSelf="CENTER"/>
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <vbox width="100%" padding="true">
+                            <details id="myInspectionsFilter"
+                                     summaryText="msg://filter"
+                                     width="100%"
+                                     themeNames="filled">
+                                <propertyFilter property="taskStatus"
+                                                operation="EQUAL"
+                                                dataLoader="myInspectionsDl"
+                                                labelPosition="TOP"
+                                                label="msg://taskStatusFilter"
+                                                width="100%"
+                                />
+                                <propertyFilter property="inspectionDate"
+                                                operation="EQUAL"
+                                                dataLoader="myInspectionsDl"
+                                                labelPosition="TOP"
+                                                label="msg://inspectionDateFilter"
+                                                width="100%"
+                                />
+                            </details>
+                        </vbox>
+                        <virtualList id="myInspectionsVirtualList"
+                                     width="100%"
+                                     height="100%"
+                                     itemsContainer="myInspectionsDc"
+                                     alignSelf="CENTER"/>
+                    </vbox>
                 </vbox>
             </tab>
             <tab id="allInspectionsTab" label="msg://allInspections">
-<!--                <vbox width="100%" height="100%" padding="false" spacing="false">-->
-<!--                    <details id="allInspectionsFilter" summaryText="msg://filter" width="100%" themeNames="filled">-->
-<!--                        <propertyFilter property="taskStatus"-->
-<!--                                        operation="EQUAL"-->
-<!--                                        dataLoader="inspectionsDl"-->
-<!--                                        labelPosition="TOP"-->
-<!--                                        label="msg://taskStatusFilter"-->
-<!--                                        width="100%"-->
-<!--                        />-->
-<!--                        <propertyFilter property="inspectionDate"-->
-<!--                                        operation="EQUAL"-->
-<!--                                        dataLoader="inspectionsDl"-->
-<!--                                        labelPosition="TOP"-->
-<!--                                        label="msg://inspectionDateFilter"-->
-<!--                                        width="100%"-->
-<!--                        />-->
-<!--                    </details>-->
-                    <virtualList id="allInspectionsVirtualList"
-                                 width="100%"
-                                 height="100%"
-                                 itemsContainer="inspectionsDc"
-                                 alignSelf="CENTER"/>
-<!--                </vbox>-->
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <virtualList id="allInspectionsVirtualList"
+                                     width="100%"
+                                     height="100%"
+                                     itemsContainer="inspectionsDc"
+                                     alignSelf="CENTER"/>
+                    </vbox>
+                </vbox>
             </tab>
         </tabSheet>
     </layout>
