@@ -3,6 +3,7 @@ package io.jmix.windturbines.view.turbine;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -10,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import io.jmix.core.Messages;
 import io.jmix.flowui.UiComponents;
@@ -41,7 +43,6 @@ public class TurbineListView extends StandardListView<Turbine> {
             mainLayout.setId("turbine-" + turbine.getId());
             mainLayout.addClassNames(
                     LumoUtility.Margin.MEDIUM,
-                    LumoUtility.Gap.MEDIUM,
                     "white-card",
                     "cursor-pointer",
                     "turbine-list-white-card"
@@ -58,16 +59,13 @@ public class TurbineListView extends StandardListView<Turbine> {
             turbineId.setClassName(LumoUtility.FontWeight.BOLD);
             firstRow.add(turbineId);
 
-            Span manufacturer = uiComponents.create(Span.class);
-            manufacturer.setText(turbine.getManufacturer().getName());
-            firstRow.add(manufacturer);
 
             HorizontalLayout statusLayout = createHorizontalLayout();
             statusLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", turbine.getStatus().getBadgeThemeName()));
+            status.getElement().getThemeList().addAll(List.of("badge", "pill", turbine.getStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(turbine.getStatus()));
             statusLayout.add(status);
@@ -78,14 +76,36 @@ public class TurbineListView extends StandardListView<Turbine> {
             HorizontalLayout secondRow = createHorizontalLayout();
             secondRow.setWidthFull();
             secondRow.setAlignItems(FlexComponent.Alignment.STRETCH);
-            secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
+            secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.XLARGE);
+
+            Span manufacturer = uiComponents.create(Span.class);
+            manufacturer.setText(turbine.getManufacturer().getName());
+            secondRow.add(manufacturer);
 
 
+            Span model = uiComponents.create(Span.class);
+            model.setText(turbine.getModel());
+            secondRow.add(model);
+
+            mainLayout.add(secondRow);
+
+            HorizontalLayout thirdRow = createHorizontalLayout();
+            thirdRow.setWidthFull();
+            thirdRow.setAlignItems(FlexComponent.Alignment.STRETCH);
+            thirdRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
+
+            HorizontalLayout locationWrapper = uiComponents.create(HorizontalLayout.class);
+            locationWrapper.setAlignItems(FlexComponent.Alignment.CENTER);
+            locationWrapper.setWidthFull();
             Span location = uiComponents.create(Span.class);
             location.setText(turbine.getLocation());
             location.setWidthFull();
             location.setClassName("cut-overflow-text");
-            secondRow.add(location);
+            locationWrapper.add(
+                    icon("location.svg"),
+                    location
+            );
+            thirdRow.add(locationWrapper);
 
 
             HorizontalLayout detailButtonLayout = createHorizontalLayout();
@@ -93,10 +113,10 @@ public class TurbineListView extends StandardListView<Turbine> {
 
             Button detailsButton = detailsButton(turbine);
             detailButtonLayout.add(detailsButton);
-            secondRow.add(detailButtonLayout);
-            secondRow.expand(location);
+            thirdRow.add(detailButtonLayout);
+            thirdRow.expand(location);
 
-            mainLayout.add(secondRow);
+            mainLayout.add(thirdRow);
 
             mainLayout.addClickListener(event ->
                     viewNavigators.detailView(this, Turbine.class)
@@ -108,7 +128,12 @@ public class TurbineListView extends StandardListView<Turbine> {
             return mainLayout;
         });
     }
-
+    private SvgIcon icon(String filename) {
+        StreamResource iconResource = new StreamResource(filename,
+                () -> getClass().getResourceAsStream("/META-INF/resources/icons/%s".formatted(filename)));
+        SvgIcon icon = new SvgIcon(iconResource);
+        return icon;
+    }
     private Button detailsButton(Turbine turbine) {
         Button button = uiComponents.create(Button.class);
         button.setId("detailsButton");
