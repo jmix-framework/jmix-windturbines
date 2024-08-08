@@ -46,3 +46,8 @@
 .inspection-list-tab-sheet::part(content) {
     padding: 0 !important;
 }
+
+.my-inspections-filter  {
+    border-radius: 10px;
+    background-color: white;
+}
