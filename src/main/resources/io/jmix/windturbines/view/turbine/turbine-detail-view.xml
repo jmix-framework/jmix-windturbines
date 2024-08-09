@@ -29,7 +29,8 @@
             </hbox>
             <h3 id="pageTitle" classNames="page-title" />
         </vbox>
-        <tabSheet id="contentTabSheet" width="100%" themeNames="centered">
+        <tabSheet id="contentTabSheet" width="100%" themeNames="centered minimal" height="100%"
+                  classNames="content-tab-sheet">
             <tab id="detailsTab" label="msg://details">
                 <accordion id="mainAccordion" width="100%">
                     <accordionPanel summaryText="msg://details" classNames="white-card mb-m" opened="true">
