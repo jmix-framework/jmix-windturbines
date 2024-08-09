@@ -1,6 +1,7 @@
 package io.jmix.windturbines.view.turbine;
 
 import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.html.Span;
 import io.jmix.core.DataManager;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.tabsheet.JmixTabSheet;
@@ -88,8 +89,8 @@ public class TurbineDetailViewTest {
         // then
         assertThat(fieldValue(detailView, "turbineIdField"))
                 .isEqualTo("#738901");
-        assertThat(fieldValue(detailView, "statusField"))
-                .isEqualTo(TurbineStatus.OPERATING);
+        assertThat(fieldText(detailView, "statusField"))
+                .isEqualTo("Operating");
         assertThat(fieldValue(detailView, "manufacturerField"))
                 .isEqualTo(vestas);
         assertThat(fieldValue(detailView, "modelField"))
@@ -135,6 +136,9 @@ public class TurbineDetailViewTest {
 
     private static Object fieldValue(View<?> view, String componentId) {
         return ((HasValue) UiTestUtils.getComponent(view, componentId)).getValue();
+    }
+    private static String fieldText(View<?> view, String componentId) {
+        return ((Span) UiTestUtils.getComponent(view, componentId)).getText();
     }
 
     private <V extends View<?>, E> V navigateTo(Class<V> viewClass, E entity, Class<E> entityClass) {
