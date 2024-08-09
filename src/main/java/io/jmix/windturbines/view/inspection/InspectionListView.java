@@ -66,17 +66,6 @@ public class InspectionListView extends StandardListView<Inspection> {
     private Renderer<Inspection> allInspectionsVirtualListRenderer() {
         return new ComponentRenderer<>(inspection -> {
 
-//            VerticalLayout mainLayout = createVerticalLayout();
-//            mainLayout.addClassNames();
-//            mainLayout.setWidth("99%");
-//            mainLayout.setId("inspection-" + inspection.getId());
-//            mainLayout.addClassNames(
-//                    LumoUtility.Margin.Bottom.MEDIUM,
-//                    LumoUtility.Padding.SMALL,
-//                    LumoUtility.Gap.MEDIUM,
-//                    "white-card"
-//            );
-
             VerticalLayout mainLayout = createVerticalLayout();
             mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(

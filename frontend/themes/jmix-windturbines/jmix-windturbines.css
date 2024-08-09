@@ -12,7 +12,7 @@ html {
 
 .white-card {
     background-color: white;
-    border-radius: var(--lumo-border-radius-s);
+    border-radius: var(--lumo-border-radius-l);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     padding: 10px;
 }

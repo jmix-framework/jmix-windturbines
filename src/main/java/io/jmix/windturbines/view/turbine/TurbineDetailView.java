@@ -49,13 +49,11 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
     @Autowired
     private DatatypeFormatter datatypeFormatter;
     @ViewComponent
-    private Span emptyInspectionBox;
-    @ViewComponent
-    private JmixVirtualList<Inspection> inspectionsVirtualList;
-    @ViewComponent
     private H3 pageTitle;
-    @Autowired
+    @ViewComponent
     private MessageBundle messageBundle;
+    @ViewComponent
+    private Span statusField;
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
@@ -64,12 +62,12 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
 
     @Subscribe
     public void onReady(final ReadyEvent event) {
-        if (CollectionUtils.isEmpty(getEditedEntity().getInspections())) {
-            emptyInspectionBox.setVisible(true);
-            inspectionsVirtualList.setVisible(false);
-        }
 
         pageTitle.setText(turbineTitle());
+
+        statusField.getElement().getThemeList().addAll(List.of("badge", "pill", getEditedEntity().getStatus().getBadgeThemeName()));
+        statusField.setWidth("100px");
+        statusField.setText(messages.getMessage(getEditedEntity().getStatus()));
     }
 
     private String turbineTitle() {
@@ -99,16 +97,14 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
         return new ComponentRenderer<>(inspection -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
-            mainLayout.addClassNames();
-            mainLayout.setWidth("99%");
             mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
-                    LumoUtility.Margin.Bottom.MEDIUM,
-                    LumoUtility.Padding.SMALL,
-                    LumoUtility.Gap.MEDIUM,
+                    LumoUtility.Margin.MEDIUM,
                     "white-card",
-                    "cursor-pointer"
+                    "cursor-pointer",
+                    "turbine-list-white-card"
             );
+
             HorizontalLayout firstRow = createHorizontalLayout();
             firstRow.setWidthFull();
             firstRow.setAlignItems(FlexComponent.Alignment.STRETCH);
@@ -202,4 +198,5 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
     public void onBack(final ActionPerformedEvent event) {
         closeWithDiscard();
     }
+
 }
