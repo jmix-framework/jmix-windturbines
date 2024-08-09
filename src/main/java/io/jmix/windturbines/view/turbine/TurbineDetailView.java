@@ -65,6 +65,7 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
 
         pageTitle.setText(turbineTitle());
 
+        statusField.addClassName("turbine-status");
         statusField.getElement().getThemeList().addAll(List.of("badge", "pill", getEditedEntity().getStatus().getBadgeThemeName()));
         statusField.setWidth("100px");
         statusField.setText(messages.getMessage(getEditedEntity().getStatus()));
@@ -123,7 +124,8 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
+            status.addClassName("task-status");
+            status.getElement().getThemeList().addAll(List.of("badge", "pill", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);

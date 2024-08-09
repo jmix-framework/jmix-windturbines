@@ -6,10 +6,10 @@ import org.springframework.lang.Nullable;
 
 public enum TurbineStatus implements EnumClass<String> {
 
-    OPERATING("OPERATING", "success"),
-    MAINTENANCE("MAINTENANCE", "contrast"),
-    IDLE("IDLE", "contrast"),
-    OUT_OF_SERVICE("OUT_OF_SERVICE", "error");
+    OPERATING("OPERATING", "operating"),
+    MAINTENANCE("MAINTENANCE", "maintenance"),
+    IDLE("IDLE", "idle"),
+    OUT_OF_SERVICE("OUT_OF_SERVICE", "out-of-service"),;
 
     private final String id;
     private final String badgeThemeName;

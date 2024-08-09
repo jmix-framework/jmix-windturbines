@@ -49,3 +49,21 @@
     border-radius: 10px;
     background-color: white;
 }
+
+
+
+
+span.task-status[theme~="scheduled"] {
+    background: #E3F0FB;
+    color: #235FD5;
+}
+
+span.task-status[theme~="deferred"] {
+    background: #FFEED0;
+    color: #BF6F00;
+}
+
+span.task-status[theme~="completed"] {
+    background: #DAF1F6;
+    color: #297B84;
+}

@@ -6,9 +6,9 @@ import org.springframework.lang.Nullable;
 
 public enum TaskStatus implements EnumClass<String> {
 
-    SCHEDULED("SCHEDULED", "contrast"),
-    DEFERRED("DEFERRED", "contrast"),
-    COMPLETED("COMPLETED", "success");
+    SCHEDULED("SCHEDULED", "scheduled"),
+    DEFERRED("DEFERRED", "deferred"),
+    COMPLETED("COMPLETED", "completed");
 
     private final String id;
     private final String badgeThemeName;
