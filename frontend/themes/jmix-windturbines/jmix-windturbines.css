@@ -47,7 +47,7 @@ html {
 }
 
 
-.jmix-main-view-drawer-toggle {
+.jmix-main-view-drawer-toggle, .back-button {
     color: white !important;
     margin-left: -13px;
 }

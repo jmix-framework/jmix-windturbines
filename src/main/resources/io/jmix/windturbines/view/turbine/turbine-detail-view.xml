@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       title="msg://turbineDetailView.title"
-      focusComponent="form">
+      focusComponent="contentTabSheet">
     <data>
         <instance id="turbineDc"
                   class="io.jmix.windturbines.entity.Turbine">
@@ -18,9 +18,17 @@
         <dataLoadCoordinator auto="true"/>
     </facets>
     <actions>
-        <action id="closeAction" type="detail_close"/>
+        <action id="back" icon="lumo:arrow-left" />
     </actions>
     <layout spacing="false" padding="false">
+        <vbox classNames="layout-header">
+            <hbox width="100%" alignItems="CENTER" expand="spacer">
+                <button id="backBtn" action="back" classNames="back-button" />
+                <span id="spacer"/>
+                <svgIcon resource="icons/notification.svg"/>
+            </hbox>
+            <h3 id="pageTitle" classNames="page-title" />
+        </vbox>
         <tabSheet id="contentTabSheet" width="100%" themeNames="centered">
             <tab id="detailsTab" label="msg://details">
                 <accordion id="mainAccordion" width="100%">
@@ -70,8 +78,5 @@
                 </vbox>
             </tab>
         </tabSheet>
-        <hbox id="detailActions">
-            <button id="closeBtn" action="closeAction"/>
-        </hbox>
     </layout>
 </view>

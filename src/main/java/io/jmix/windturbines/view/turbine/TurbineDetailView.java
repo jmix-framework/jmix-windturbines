@@ -4,6 +4,7 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import io.jmix.core.Messages;
@@ -20,6 +22,7 @@ import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.component.virtuallist.JmixVirtualList;
+import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.Turbine;
@@ -34,7 +37,7 @@ import java.util.List;
 @ViewController("Turbine.detail")
 @ViewDescriptor("turbine-detail-view.xml")
 @EditedEntityContainer("turbineDc")
-public class TurbineDetailView extends StandardDetailView<Turbine> {
+public class TurbineDetailView extends StandardDetailView<Turbine> implements HasDynamicTitle {
     @ViewComponent
     private TypedTextField<String> operatorPhoneField;
     @Autowired
@@ -49,6 +52,10 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
     private Span emptyInspectionBox;
     @ViewComponent
     private JmixVirtualList<Inspection> inspectionsVirtualList;
+    @ViewComponent
+    private H3 pageTitle;
+    @Autowired
+    private MessageBundle messageBundle;
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
@@ -61,9 +68,18 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
             emptyInspectionBox.setVisible(true);
             inspectionsVirtualList.setVisible(false);
         }
+
+        pageTitle.setText(turbineTitle());
     }
 
+    private String turbineTitle() {
+        return messageBundle.formatMessage("turbineDetailView.title", getEditedEntity().getTurbineId());
+    }
 
+    @Override
+    public String getPageTitle() {
+        return turbineTitle();
+    }
 
     private Button callButton(String phoneNumber) {
         Button btn = uiComponents.create(Button.class);
@@ -180,5 +196,10 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
         HorizontalLayout layout = uiComponents.create(HorizontalLayout.class);
         layout.setPadding(false);
         return layout;
+    }
+
+    @Subscribe("back")
+    public void onBack(final ActionPerformedEvent event) {
+        closeWithDiscard();
     }
 }
