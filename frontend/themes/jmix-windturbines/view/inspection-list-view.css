@@ -17,10 +17,8 @@
     width: auto !important;
 }
 
-.inspection-list-tab-sheet  {
-}
 
-.inspection-list-tab-sheet::part(tabs-container) {
+.content-tab-sheet::part(tabs-container) {
     background-color: #1D3982;
     border-radius: 15px;
     padding: 5px;
@@ -31,11 +29,11 @@
     height: 36px;
 }
 
-.inspection-list-tab-sheet vaadin-tab {
+.content-tab-sheet vaadin-tab {
     color: white;
 }
 
-.inspection-list-tab-sheet vaadin-tab[selected] {
+.content-tab-sheet vaadin-tab[selected] {
     background: linear-gradient(180deg, #EBF2FC 0%, #DBE8FD 100%);
     color: #1D3982;
     border-radius: 10px;
@@ -43,11 +41,29 @@
     margin-bottom: 5px;
 }
 
-.inspection-list-tab-sheet::part(content) {
+.content-tab-sheet::part(content) {
     padding: 0 !important;
 }
 
 .my-inspections-filter  {
     border-radius: 10px;
     background-color: white;
+}
+
+
+
+
+span.task-status[theme~="scheduled"] {
+    background: #E3F0FB;
+    color: #235FD5;
+}
+
+span.task-status[theme~="deferred"] {
+    background: #FFEED0;
+    color: #BF6F00;
+}
+
+span.task-status[theme~="completed"] {
+    background: #DAF1F6;
+    color: #297B84;
 }

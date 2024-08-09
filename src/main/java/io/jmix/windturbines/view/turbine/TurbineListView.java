@@ -1,5 +1,6 @@
 package io.jmix.windturbines.view.turbine;
 
+import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Span;
@@ -65,6 +66,7 @@ public class TurbineListView extends StandardListView<Turbine> {
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
+            status.addClassName("turbine-status");
             status.getElement().getThemeList().addAll(List.of("badge", "pill", turbine.getStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(turbine.getStatus()));

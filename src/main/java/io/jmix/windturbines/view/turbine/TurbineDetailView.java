@@ -4,6 +4,7 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import io.jmix.core.Messages;
@@ -20,6 +22,7 @@ import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.component.virtuallist.JmixVirtualList;
+import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.Turbine;
@@ -34,7 +37,7 @@ import java.util.List;
 @ViewController("Turbine.detail")
 @ViewDescriptor("turbine-detail-view.xml")
 @EditedEntityContainer("turbineDc")
-public class TurbineDetailView extends StandardDetailView<Turbine> {
+public class TurbineDetailView extends StandardDetailView<Turbine> implements HasDynamicTitle {
     @ViewComponent
     private TypedTextField<String> operatorPhoneField;
     @Autowired
@@ -46,9 +49,11 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
     @Autowired
     private DatatypeFormatter datatypeFormatter;
     @ViewComponent
-    private Span emptyInspectionBox;
+    private H3 pageTitle;
     @ViewComponent
-    private JmixVirtualList<Inspection> inspectionsVirtualList;
+    private MessageBundle messageBundle;
+    @ViewComponent
+    private Span statusField;
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
@@ -57,13 +62,23 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
 
     @Subscribe
     public void onReady(final ReadyEvent event) {
-        if (CollectionUtils.isEmpty(getEditedEntity().getInspections())) {
-            emptyInspectionBox.setVisible(true);
-            inspectionsVirtualList.setVisible(false);
-        }
+
+        pageTitle.setText(turbineTitle());
+
+        statusField.addClassName("turbine-status");
+        statusField.getElement().getThemeList().addAll(List.of("badge", "pill", getEditedEntity().getStatus().getBadgeThemeName()));
+        statusField.setWidth("100px");
+        statusField.setText(messages.getMessage(getEditedEntity().getStatus()));
     }
 
+    private String turbineTitle() {
+        return messageBundle.formatMessage("turbineDetailView.title", getEditedEntity().getTurbineId());
+    }
 
+    @Override
+    public String getPageTitle() {
+        return turbineTitle();
+    }
 
     private Button callButton(String phoneNumber) {
         Button btn = uiComponents.create(Button.class);
@@ -83,16 +98,14 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
         return new ComponentRenderer<>(inspection -> {
 
             VerticalLayout mainLayout = createVerticalLayout();
-            mainLayout.addClassNames();
-            mainLayout.setWidth("99%");
             mainLayout.setId("inspection-" + inspection.getId());
             mainLayout.addClassNames(
-                    LumoUtility.Margin.Bottom.MEDIUM,
-                    LumoUtility.Padding.SMALL,
-                    LumoUtility.Gap.MEDIUM,
+                    LumoUtility.Margin.MEDIUM,
                     "white-card",
-                    "cursor-pointer"
+                    "cursor-pointer",
+                    "turbine-list-white-card"
             );
+
             HorizontalLayout firstRow = createHorizontalLayout();
             firstRow.setWidthFull();
             firstRow.setAlignItems(FlexComponent.Alignment.STRETCH);
@@ -111,7 +124,8 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
-            status.getElement().getThemeList().addAll(List.of("badge", inspection.getTaskStatus().getBadgeThemeName()));
+            status.addClassName("task-status");
+            status.getElement().getThemeList().addAll(List.of("badge", "pill", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(inspection.getTaskStatus()));
             statusLayout.add(status);
@@ -181,4 +195,10 @@ public class TurbineDetailView extends StandardDetailView<Turbine> {
         layout.setPadding(false);
         return layout;
     }
+
+    @Subscribe("back")
+    public void onBack(final ActionPerformedEvent event) {
+        closeWithDiscard();
+    }
+
 }

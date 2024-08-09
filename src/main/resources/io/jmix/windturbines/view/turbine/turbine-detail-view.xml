@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       title="msg://turbineDetailView.title"
-      focusComponent="form">
+      focusComponent="contentTabSheet">
     <data>
         <instance id="turbineDc"
                   class="io.jmix.windturbines.entity.Turbine">
@@ -18,60 +18,118 @@
         <dataLoadCoordinator auto="true"/>
     </facets>
     <actions>
-        <action id="closeAction" type="detail_close"/>
+        <action id="back" icon="lumo:arrow-left"/>
     </actions>
     <layout spacing="false" padding="false">
-        <tabSheet id="contentTabSheet" width="100%" themeNames="centered">
+        <vbox classNames="layout-header">
+            <hbox width="100%" alignItems="CENTER" expand="spacer">
+                <button id="backBtn" action="back" classNames="back-button"/>
+                <span id="spacer"/>
+                <svgIcon resource="icons/notification.svg"/>
+            </hbox>
+            <h3 id="pageTitle" classNames="page-title"/>
+        </vbox>
+        <tabSheet id="contentTabSheet" width="100%" themeNames="centered minimal" height="100%"
+                  classNames="content-tab-sheet">
             <tab id="detailsTab" label="msg://details">
-                <accordion id="mainAccordion" width="100%">
-                    <accordionPanel summaryText="msg://details" classNames="white-card mb-m" opened="true">
-                        <formLayout id="detailsForm" dataContainer="turbineDc">
-                            <textField id="turbineIdField" property="turbineId"/>
-                            <select id="statusField" property="status"/>
-                            <textArea id="locationField" property="location"/>
-                            <datePicker id="installationDateField" property="installationDate"/>
-                            <datePicker id="lastMaintenanceDateField" property="lastMaintenanceDate"/>
-                        </formLayout>
-                    </accordionPanel>
-                    <accordionPanel summaryText="msg://technicalData" classNames="white-card mb-m">
-                        <formLayout id="technicalDataForm" dataContainer="turbineDc">
-                            <entityPicker id="manufacturerField" property="manufacturer">
-                                <actions>
-                                    <action id="entityLookup" type="entity_lookup"/>
-                                    <action id="entityClear" type="entity_clear"/>
-                                </actions>
-                            </entityPicker>
-                            <textField id="modelField" property="model"/>
-                            <textField id="heightField" property="height"/>
-                            <textField id="rotorDiameterField" property="rotorDiameter"/>
-                        </formLayout>
-                    </accordionPanel>
-                </accordion>
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout id="detailsForm" dataContainer="turbineDc">
+                                        <responsiveSteps>
+                                            <responsiveStep minWidth="0" columns="2"/>
+                                        </responsiveSteps>
+                                        <textField id="turbineIdField" property="turbineId"/>
+                                        <formItem label="msg://io.jmix.windturbines.entity/Turbine.status"
+                                                  classNames="status-field-form-item">
+                                            <span id="statusField"/>
+                                        </formItem>
+                                        <textArea id="locationField" property="location" colspan="2"/>
+                                    </formLayout>
+                                </vbox>
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout id="technicalDataForm" dataContainer="turbineDc">
+                                        <responsiveSteps>
+                                            <responsiveStep minWidth="0" columns="2"/>
+                                        </responsiveSteps>
+                                        <entityPicker id="manufacturerField" property="manufacturer">
+                                            <actions>
+                                                <action id="entityLookup" type="entity_lookup"/>
+                                                <action id="entityClear" type="entity_clear"/>
+                                            </actions>
+                                        </entityPicker>
+                                        <textField id="modelField" property="model"/>
+                                        <textField id="heightField" property="height"/>
+                                        <textField id="rotorDiameterField" property="rotorDiameter"/>
+                                    </formLayout>
+                                </vbox>
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout dataContainer="turbineDc">
+                                        <responsiveSteps>
+                                            <responsiveStep minWidth="0" columns="2"/>
+                                        </responsiveSteps>
+                                        <datePicker id="installationDateField" property="installationDate"/>
+                                        <datePicker id="lastMaintenanceDateField" property="lastMaintenanceDate"/>
+                                    </formLayout>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
+                </vbox>
             </tab>
             <tab id="operatorTab" label="msg://operator">
-                <formLayout id="operatorForm" dataContainer="turbineDc" classNames="white-card">
-                    <textField id="operatorNameField" property="operator.name"/>
-                    <textField id="operatorContactPersonField" property="operator.contactPerson"/>
-                    <textField id="operatorEmailField" property="operator.email"/>
-                    <textField id="operatorPhoneField" property="operator.phone"/>
-                    <textArea id="operatorAddressField" property="operator.address"/>
-                </formLayout>
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+                                <vbox width="100%" padding="true" classNames="white-card">
+                                    <formLayout dataContainer="turbineDc">
+                                        <textField id="operatorNameField" property="operator.name"/>
+                                    </formLayout>
+                                </vbox>
+                                <vbox width="100%" padding="true" classNames="white-card">
+                                    <formLayout id="operatorForm" dataContainer="turbineDc">
+                                        <textField id="operatorContactPersonField" property="operator.contactPerson">
+                                            <prefix>
+                                                <icon icon="USER_CARD"/>
+                                            </prefix>
+                                        </textField>
+                                        <textField id="operatorEmailField" property="operator.email">
+                                            <prefix>
+                                                <icon icon="AT"/>
+                                            </prefix>
+                                        </textField>
+                                        <textField id="operatorPhoneField" property="operator.phone">
+                                            <prefix>
+                                                <icon icon="PHONE"/>
+                                            </prefix>
+                                        </textField>
+                                        <textArea id="operatorAddressField" property="operator.address" height="7em">
+                                            <prefix>
+                                                <icon icon="MAP_MARKER"/>
+                                            </prefix>
+                                        </textArea>
+                                    </formLayout>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
+                </vbox>
             </tab>
             <tab id="inspectionsTab" label="msg://inspections">
-                <vbox width="100%" alignItems="CENTER" height="100%">
-                    <span id="emptyInspectionBox"
-                          text="msg://inspections.emptyMessage"
-                          visible="false"
-                          themeNames="badge error"/>
-                    <virtualList id="inspectionsVirtualList"
-                                 itemsContainer="inspectionsDc"
-                                 height="100%"
-                                 width="100%"/>
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                                    <virtualList id="inspectionsVirtualList"
+                                                 itemsContainer="inspectionsDc"
+                                                 height="100%"
+                                                 width="100%"/>
+                        </scroller>
+                    </vbox>
                 </vbox>
             </tab>
         </tabSheet>
-        <hbox id="detailActions">
-            <button id="closeBtn" action="closeAction"/>
-        </hbox>
     </layout>
 </view>
