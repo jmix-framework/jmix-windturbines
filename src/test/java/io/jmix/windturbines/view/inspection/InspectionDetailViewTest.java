@@ -2,14 +2,15 @@ package io.jmix.windturbines.view.inspection;
 
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.tabs.TabSheet;
 import io.jmix.core.DataManager;
 import io.jmix.core.Id;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.action.DialogAction;
-import io.jmix.flowui.component.accordion.JmixAccordion;
 import io.jmix.flowui.component.checkbox.JmixCheckbox;
 import io.jmix.flowui.component.radiobuttongroup.JmixRadioButtonGroup;
 import io.jmix.flowui.component.select.JmixSelect;
+import io.jmix.flowui.component.tabsheet.JmixTabSheet;
 import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.component.validation.ValidationErrors;
 import io.jmix.flowui.kit.component.button.JmixButton;
@@ -173,7 +174,7 @@ public class InspectionDetailViewTest {
             InspectionDetailView detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
 
             // and
-            assertThat(currentAccordionIndex(detailView))
+            assertThat(currentTabSheetIndex(detailView))
                     .isEqualTo(0);
 
             // when
@@ -190,14 +191,14 @@ public class InspectionDetailViewTest {
             InspectionDetailView detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
 
             // and
-            assertThat(currentAccordionIndex(detailView))
+            assertThat(currentTabSheetIndex(detailView))
                     .isEqualTo(0);
 
             // when
             next(detailView).click();
 
             // then
-            assertThat(currentAccordionIndex(detailView))
+            assertThat(currentTabSheetIndex(detailView))
                     .isEqualTo(1);
 
         }
@@ -319,13 +320,13 @@ public class InspectionDetailViewTest {
         private static JmixButton finish(InspectionDetailView detailView) {
             return button(detailView, "finishBtn");
         }
-        private static int currentAccordionIndex(InspectionDetailView detailView) {
-            return accordion(detailView).getOpenedIndex().orElse(-1);
+        private static int currentTabSheetIndex(InspectionDetailView detailView) {
+            return tabSheet(detailView).getSelectedIndex();
         }
     }
 
-    private static JmixAccordion accordion(InspectionDetailView detailView) {
-        return UiTestUtils.getComponent(detailView, "mainAccordion");
+    private static JmixTabSheet tabSheet(InspectionDetailView detailView) {
+        return UiTestUtils.getComponent(detailView, "contentTabSheet");
     }
 
     private static DatePicker inspectionDateField(InspectionDetailView detailView) {
