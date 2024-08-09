@@ -34,11 +34,6 @@ html {
     background-color: #eee;
 }
 
-.finding-card {
-    border: 1px solid #ddd;
-    box-shadow: none;
-}
-
 
 .cut-overflow-text {
     overflow: hidden;
@@ -58,4 +53,33 @@ html {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     height: 100%;
+}
+
+
+.blue-btn  {
+    background: linear-gradient(270deg, #1A60CC 0%, #154287 100%);
+    box-shadow: 0px 1px 1.63px 0px #1542872E;
+    box-shadow: 0px 5px 10px 0px #1542875C;
+    color:white;
+    border-radius: 20px;
+    flex: 1;
+}
+
+.blue-btn[disabled]  {
+    background: linear-gradient(270deg, #1A60CC 0%, #154287 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+    box-shadow: none;
+}
+.orange-btn  {
+    background: linear-gradient(270deg, #FF9467 0%, #E35231 100%);
+    box-shadow: 0px 1px 1.63px 0px #B936032E;
+    box-shadow: 0px 5px 10px 0px #B936035C;
+    color:white;
+    border-radius: 20px;
+    flex: 1;
+}
+
+
+.orange-btn[disabled]  {
+    background: linear-gradient(270deg, #FF9467 0%, #E35231 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+    box-shadow: none;
 }

@@ -78,7 +78,6 @@ public class InspectionRecommendationCard extends VerticalLayout {
                 LumoUtility.Margin.Bottom.MEDIUM,
                 LumoUtility.Padding.SMALL,
                 LumoUtility.Gap.MEDIUM,
-                "white-card",
                 "cursor-pointer",
                 "finding-card"
         );

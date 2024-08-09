@@ -170,6 +170,7 @@ public class InspectionListView extends StandardListView<Inspection> {
             statusLayout.setWidthFull();
 
             Span status = uiComponents.create(Span.class);
+            status.addClassName("task-status");
             status.getElement().getThemeList().addAll(List.of("badge", "pill", inspection.getTaskStatus().getBadgeThemeName()));
             status.setWidth("100px");
             status.setText(messages.getMessage(inspection.getTaskStatus()));

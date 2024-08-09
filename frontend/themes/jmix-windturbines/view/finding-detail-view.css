@@ -1,6 +1,12 @@
 .finding-card {
-    border: 1px solid #ddd;
+    border: none;
+    border-bottom: 1px solid #ddd;
     box-shadow: none;
+    border-radius: 0;
+}
+
+div[style*="position: absolute;"]:last-child .finding-card {
+    border-bottom: none;
 }
 
 .evidence-flex-container {

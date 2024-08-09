@@ -27,90 +27,170 @@
         <action id="finishAction" text="msg://finish" icon="CHECK" actionVariant="PRIMARY"/>
         <action id="createFindingAction" text="msg://createFinding" icon="PLUS" actionVariant="PRIMARY"/>
         <action id="createRecommendationAction" text="msg://createRecommendation" icon="PLUS" actionVariant="PRIMARY"/>
+        <action id="back" icon="lumo:arrow-left"/>
     </actions>
     <layout spacing="false" padding="false">
-        <accordion id="mainAccordion" width="100%">
-            <accordionPanel summaryText="msg://inspectionDetails" classNames="white-card mb-m">
-                <formLayout id="detailsForm" dataContainer="inspectionDc">
-                    <entityPicker id="turbineField" property="turbine" readOnly="true">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                    <datePicker id="inspectionDateField" property="inspectionDate"/>
-                    <entityPicker id="technicianField" property="technician">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                </formLayout>
-            </accordionPanel>
-            <accordionPanel summaryText="msg://checklist" classNames="white-card mb-m">
-                <formLayout id="checklistForm" dataContainer="inspectionDc">
-                    <select id="rotorBladesAnswerField"
-                            property="rotorBladesAnswer"
-                            themeNames="helper-above-field"
-                            helperText="msg://rotorBladesQuestion"/>
-                    <textArea label="msg://empty" height="4em" id="rotorBladesCommentField"
-                              property="rotorBladesComment"/>
-                    <select id="gearboxOilLevelAnswerField"
-                            themeNames="helper-above-field"
-                            helperText="msg://gearboxOilLevelQuestion"
-                            property="gearboxOilLevelAnswer"/>
-                    <textArea label="msg://empty" height="4em" id="gearboxOilLevelCommentField"
-                              property="gearboxOilLevelComment"/>
-                    <radioButtonGroup id="generatorCheckAnswerField"
-                                      themeNames="helper-above-field"
-                                      helperText="msg://generatorCheckQuestion"
-                                      property="generatorCheckAnswer"/>
-                    <textArea label="msg://empty" height="4em" id="generatorCheckCommentField"
-                              property="generatorCheckComment"/>
-                    <select id="controlSystemStatusField"
-                            themeNames="helper-above-field"
-                            helperText="msg://controlSystemStatusQuestion"
-                            property="controlSystemStatus"/>
-                    <textArea label="msg://empty" height="4em" id="controlSystemCommentField"
-                              property="controlSystemComment"/>
-                </formLayout>
-            </accordionPanel>
-            <accordionPanel summaryText="msg://findings" classNames="white-card mb-m">
-                <hbox width="100%" justifyContent="END">
-                    <button id="createFindingBtn" action="createFindingAction" alignSelf="END"/>
-                </hbox>
-                <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%"/>
-            </accordionPanel>
-            <accordionPanel summaryText="msg://recommendations" classNames="white-card mb-m">
-                <hbox width="100%" justifyContent="END">
-                    <button id="createRecommendationBtn" action="createRecommendationAction" alignSelf="END"/>
-                </hbox>
-                <virtualList id="recommendationsVirtualList" itemsContainer="recommendationsDc" width="100%"/>
-            </accordionPanel>
-            <accordionPanel summaryText="msg://complete" classNames="white-card mb-m">
-                <vbox id="signatureDetails">
-                    <image id="storedSignatureImage"
-                           property="operatorRepSignature"
-                           dataContainer="inspectionDc"
-                           height="300px"
-                           width="100%"
-                           visible="false"
-                    />
+        <vbox classNames="layout-header">
+            <hbox width="100%" alignItems="CENTER" expand="spacer">
+                <button id="backBtn" action="back" classNames="back-button"/>
+                <span id="spacer"/>
+                <svgIcon resource="icons/notification.svg"/>
+            </hbox>
+            <h3 classNames="page-title" text="msg://inspectionDetailView.title"/>
+        </vbox>
+
+        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="100%"
+                  classNames="content-tab-sheet">
+            <tab id="detailsTab" label="msg://inspectionDetails">
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout id="detailsForm" dataContainer="inspectionDc">
+                                        <entityPicker id="turbineField" property="turbine" readOnly="true">
+                                            <actions>
+                                                <action id="entityLookup" type="entity_lookup"/>
+                                                <action id="entityClear" type="entity_clear"/>
+                                            </actions>
+                                        </entityPicker>
+                                        <datePicker id="inspectionDateField" property="inspectionDate"/>
+                                        <entityPicker id="technicianField" property="technician">
+                                            <actions>
+                                                <action id="entityLookup" type="entity_lookup"/>
+                                                <action id="entityClear" type="entity_clear"/>
+                                            </actions>
+                                        </entityPicker>
+                                    </formLayout>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
                 </vbox>
-                <vbox id="signaturePadWrapper" width="100%" padding="false" spacing="false"/>
-                <formLayout id="signatureForm" dataContainer="inspectionDc">
-                    <textField id="operatorRepNameField" property="operatorRepName"/>
-                    <dateTimePicker id="operatorRepSignedAtField" dataContainer="inspectionDc"
-                                    property="operatorRepSignedAt" visible="false"/>
-                    <checkbox id="operatorConfirmationField" property="operatorConfirmation"/>
-                </formLayout>
-            </accordionPanel>
-        </accordion>
-        <hbox id="detailActions" alignSelf="END">
-            <button id="closeBtn" action="closeAction"/>
-            <button id="prevBtn" action="prevAction" enabled="false"/>
-            <button id="nextBtn" action="nextAction"/>
-            <button id="finishBtn" action="finishAction" visible="false"/>
+            </tab>
+            <tab id="checklistTab" label="msg://checklist">
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout dataContainer="inspectionDc">
+                                        <select id="rotorBladesAnswerField"
+                                                property="rotorBladesAnswer"
+                                                themeNames="helper-above-field"
+                                                helperText="msg://rotorBladesQuestion"/>
+                                        <textArea label="msg://empty" height="4em" id="rotorBladesCommentField"
+                                                  property="rotorBladesComment"/>
+                                    </formLayout>
+                                </vbox>
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout dataContainer="inspectionDc">
+                                        <select id="gearboxOilLevelAnswerField"
+                                                themeNames="helper-above-field"
+                                                helperText="msg://gearboxOilLevelQuestion"
+                                                property="gearboxOilLevelAnswer"/>
+                                        <textArea label="msg://empty" height="4em" id="gearboxOilLevelCommentField"
+                                                  property="gearboxOilLevelComment"/>
+                                    </formLayout>
+                                </vbox>
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout dataContainer="inspectionDc">
+                                        <radioButtonGroup id="generatorCheckAnswerField"
+                                                          themeNames="helper-above-field"
+                                                          helperText="msg://generatorCheckQuestion"
+                                                          property="generatorCheckAnswer"/>
+                                        <textArea label="msg://empty" height="4em" id="generatorCheckCommentField"
+                                                  property="generatorCheckComment"/>
+                                    </formLayout>
+                                </vbox>
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout dataContainer="inspectionDc">
+                                        <select id="controlSystemStatusField"
+                                                themeNames="helper-above-field"
+                                                helperText="msg://controlSystemStatusQuestion"
+                                                property="controlSystemStatus"/>
+                                        <textArea label="msg://empty" height="4em" id="controlSystemCommentField"
+                                                  property="controlSystemComment"/>
+                                    </formLayout>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
+                </vbox>
+            </tab>
+            <tab id="findingsTab" label="msg://findings">
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+                                <vbox width="100%" classNames="white-card">
+                                    <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%"/>
+                                    <button id="createFindingBtn" action="createFindingAction" classNames="blue-btn"
+                                            width="100%"/>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
+                </vbox>
+            </tab>
+            <tab id="recommendationsTab" label="msg://recommendations">
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+                                <vbox width="100%" classNames="white-card">
+                                    <virtualList id="recommendationsVirtualList" itemsContainer="recommendationsDc"
+                                                 width="100%"/>
+                                    <button id="createRecommendationBtn" action="createRecommendationAction"
+                                            classNames="blue-btn" width="100%"/>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
+                </vbox>
+            </tab>
+            <tab id="completeTab" label="msg://complete">
+                <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                    <vbox width="100%" classNames="light-background" padding="false">
+                        <scroller width="100%" height="100%">
+                            <vbox width="100%" padding="true">
+                                <vbox width="100%" classNames="white-card">
+
+                                    <formLayout dataContainer="inspectionDc">
+                                        <formItem label="msg://io.jmix.windturbines.entity.inspection/Inspection.operatorRepSignature">
+                                            <vbox id="signaturePadWrapper" width="100%" padding="false" spacing="false"/>
+                                        </formItem>
+                                    </formLayout>
+                                    <vbox id="signatureDetails" padding="false" spacing="false">
+                                        <image id="storedSignatureImage"
+                                               property="operatorRepSignature"
+                                               dataContainer="inspectionDc"
+                                               height="300px"
+                                               width="100%"
+                                               visible="false"
+                                        />
+                                    </vbox>
+                                </vbox>
+                                <vbox width="100%" classNames="white-card">
+                                    <formLayout id="signatureForm" dataContainer="inspectionDc">
+                                        <textField id="operatorRepNameField" property="operatorRepName"/>
+                                        <dateTimePicker id="operatorRepSignedAtField" dataContainer="inspectionDc"
+                                                        property="operatorRepSignedAt" visible="false"/>
+                                        <checkbox id="operatorConfirmationField" property="operatorConfirmation"/>
+                                    </formLayout>
+                                </vbox>
+                            </vbox>
+                        </scroller>
+                    </vbox>
+                </vbox>
+            </tab>
+        </tabSheet>
+        <hbox id="detailActions" width="100%" spacing="true" padding="true">
+            <button id="prevBtn" action="prevAction" enabled="false" classNames="blue-btn"/>
+            <button id="nextBtn" action="nextAction" classNames="orange-btn"/>
+            <button id="finishBtn" action="finishAction" visible="false" classNames="orange-btn"/>
         </hbox>
     </layout>
 </view>
