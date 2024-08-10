@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/flowui/menu">
 
-    <item view="Inspection.list"
-          title="msg://io.jmix.windturbines.view.inspection/inspectionsListView.title"/>
-    <item view="Turbine.list"
-          title="msg://io.jmix.windturbines.view.turbine/turbineListView.title"
-    />
-    <separator />
+    <separator/>
+    <item view="Inspection.list" title="msg://io.jmix.windturbines.view.inspection/inspectionsListView.title"/>
+    <item view="Turbine.list" title="msg://io.jmix.windturbines.view.turbine/turbineListView.title"/>
+    <separator/>
     <menu id="security" title="msg://io.jmix.windturbines/menu.security.title">
         <item view="User.list" title="msg://io.jmix.windturbines.view.user/UserListView.title"/>
         <item view="sec_ResourceRoleModel.list"

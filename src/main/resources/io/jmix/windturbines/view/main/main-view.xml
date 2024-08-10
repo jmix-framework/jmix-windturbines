@@ -7,18 +7,17 @@
     <appLayout>
         <navigationBar touchOptimized="true">
             <header id="header" classNames="jmix-main-view-header">
-                <tabs id="mainMenuTabs" width="100%" themeNames="equal-width-tabs hide-scroll-buttons minimal" classNames="main-menu-tabs"/>
+                <tabs id="mainMenuTabs" width="100%" themeNames="equal-width-tabs hide-scroll-buttons minimal"
+                      classNames="main-menu-tabs"/>
             </header>
         </navigationBar>
         <drawerLayout>
             <section id="section" classNames="jmix-main-view-section">
-                <h2 id="applicationTitle"
-                    classNames="jmix-main-view-application-title">
-                    <anchor id="baseLink"
-                            href="."
-                            text="msg://applicationTitle.text"
-                            classNames="jmix-main-view-application-title-base-link"/>
-                </h2>
+                <vbox classNames="menu-header">
+                    <image classNames="menu-avatar" resource="/icons/avatar.jpg"/>
+                    <h3 text="msg://currentUser"/>
+                </vbox>
+
                 <nav id="navigation"
                      classNames="jmix-main-view-navigation"
                      ariaLabel="msg://navigation.ariaLabel">
