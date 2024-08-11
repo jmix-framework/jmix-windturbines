@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <actions>
+        <action id="detailsAction" />
+    </actions>
+    <content>
+        <vbox id="root"
+              padding="false"
+              spacing="false"
+              classNames="white-card cursor-pointer turbine-list-white-card m-m">
+            <hbox width="100%" classNames="gap-m p-s">
+                <span id="turbineId" classNames="font-bold"/>
+                <hbox justifyContent="END" width="100%">
+                    <span id="statusBadge"
+                          width="100px"
+                          themeNames="badge pill"
+                          classNames="turbine-status"/>
+                </hbox>
+            </hbox>
+            <hbox width="100%" classNames="gap-xl p-s">
+                <span id="manufacturerName"/>
+                <span id="model"/>
+            </hbox>
+            <hbox width="100%" classNames="gap-m p-s">
+                <hbox alignItems="CENTER" width="100%">
+                    <svgIcon resource="/icons/location.svg"/>
+                    <span id="location"
+                          width="100%"
+                          classNames="cut-overflow-text"/>
+                </hbox>
+                <hbox padding="false" justifyContent="END">
+                    <button action="detailsAction" icon="CHEVRON_RIGHT"
+                            themeNames="tertiary-inline"/>
+                </hbox>
+            </hbox>
+        </vbox>
+
+    </content>
+</fragment>
