@@ -4,7 +4,6 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.AbstractIcon;
 import com.vaadin.flow.component.icon.SvgIcon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -22,6 +21,7 @@ import io.jmix.windturbines.entity.inspection.Inspection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Route("")
@@ -48,10 +48,27 @@ public class MainView extends StandardMainView {
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
         initMobileMenu();
-        createNotificationsMenuEntry();
+        initSideMenu();
     }
 
-    private void createNotificationsMenuEntry() {
+
+    private void initSideMenu() {
+
+        menu.addMenuItem(
+                ListMenu.MenuItem.create("myProfile")
+                        .withTitle(messageBundle.getMessage("myProfile"))
+                        .withPrefixComponent(icon("user.svg"))
+                        .withClickHandler(e -> notifications.create(messageBundle.getMessage("notImplemented"))
+                                .withType(Notifications.Type.WARNING)
+                                .show()
+                        ),
+                0
+        );
+
+
+        setMenuIcon("Turbine.list", "turbine-white.svg");
+        setMenuIcon("Inspection.list", "inspection-white.svg");
+
         Span notificationsBadge = uiComponents.create(Span.class);
         notificationsBadge.getElement().getThemeList().addAll(List.of("badge", "pill"));
         notificationsBadge.setText(new Random().nextInt(10) + "");
@@ -65,8 +82,32 @@ public class MainView extends StandardMainView {
                                 .show()
                         )
         );
+
+
+        menu.addMenuItem(
+                ListMenu.MenuItem.create("settings")
+                        .withTitle(messageBundle.getMessage("settings"))
+                        .withPrefixComponent(icon("settings.svg"))
+                        .withClickHandler(e -> notifications.create(messageBundle.getMessage("notImplemented"))
+                                .withType(Notifications.Type.WARNING)
+                                .show()
+                        )
+        );
+        menu.addMenuItem(
+                ListMenu.MenuItem.create("technicalSupport")
+                        .withTitle(messageBundle.getMessage("technicalSupport"))
+                        .withPrefixComponent(icon("technical-support.svg"))
+                        .withClickHandler(e -> notifications.create(messageBundle.getMessage("notImplemented"))
+                                .withType(Notifications.Type.WARNING)
+                                .show()
+                        )
+        );
     }
 
+    private void setMenuIcon(String menuItemId, String iconFilename) {
+        Optional.ofNullable(menu.getMenuItem(menuItemId))
+                .ifPresent(it -> it.setPrefixComponent(icon(iconFilename)));
+    }
 
     private void initMobileMenu() {
         inspectionsTab = createTab("Inspections", "inspections", icon("inspection.svg"));
@@ -96,12 +137,12 @@ public class MainView extends StandardMainView {
         if (e.getSelectedTab() != null) {
             Tab selectedTab = e.getSelectedTab();
             if (selectedTab.equals(turbineTab)) {
-                    viewNavigators.listView(this, Turbine.class)
-                            .navigate();
+                viewNavigators.listView(this, Turbine.class)
+                        .navigate();
             }
             if (selectedTab.equals(inspectionsTab)) {
-                    viewNavigators.listView(this, Inspection.class)
-                            .navigate();
+                viewNavigators.listView(this, Inspection.class)
+                        .navigate();
             }
         }
     }
