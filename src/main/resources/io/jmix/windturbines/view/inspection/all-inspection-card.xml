@@ -1,0 +1,25 @@
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <actions>
+        <action id="assignAction" icon="vaadin:check" />
+    </actions>
+    <content>
+        <vbox id="root"
+              padding="false"
+              spacing="false"
+              classNames="m-m white-card cursor-pointer turbine-list-white-card">
+            <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
+                <icon icon="vaadin:calendar-o" classNames="mr-s"/>
+                <span id="inspectionDate"/>
+                <hbox id="statusLayout" width="100%" padding="false" justifyContent="END">
+                    <span id="statusBadge" width="100px" classNames="task-status" themeNames="badge pill"/>
+                </hbox>
+            </hbox>
+            <hbox width="100%" classNames="p-s gap-m">
+                <span id="secondRowText" width="100%"/>
+                <hbox padding="false" justifyContent="END">
+                    <button action="assignAction" themeNames="tertiary-inline"/>
+                </hbox>
+            </hbox>
+        </vbox>
+    </content>
+</fragment>

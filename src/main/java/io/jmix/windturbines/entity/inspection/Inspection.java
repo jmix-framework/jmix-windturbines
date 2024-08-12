@@ -16,6 +16,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @JmixEntity
 @Table(name = "INSPECTION")
@@ -239,5 +240,11 @@ public class Inspection extends StandardEntity {
         return String.format("%s - %s",
                 datatypeFormatter.formatLocalDate(inspectionDate),
                 metadataTools.format(turbine));
+    }
+
+    public String technicianName() {
+        return Optional.ofNullable(getTechnician())
+                .map(User::getDisplayName)
+                .orElse("Not assigned");
     }
 }
