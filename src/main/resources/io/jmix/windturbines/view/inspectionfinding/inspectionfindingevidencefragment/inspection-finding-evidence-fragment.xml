@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <actions>
+        <action id="removeAction" icon="TRASH"/>
+    </actions>
+    <content>
+        <hbox id="root" width="100%" spacing="true" padding="true" alignItems="CENTER">
+            <image id="image" classNames="evidence-image"/>
+            <span id="filename" classNames="cut-overflow-text-wrap"/>
+            <button action="removeAction" themeNames="large"/>
+        </hbox>
+    </content>
+</fragment>

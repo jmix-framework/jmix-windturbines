@@ -1,12 +1,8 @@
 html {
-    --lumo-primary-color-50pct: hsla(214, 0%, 0%, 0.5);
-    --lumo-primary-color-10pct: hsla(214, 0%, 0%, 0.1);
-    --lumo-error-color-50pct: rgba(229, 44, 67, 0.5);
-    --lumo-error-color-10pct: rgba(229, 44, 67, 0.1);
-    --lumo-primary-color: hsl(214, 0%, 0%);
-    --lumo-primary-text-color: hsl(214, 0%, 0%);
-    --lumo-error-color: rgb(229, 44, 67);
-    --lumo-error-text-color: rgb(229, 44, 67);
+    --lumo-primary-text-color: rgb(35, 95, 213);
+    --lumo-primary-color-50pct: rgba(35, 95, 213, 0.5);
+    --lumo-primary-color-10pct: rgba(35, 95, 213, 0.1);
+    --lumo-primary-color: #235FD5;
 }
 
 
@@ -41,6 +37,11 @@ html {
     white-space: nowrap;
 }
 
+.cut-overflow-text-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .jmix-main-view-drawer-toggle, .back-button {
     color: white !important;
@@ -56,30 +57,34 @@ html {
 }
 
 
-.blue-btn  {
+.blue-btn {
     background: linear-gradient(270deg, #1A60CC 0%, #154287 100%);
     box-shadow: 0px 1px 1.63px 0px #1542872E;
     box-shadow: 0px 5px 10px 0px #1542875C;
-    color:white;
+    color: white;
     border-radius: 20px;
     flex: 1;
 }
 
-.blue-btn[disabled]  {
-    background: linear-gradient(270deg, #1A60CC 0%, #154287 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+.blue-btn[disabled] {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+    linear-gradient(270deg, #1A60CC 0%, #154287 100%);
     box-shadow: none;
 }
-.orange-btn  {
+
+.orange-btn {
     background: linear-gradient(270deg, #FF9467 0%, #E35231 100%);
     box-shadow: 0px 1px 1.63px 0px #B936032E;
     box-shadow: 0px 5px 10px 0px #B936035C;
-    color:white;
+    color: white;
     border-radius: 20px;
     flex: 1;
 }
 
 
-.orange-btn[disabled]  {
-    background: linear-gradient(270deg, #FF9467 0%, #E35231 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+.orange-btn[disabled] {
+    background:
+        linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+        linear-gradient(270deg, #FF9467 0%, #E35231 100%);
     box-shadow: none;
 }

@@ -18,6 +18,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import io.jmix.core.Messages;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
+import io.jmix.flowui.Fragments;
 import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.textfield.TypedTextField;
@@ -27,6 +28,7 @@ import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.inspection.Inspection;
+import io.jmix.windturbines.view.inspection.MyInspectionCard;
 import io.jmix.windturbines.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -47,7 +49,7 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
     @Autowired
     private ViewNavigators viewNavigators;
     @Autowired
-    private DatatypeFormatter datatypeFormatter;
+    private Fragments fragments;
     @ViewComponent
     private H3 pageTitle;
     @ViewComponent
@@ -96,104 +98,11 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
     @Supply(to = "inspectionsVirtualList", subject = "renderer")
     private Renderer<Inspection> inspectionsVirtualListRenderer() {
         return new ComponentRenderer<>(inspection -> {
-
-            VerticalLayout mainLayout = createVerticalLayout();
-            mainLayout.setId("inspection-" + inspection.getId());
-            mainLayout.addClassNames(
-                    LumoUtility.Margin.MEDIUM,
-                    "white-card",
-                    "cursor-pointer",
-                    "turbine-list-white-card"
-            );
-
-            HorizontalLayout firstRow = createHorizontalLayout();
-            firstRow.setWidthFull();
-            firstRow.setAlignItems(FlexComponent.Alignment.STRETCH);
-            firstRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
-
-            Icon calendarIcon = new Icon(VaadinIcon.CALENDAR_O);
-            calendarIcon.addClassName(LumoUtility.Margin.Right.SMALL);
-            firstRow.add(calendarIcon);
-
-            Span inspectionDate = uiComponents.create(Span.class);
-            inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
-            firstRow.add(inspectionDate);
-
-            HorizontalLayout statusLayout = createHorizontalLayout();
-            statusLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
-            statusLayout.setWidthFull();
-
-            Span status = uiComponents.create(Span.class);
-            status.addClassName("task-status");
-            status.getElement().getThemeList().addAll(List.of("badge", "pill", inspection.getTaskStatus().getBadgeThemeName()));
-            status.setWidth("100px");
-            status.setText(messages.getMessage(inspection.getTaskStatus()));
-            statusLayout.add(status);
-            firstRow.add(statusLayout);
-
-            mainLayout.add(firstRow);
-
-            HorizontalLayout secondRow = createHorizontalLayout();
-            secondRow.setWidthFull();
-            secondRow.setAlignItems(FlexComponent.Alignment.STRETCH);
-            secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
-
-
-            HorizontalLayout detailButtonLayout = createHorizontalLayout();
-            detailButtonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
-
-            Span secondRowText = uiComponents.create(Span.class);
-
-
-            String text = "%s - %s".formatted(
-                    inspection.getTurbine().getLocation(),
-                    inspection.getTurbine().getManufacturer().getName()
-            );
-
-            secondRowText.setText(text);
-            secondRow.addAndExpand(secondRowText);
-
-            Button detailsButton = detailsButton(inspection);
-            detailButtonLayout.add(detailsButton);
-            secondRow.add(detailButtonLayout);
-            mainLayout.add(secondRow);
-
-            mainLayout.addClickListener(event ->
-                    viewNavigators.detailView(this, Inspection.class)
-                            .withReadOnly(inspection.getTaskStatus().equals(TaskStatus.COMPLETED))
-                            .editEntity(inspection)
-                            .navigate()
-            );
-
-            return mainLayout;
+            MyInspectionCard card = fragments.create(this, MyInspectionCard.class);
+            card.setInspection(inspection);
+            card.setOriginView(this);
+            return card;
         });
-    }
-
-
-    private Button detailsButton(Inspection inspection) {
-        Button button = uiComponents.create(Button.class);
-        button.setId("detailsButton");
-        button.setIcon(VaadinIcon.CHEVRON_RIGHT.create());
-        button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        button.addClickListener(e ->
-                viewNavigators.detailView(this, Inspection.class)
-                        .withReadOnly(inspection.getTaskStatus().equals(TaskStatus.COMPLETED))
-                        .editEntity(inspection)
-                        .navigate()
-        );
-        return button;
-    }
-    private VerticalLayout createVerticalLayout() {
-        VerticalLayout layout = uiComponents.create(VerticalLayout.class);
-        layout.setSpacing(false);
-        layout.setPadding(false);
-        return layout;
-    }
-
-    private HorizontalLayout createHorizontalLayout() {
-        HorizontalLayout layout = uiComponents.create(HorizontalLayout.class);
-        layout.setPadding(false);
-        return layout;
     }
 
     @Subscribe("back")

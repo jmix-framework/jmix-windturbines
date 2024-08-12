@@ -1,11 +1,9 @@
 package io.jmix.windturbines.view.inspectionfinding;
 
-import com.vaadin.flow.component.html.Div;
 import io.jmix.core.DataManager;
 import io.jmix.core.FileRef;
 import io.jmix.core.FileStorage;
 import io.jmix.flowui.ViewNavigators;
-import io.jmix.flowui.component.UiComponentUtils;
 import io.jmix.flowui.component.image.JmixImage;
 import io.jmix.flowui.component.upload.FileStorageUploadField;
 import io.jmix.flowui.component.upload.receiver.FileTemporaryStorageBuffer;
@@ -69,12 +67,8 @@ class InspectionFindingDetailViewTest {
     private InspectionFindingEvidence evidence1;
     private InspectionFindingEvidence evidence2;
 
-    private static List<JmixImage> findEvidenceImageComponents(InspectionFindingDetailView detailView) {
-        Div evidencesListWrapper = UiTestUtils.getComponent(detailView, "evidencesListWrapper");
-        return UiComponentUtils.getComponents(evidencesListWrapper).stream()
-                .filter(JmixImage.class::isInstance)
-                .map(JmixImage.class::cast)
-                .toList();
+    private static List<InspectionFindingEvidence> evidences(InspectionFindingDetailView detailView) {
+        return detailView.getEvidencesDc().getDisconnectedItems();
     }
 
     @BeforeEach
@@ -97,14 +91,14 @@ class InspectionFindingDetailViewTest {
         InspectionFindingDetailView detailView = navigateTo(InspectionFindingDetailView.class, inspectionFinding, InspectionFinding.class);
 
         // when
-        List<JmixImage> images = findEvidenceImageComponents(detailView);
+        List<InspectionFindingEvidence> evidences = evidences(detailView);
 
         // then
-        assertThat(images).hasSize(2);
+        assertThat(evidences).hasSize(2);
 
         // and
-        assertThat(images.getFirst().getSrc()).contains(evidence1.getFile().getFileName());
-        assertThat(images.getLast().getSrc()).contains(evidence2.getFile().getFileName());
+        assertThat(evidences.getFirst().getFile().getFileName()).isEqualTo(evidence1.getFile().getFileName());
+        assertThat(evidences.getLast().getFile().getFileName()).isEqualTo(evidence2.getFile().getFileName());
     }
 
     @Test
@@ -116,13 +110,13 @@ class InspectionFindingDetailViewTest {
         FileStorageUploadField upload = UiTestUtils.getComponent(detailView, "upload");
 
         simulateUploadFor(detailView, upload, "evidence-3.jpg", "image/jpeg");
-        List<JmixImage> images = findEvidenceImageComponents(detailView);
+        List<InspectionFindingEvidence> evidences = evidences(detailView);
 
         // then
-        assertThat(images).hasSize(3);
+        assertThat(evidences).hasSize(3);
 
         // and
-        assertThat(images.getLast().getSrc()).contains("evidence-3.jpg");
+        assertThat(evidences.getLast().getFile().getFileName()).isEqualTo("evidence-3.jpg");
     }
 
     private void simulateUploadFor(InspectionFindingDetailView detailView, FileStorageUploadField upload, String fileName, String mimeType) {
@@ -147,10 +141,10 @@ class InspectionFindingDetailViewTest {
         return UiTestUtils.getCurrentView();
     }
 
-    private InspectionFindingEvidence saveEvidence(InspectionFinding inspectionFinding1, Resource image) {
+    private InspectionFindingEvidence saveEvidence(InspectionFinding inspectionFinding, Resource image) {
         var evidence = dataManager.create(InspectionFindingEvidence.class);
         evidence.setFile(storeTestImage(image));
-        evidence.setInspectionFinding(inspectionFinding1);
+        evidence.setInspectionFinding(inspectionFinding);
 
         return dataManager.save(evidence);
     }
