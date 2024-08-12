@@ -12,24 +12,23 @@
     - Definition and characteristics of PWAs
     - Advantages of PWAs in the business application context
     - Limitations and specific considerations
-
-4. **Support by Vaadin**
     - Capabilities and benefits of Vaadin for PWA development
     - Special features and layout support
+    - Jmix added functionalities
 
-5. **Example application: Jmix Wind Turbines**
+4. **Example application: Jmix Wind Turbines**
     - Overview and purpose of the application
     - Business use case
     - Key functions and features
     - Visual representations (screenshots, diagrams)
 
-6. **Approaches to creating mobile applications with Jmix**
+5. **Approaches to creating mobile applications with Jmix**
     - Integration into an existing application
     - Dedicated mobile Jmix application
     - Mobile application with React and REST API
     - Pros and cons of different approaches
 
-7. **Conclusion**
+6. **Conclusion**
     - Summary of key points
     - Call to action
 
@@ -54,21 +53,16 @@
     - No need for platform-specific apps
     - Avoidance of app stores
     - Suitable for business applications
+- **Vaadin Capabilities**: Efficient PWA development, extensive UI components
+- **Special features**:
+    - Responsive layout support
+    - CSS Flexbox model for flexible design
 - **Limitations**:
     - Offline capability not always guaranteed
     - Server interactions on every button click (server round-trips)
     - Dependency on a good internet connection
 
-#### 4. Support by Vaadin
-- **Capabilities**: Efficient PWA development, extensive UI components
-- **Special features**:
-    - Responsive layout support
-    - CSS Flexbox model for flexible design
-- **Limitations**:
-    - High server interaction via Vaadin Flow
-    - Dependency on a good internet connection
-
-#### 5. Example application: Jmix Wind Turbines
+#### 4. Example application: Jmix Wind Turbines
 - **Overview**:
     - Target audience: Field inspectors for wind turbines
     - Purpose: Efficient inspection and maintenance planning
@@ -92,7 +86,7 @@
     - Screenshots of the user interface (card layout, questionnaire, photo upload, turbine info)
     - Diagrams of inspection performance and history
 
-#### 6. Approaches to creating mobile applications with Jmix
+#### 5. Approaches to creating mobile applications with Jmix
 - **Integration into an existing application**:
     - **Description**: Backoffice UI and mobile frontend in one application
     - **Pros**: Unified system, simple permission control
@@ -109,7 +103,7 @@
     - **Reason**: Demonstrating capabilities within a single Jmix application
     - **Outcome**: Efficient use of existing infrastructure and resources
 
-#### 7. Conclusion
+#### 6. Conclusion
 - **Summary**: Key insights from the blog post
     - Importance of mobile applications in business
     - Advantages of PWAs and Vaadin support

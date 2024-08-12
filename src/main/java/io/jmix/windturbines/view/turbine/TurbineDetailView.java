@@ -69,7 +69,7 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
 
         statusField.addClassName("turbine-status");
         statusField.getElement().getThemeList().addAll(List.of("badge", "pill", getEditedEntity().getStatus().getBadgeThemeName()));
-        statusField.setWidth("100px");
+        statusField.setWidth("120px");
         statusField.setText(messages.getMessage(getEditedEntity().getStatus()));
     }
 

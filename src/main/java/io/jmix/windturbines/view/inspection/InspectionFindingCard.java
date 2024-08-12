@@ -98,7 +98,7 @@ public class InspectionFindingCard extends VerticalLayout {
         Span severity = uiComponents.create(Span.class);
         severity.setId("severity");
         severity.getElement().getThemeList().addAll(List.of("badge", finding.getSeverity().getBadgeThemeName()));
-        severity.setWidth("100px");
+        severity.setWidth("120px");
         severity.setText(messages.getMessage(finding.getSeverity()));
         severityLayout.add(severity);
         firstRow.add(severityLayout);

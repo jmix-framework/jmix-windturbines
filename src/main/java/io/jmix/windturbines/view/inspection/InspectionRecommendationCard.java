@@ -102,7 +102,7 @@ public class InspectionRecommendationCard extends VerticalLayout {
         Span priority = uiComponents.create(Span.class);
         priority.setId("priority");
         priority.getElement().getThemeList().addAll(List.of("badge", recommendation.getPriority().getBadgeThemeName()));
-        priority.setWidth("100px");
+        priority.setWidth("120px");
         priority.setText(messages.getMessage(recommendation.getPriority()));
         priorityLayout.add(priority);
         firstRow.add(priorityLayout);

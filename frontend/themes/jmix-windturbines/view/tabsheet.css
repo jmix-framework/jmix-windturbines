@@ -1,0 +1,23 @@
+.content-tab-sheet::part(tabs-container) {
+    background-color: #1D3982;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 4px 16px 16px;
+    height: 36px;
+}
+
+.content-tab-sheet vaadin-tab {
+    color: white;
+}
+
+.content-tab-sheet vaadin-tab[selected] {
+    background: linear-gradient(180deg, #EBF2FC 0%, #DBE8FD 100%);
+    color: #1D3982;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.content-tab-sheet::part(content) {
+    padding: 0 !important;
+}

@@ -12,7 +12,7 @@
                 <span id="turbineId" classNames="font-bold"/>
                 <hbox justifyContent="END" width="100%">
                     <span id="statusBadge"
-                          width="100px"
+                          width="120px"
                           themeNames="badge pill"
                           classNames="turbine-status"/>
                 </hbox>
