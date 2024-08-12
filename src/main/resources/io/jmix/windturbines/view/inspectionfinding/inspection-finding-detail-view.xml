@@ -19,34 +19,29 @@
         <action id="saveAction" type="detail_saveClose"/>
         <action id="closeAction" type="detail_close"/>
     </actions>
-    <layout expand="contentTabSheet">
-        <tabSheet id="contentTabSheet" width="100%">
-            <tab id="formTab" label="msg://finding">
-                <formLayout id="form" dataContainer="inspectionFindingDc">
-                    <textField id="titleField" property="title"/>
-                    <textArea id="descriptionField" height="15em" property="description"/>
-                    <select id="severityField" property="severity"/>
-                </formLayout>
-            </tab>
-            <tab id="evidencesTab" label="msg://evidences">
-                <vbox width="100%">
-                    <fileStorageUploadField id="upload"
-                                            dropAllowed="false"
-                                            acceptedFileTypes=".png,.jpg,.jpeg"
-                                            maxFileSize="100000000"
-                                            uploadIcon="PICTURE"
-                                            clearButtonVisible="false"
-                                            fileStoragePutMode="MANUAL"
-                    />
-
-                    <div id="evidencesListWrapper"/>
-                </vbox>
-            </tab>
-        </tabSheet>
-
-        <hbox id="detailActions">
-            <button id="saveAndCloseBtn" action="saveAction"/>
-            <button id="closeBtn" action="closeAction"/>
+    <layout>
+        <formLayout id="form" dataContainer="inspectionFindingDc">
+            <textField id="titleField" property="title"/>
+            <textArea id="descriptionField" height="7em" property="description"/>
+            <select id="severityField" property="severity"/>
+        </formLayout>
+        <h5 text="msg://evidences"/>
+        <vbox width="100%" padding="false">
+            <virtualList id="evidencesVirtualList" itemsContainer="evidencesDc" height="300px" />
+            <fileStorageUploadField id="upload"
+                                    uploadText="msg://uploadEvidence"
+                                    classNames="upload-btn"
+                                    dropAllowed="false"
+                                    acceptedFileTypes=".png,.jpg,.jpeg"
+                                    maxFileSize="100000000"
+                                    uploadIcon="PICTURE"
+                                    clearButtonVisible="false"
+                                    fileStoragePutMode="MANUAL"
+            />
+        </vbox>
+        <hbox id="detailActions" width="100%" spacing="true" padding="false">
+            <button id="closeBtn" action="closeAction" classNames="blue-btn"/>
+            <button id="saveAndCloseBtn" action="saveAction" classNames="orange-btn"/>
         </hbox>
     </layout>
 </view>
