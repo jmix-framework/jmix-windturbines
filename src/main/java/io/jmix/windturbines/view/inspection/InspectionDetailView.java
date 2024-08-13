@@ -280,25 +280,51 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
             dataContext.remove(dataContext.merge(recommendation));
         });
     }
+    private void removeRecommendation(InspectionRecommendation recommendation) {
+        recommendationsDc.getMutableItems().remove(recommendation);
+        dataContext.remove(dataContext.merge(recommendation));
+    }
 
     @Supply(to = "recommendationsVirtualList", subject = "renderer")
     private Renderer<InspectionRecommendation> recommendationsVirtualListRenderer() {
-        //noinspection JmixIncorrectCreateGuiComponent
-        return new ComponentRenderer<>(recommendation ->
-                new InspectionRecommendationCard(
-                        recommendation,
-                        uiComponents,
-                        dialogs,
-                        dataContext,
-                        dialogWindows,
-                        messages,
-                        recommendationsDc,
-                        findingsDc,
-                        this,
-                        isReadOnly()
-                ));
+        return new ComponentRenderer<>(this::createInspectionRecommendationCard);
     }
+    public InspectionRecommendationCard createInspectionRecommendationCard(InspectionRecommendation recommendation) {
+        InspectionRecommendationCard card = fragments.create(this, InspectionRecommendationCard.class);
+        card.setInspectionRecommendation(recommendation);
+        card.setReadOnly(isReadOnly());
+        card.setEditActionHandler(it -> {
+            DialogWindow<InspectionRecommendationDetailView> dialogWindow = dialogWindows.detail(this, InspectionRecommendation.class)
+                    .withViewClass(InspectionRecommendationDetailView.class)
+                    .withParentDataContext(dataContext)
+                    .withContainer(recommendationsDc)
+                    .editEntity(it)
+                    .build();
 
+            dialogWindow.setHeight("90%");
+            dialogWindow.setWidth("90%");
+            dialogWindow.open();
+        });
+        card.setRemoveActionHandler(it ->
+                dialogs.createOptionDialog()
+                        .withHeader(messages.getMessage("io.jmix.windturbines.view.inspection", "removeRecommendationDialog.header"))
+                        .withText(messages.getMessage("io.jmix.windturbines.view.inspection", "removeRecommendationDialog.text"))
+                        .withActions(
+                                new DialogAction(DialogAction.Type.OK)
+                                        .withVariant(ActionVariant.DANGER)
+                                        .withHandler(e -> removeRecommendation(it)),
+                                new DialogAction(DialogAction.Type.CANCEL)
+                        )
+                        .open()
+        );
+        card.setReadActionHandler(it ->
+                dialogWindows.detail(this, InspectionRecommendation.class)
+                        .withViewConfigurer(view -> ((ReadOnlyAwareView) view).setReadOnly(true))
+                        .editEntity(it)
+                        .open()
+        );
+        return card;
+    }
     @Subscribe("createFindingAction")
     public void onCreateFindingAction(final ActionPerformedEvent event) {
         dialogWindows.detail(this, InspectionFinding.class)
