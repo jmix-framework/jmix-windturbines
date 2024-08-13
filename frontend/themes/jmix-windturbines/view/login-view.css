@@ -15,7 +15,7 @@ vaadin-login-form-wrapper {
 }
 vaadin-login-form-wrapper::part(form-title) {
     font-size: 0;
-    background-image: url('/icons/login-icon.svg');
+    background-image: url('icons/login-icon.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

@@ -14,7 +14,7 @@
         <drawerLayout>
             <section id="section" classNames="jmix-main-view-section">
                 <vbox classNames="menu-header">
-                    <image classNames="menu-avatar" resource="/icons/avatar.jpg"/>
+                    <image classNames="menu-avatar" resource="icons/avatar.jpg"/>
                     <h3 text="msg://currentUser"/>
                 </vbox>
 
