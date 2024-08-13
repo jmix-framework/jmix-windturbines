@@ -1,13 +1,10 @@
 ### 5. Technical Implementation of the Example Application
 
-In this section, we will dive into the technical implementation details of the Jmix Wind Turbines application. This
-includes how to enable PWA functionality, the use of mobile optimised Vaadin components like VirtualList, leveraging
-standard Jmix views, and customizing styles to create a good look & feel on a mobile device.
+In this section, we will dive into the technical implementation details of the Jmix Wind Turbines application. This includes how to enable PWA functionality, the use of mobile optimised Vaadin components like VirtualList, leveraging standard Jmix views, and customizing styles to create a good look & feel on a mobile device.
 
 ### Enabling PWA Functionality
 
-To enable PWA functionality in your Jmix application, you use the `@PWA` annotation from Vaadin. By default, every Jmix application has this annotation already active by default when creating a new application. This annotation transforms your web application into a Progressive Web App (PWA), which can be installed on a user’s device, providing an app-like experience. The `@PWA` annotation includes several configuration options such
-as `name`, `shortName`, `backgroundColor`, and `display`, which determine how the PWA behaves.
+To enable PWA functionality in your Jmix application, you use the `@PWA` annotation from Vaadin. By default, every Jmix application has this annotation already active by default when creating a new application. This annotation transforms your web application into a Progressive Web App (PWA), which can be installed on a user’s device, providing an app-like experience. The `@PWA` annotation includes several configuration options such as `name`, `shortName`, `backgroundColor`, and `display`, which determine how the PWA behaves.
 
 Here is an example of enabling PWA functionality in the Jmix Windturbines application:
 
@@ -47,13 +44,11 @@ For the Jmix Windturbines app, we use the standalone mode, which is also the def
 
 ### Optimizing Mobile Data Views via Card Layout
 
-In Jmix applications, list views are typically generated using DataGrids. While they are efficient for desktop views, they are not optimal for mobile interfaces due to the horizontal scrolling required to view multiple columns.
-Representing a list of items on mobile is typically done by displaying each item underneath the other. One effective way to achieve this is by using a card layout.
+In Jmix applications, list views are typically generated using DataGrids. While they are efficient for desktop views, they are not optimal for mobile interfaces due to the horizontal scrolling required to view multiple columns. Representing a list of items on mobile is typically done by displaying each item underneath the other. One effective way to achieve this is by using a card layout.
 
 Using a card layout improves the user experience on mobile devices. It organizes information into distinct, easily readable sections that fit well within the vertical space of a mobile screen. This layout is technically supported by Vaadin's `VirtualList`, allowing for the creation of a dynamic, responsive UI.
 
-To create a more mobile-friendly interface, you can start with a standard CRUD UI and then replace the DataGrid with the `<virtualList />` XML tag. The data binding is the same as for the DataGrid. The difference is that instead of defining a set of columns to render, you define a handler function that returns a component to be displayed for each
-item.
+To create a more mobile-friendly interface, you can start with a standard CRUD UI and then replace the DataGrid with the `<virtualList />` XML tag. The data binding is the same as for the DataGrid. The difference is that instead of defining a set of columns to render, you define a handler function that returns a component to be displayed for each item.
 
 Let's explore how we used the `VirtualList` component for the Turbine List View. Here is the XML view descriptor:
 
@@ -82,7 +77,6 @@ Let's explore how we used the `VirtualList` component for the Turbine List View.
 We use the `<virtualList />` tag to create a virtual list and bind it to the `turbinesDc` data container. The next step is that we have to specify programmatically how we display one particular turbine instance. For this, we create a renderer supplier in the Java controller of the list view:
 
 ```java
-
 @Route(value = "turbines", layout = MainView.class)
 @ViewController("Turbine.list")
 @ViewDescriptor("turbine-list-view.xml")
@@ -254,7 +248,7 @@ Here is an example of how the `TabSheet` layout is used in the turbine detail vi
 
 The final step in creating a polished detail view is customizing the CSS to ensure that the UI components are visually appealing and consistent with the application's design language. Jmix allows you to customize the styles of components using standard CSS, which can be applied to the generated views.
 
-Jmix organizes CSS files under the `frontend/themes/<<theme-name>>` directory, allowing you to create separate files for different views. This structure helps in maintaining a clean and modular approach to styling.
+Jmix organizes CSS files under the  `frontend/themes/<<theme-name>>` directory, allowing you to create separate files for different views. This structure helps in maintaining a clean and modular approach to styling.
 
 Here's the structure:
 ```

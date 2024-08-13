@@ -2,7 +2,8 @@
 @import url('./view/main-view.css');
 @import url('./view/login-view.css');
 @import url('./view/tabsheet.css');
-@import url('./view/finding-detail-view.css');
 @import url('./view/turbines-list-view.css');
-@import url('./view/inspection-list-view.css');
 @import url('./view/turbine-detail-view.css');
+@import url('./view/inspection-list-view.css');
+@import url('./view/inspection-detail-view.css');
+@import url('./view/finding-detail-view.css');

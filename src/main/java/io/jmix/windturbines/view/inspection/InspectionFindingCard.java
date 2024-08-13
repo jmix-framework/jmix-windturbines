@@ -1,203 +1,86 @@
 package io.jmix.windturbines.view.inspection;
 
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 import io.jmix.core.Messages;
-import io.jmix.flowui.DialogWindows;
-import io.jmix.flowui.Dialogs;
-import io.jmix.flowui.UiComponents;
-import io.jmix.flowui.action.DialogAction;
+import io.jmix.flowui.fragment.Fragment;
+import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
-import io.jmix.flowui.kit.action.ActionVariant;
-import io.jmix.flowui.model.CollectionPropertyContainer;
-import io.jmix.flowui.model.DataContext;
-import io.jmix.flowui.view.DialogWindow;
-import io.jmix.flowui.view.ReadOnlyAwareView;
+import io.jmix.flowui.kit.component.button.JmixButton;
+import io.jmix.flowui.view.Subscribe;
+import io.jmix.flowui.view.Target;
 import io.jmix.flowui.view.View;
+import io.jmix.flowui.view.ViewComponent;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
-import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
-import io.jmix.windturbines.view.inspectionfinding.InspectionFindingDetailView;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.util.function.Consumer;
 
-public class InspectionFindingCard extends VerticalLayout {
+@FragmentDescriptor("inspection-finding-card.xml")
+public class InspectionFindingCard extends Fragment<VerticalLayout> {
 
-    private final InspectionFinding finding;
-    private final UiComponents uiComponents;
-    private final Dialogs dialogs;
-    private final DataContext dataContext;
-    private final DialogWindows dialogWindows;
-    private final Messages messages;
-    private final CollectionPropertyContainer<InspectionFinding> findingsDc;
-    private final CollectionPropertyContainer<InspectionRecommendation> recommendationsDc;
-    private final View<?> originView;
-    private final boolean readOnly;
+    @Autowired
+    private Messages messages;
 
-    public InspectionFindingCard(
-            InspectionFinding finding,
-            UiComponents uiComponents,
-            Dialogs dialogs,
-            DataContext dataContext,
-            DialogWindows dialogWindows,
-            Messages messages,
-            CollectionPropertyContainer<InspectionFinding> findingsDc,
-            CollectionPropertyContainer<InspectionRecommendation> recommendationsDc,
-            View<?> originView,
-            boolean readOnly
-    ) {
+    @ViewComponent
+    private Span severity;
+    @ViewComponent
+    private Span description;
+    @ViewComponent
+    private Span title;
+    @ViewComponent
+    private JmixButton readBtn;
+    @ViewComponent
+    private JmixButton editBtn;
+    @ViewComponent
+    private JmixButton removeBtn;
+
+    private Consumer<InspectionFinding> editActionHandler;
+    private Consumer<InspectionFinding> readActionHandler;
+    private Consumer<InspectionFinding> removeActionHandler;
+    private InspectionFinding finding;
+
+    public void setInspectionFinding(InspectionFinding finding) {
         this.finding = finding;
-        this.uiComponents = uiComponents;
-        this.dialogs = dialogs;
-        this.dataContext = dataContext;
-        this.dialogWindows = dialogWindows;
-        this.messages = messages;
-        this.findingsDc = findingsDc;
-        this.recommendationsDc = recommendationsDc;
-        this.originView = originView;
-        this.readOnly = readOnly;
-
-        initLayout();
-    }
-
-    private void initLayout() {
-
-        setSpacing(false);
-        setPadding(false);
-        setWidthFull();
-        setId("finding-" + finding.getId());
-        addClassNames(
-                LumoUtility.Margin.Bottom.MEDIUM,
-                LumoUtility.Padding.SMALL,
-                LumoUtility.Gap.MEDIUM,
-                "white-card",
-                "cursor-pointer",
-                "finding-card"
-        );
-
-
-        HorizontalLayout firstRow = createHorizontalLayout();
-        firstRow.setWidthFull();
-        firstRow.setAlignItems(Alignment.STRETCH);
-        firstRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
-
-        Span title = uiComponents.create(Span.class);
-        title.setId("title");
-        title.setClassName("cut-overflow-text");
         title.setText(finding.getTitle());
-        title.setWidthFull();
-        firstRow.add(title);
-
-        HorizontalLayout severityLayout = createHorizontalLayout();
-        severityLayout.setJustifyContentMode(JustifyContentMode.END);
-
-        Span severity = uiComponents.create(Span.class);
-        severity.setId("severity");
-        severity.getElement().getThemeList().addAll(List.of("badge", finding.getSeverity().getBadgeThemeName()));
-        severity.setWidth("120px");
         severity.setText(messages.getMessage(finding.getSeverity()));
-        severityLayout.add(severity);
-        firstRow.add(severityLayout);
-
-        add(firstRow);
-
-        HorizontalLayout secondRow = createHorizontalLayout();
-        secondRow.setWidthFull();
-        secondRow.setAlignItems(Alignment.STRETCH);
-        secondRow.addClassNames(LumoUtility.Padding.SMALL, LumoUtility.Gap.MEDIUM);
-
-
-        Span description = uiComponents.create(Span.class);
-        description.setId("description");
-        description.setClassName("cut-overflow-text");
+        severity.getElement().getThemeList().add(finding.getSeverity().getBadgeThemeName());
         description.setText(finding.getDescription());
-        description.setWidthFull();
-        secondRow.add(description);
+    }
 
 
-        HorizontalLayout detailButtonLayout = createHorizontalLayout();
-        detailButtonLayout.setJustifyContentMode(JustifyContentMode.END);
+    @Subscribe("editAction")
+    public void onEditAction(final ActionPerformedEvent event) {
+        editActionHandler.accept(finding);
+    }
 
-        Button editBtn = uiComponents.create(Button.class);
-        editBtn.setId("editBtn");
-        editBtn.setIcon(VaadinIcon.PENCIL.create());
-        editBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        editBtn.addClickListener(e ->
-                {
-                    DialogWindow<InspectionFindingDetailView> dialogWindow = dialogWindows.detail(originView, InspectionFinding.class)
-                            .withViewClass(InspectionFindingDetailView.class)
-                            .withParentDataContext(dataContext)
-                            .withContainer(findingsDc)
-                            .editEntity(finding)
-                            .build();
 
-                    dialogWindow.setHeight("90%");
-                    dialogWindow.setWidth("90%");
-                    dialogWindow.open();
-                }
+    @Subscribe("readAction")
+    public void onReadAction(final ActionPerformedEvent event) {
+        readActionHandler.accept(finding);
+    }
 
-        );
-        editBtn.setVisible(!readOnly);
+    @Subscribe("removeAction")
+    public void onRemoveAction(final ActionPerformedEvent event) {
+        removeActionHandler.accept(finding);
+    }
 
-        Button readBtn = uiComponents.create(Button.class);
-        readBtn.setId("readBtn");
-        readBtn.setIcon(VaadinIcon.SEARCH.create());
-        readBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        readBtn.addClickListener(e ->
-                dialogWindows.detail(originView, InspectionFinding.class)
-                        .withViewConfigurer(view -> ((ReadOnlyAwareView) view).setReadOnly(true))
-                        .editEntity(finding)
-                        .open()
-        );
+
+    public void setEditActionHandler(Consumer<InspectionFinding> editActionHandler) {
+        this.editActionHandler = editActionHandler;
+    }
+
+    public void setReadOnly(boolean readOnly) {
         readBtn.setVisible(readOnly);
-
-        Button removeBtn = uiComponents.create(Button.class);
-        removeBtn.setId("removeBtn");
-        removeBtn.setIcon(VaadinIcon.TRASH.create());
-        removeBtn.addThemeVariants(ButtonVariant.LUMO_ERROR, ButtonVariant.LUMO_TERTIARY_INLINE);
-        removeBtn.addClickListener(e ->
-                dialogs.createOptionDialog()
-                        .withHeader(messages.getMessage("io.jmix.windturbines.view.inspection", "removeFindingDialog.header"))
-                        .withText(messages.getMessage("io.jmix.windturbines.view.inspection", "removeFindingDialog.text"))
-                        .withActions(
-                                new DialogAction(DialogAction.Type.OK)
-                                        .withVariant(ActionVariant.DANGER)
-                                        .withHandler(this::removeFinding),
-                                new DialogAction(DialogAction.Type.CANCEL)
-                        )
-                        .open()
-        );
+        editBtn.setVisible(!readOnly);
         removeBtn.setEnabled(!readOnly);
-
-        detailButtonLayout.add(readBtn);
-        detailButtonLayout.add(editBtn);
-        detailButtonLayout.add(removeBtn);
-        secondRow.add(detailButtonLayout);
-        secondRow.expand(description);
-
-        add(secondRow);
     }
 
-    private void removeFinding(ActionPerformedEvent event) {
-        findingsDc.getMutableItems().remove(finding);
-        dataContext.remove(dataContext.merge(finding));
-
-        List<InspectionRecommendation> relatedRecommendations = recommendationsDc.getMutableItems().stream()
-                .filter(it -> finding.equals(it.getRelatedFinding()))
-                .toList();
-        relatedRecommendations.forEach(recommendation -> {
-            recommendationsDc.getMutableItems().remove(recommendation);
-            dataContext.remove(dataContext.merge(recommendation));
-        });
+    public void setReadActionHandler(Consumer<InspectionFinding> readActionHandler) {
+        this.readActionHandler = readActionHandler;
     }
 
-    private HorizontalLayout createHorizontalLayout() {
-        HorizontalLayout layout = uiComponents.create(HorizontalLayout.class);
-        layout.setPadding(false);
-        return layout;
+    public void setRemoveActionHandler(Consumer<InspectionFinding> removeActionHandler) {
+        this.removeActionHandler = removeActionHandler;
     }
 }

@@ -6,7 +6,7 @@
     <content>
         <hbox id="root" width="100%" spacing="true" padding="true" alignItems="CENTER">
             <image id="image" classNames="evidence-image"/>
-            <span id="filename" classNames="cut-overflow-text-wrap"/>
+            <span id="filename" classNames="cut-overflow-text"/>
             <button action="removeAction" themeNames="large"/>
         </hbox>
     </content>

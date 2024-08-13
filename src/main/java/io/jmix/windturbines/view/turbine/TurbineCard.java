@@ -11,10 +11,7 @@ import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.View;
 import io.jmix.flowui.view.ViewComponent;
 import io.jmix.windturbines.entity.Turbine;
-import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 @FragmentDescriptor("turbine-card.xml")
 public class TurbineCard extends Fragment<VerticalLayout> {
@@ -65,7 +62,7 @@ public class TurbineCard extends Fragment<VerticalLayout> {
                 .navigate();
     }
 
-    public void setOrigin(View<?> originView) {
+    public void setOriginView(View<?> originView) {
         this.originView = originView;
     }
 }

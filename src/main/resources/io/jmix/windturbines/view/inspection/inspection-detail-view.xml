@@ -56,12 +56,7 @@
                                             </actions>
                                         </entityPicker>
                                         <datePicker id="inspectionDateField" property="inspectionDate"/>
-                                        <entityPicker id="technicianField" property="technician">
-                                            <actions>
-                                                <action id="entityLookup" type="entity_lookup"/>
-                                                <action id="entityClear" type="entity_clear"/>
-                                            </actions>
-                                        </entityPicker>
+                                        <entityPicker id="technicianField" property="technician" readOnly="true" />
                                     </formLayout>
                                 </vbox>
                             </vbox>
@@ -99,6 +94,7 @@
                                     <formLayout dataContainer="inspectionDc">
                                         <radioButtonGroup id="generatorCheckAnswerField"
                                                           themeNames="helper-above-field"
+                                                          classNames="one-to-five-answer"
                                                           helperText="msg://generatorCheckQuestion"
                                                           property="generatorCheckAnswer"/>
                                         <textArea label="msg://empty" height="4em" id="generatorCheckCommentField"

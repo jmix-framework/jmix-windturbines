@@ -1,6 +1,7 @@
 package io.jmix.windturbines.view.inspection;
 
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import io.jmix.core.DataManager;
 import io.jmix.core.Messages;

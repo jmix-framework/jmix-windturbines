@@ -1,6 +1,6 @@
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
     <actions>
-        <action id="assignAction" icon="vaadin:check" />
+        <action id="assignAction" icon="vaadin:user-check" text="msg://assignToMe"/>
     </actions>
     <content>
         <vbox id="root"
@@ -17,7 +17,7 @@
             <hbox width="100%" classNames="p-s gap-m">
                 <span id="secondRowText" width="100%"/>
                 <hbox padding="false" justifyContent="END">
-                    <button action="assignAction" themeNames="tertiary-inline"/>
+                    <button action="assignAction" themeNames="tertiary-inline outlined"/>
                 </hbox>
             </hbox>
         </vbox>
