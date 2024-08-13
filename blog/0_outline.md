@@ -22,13 +22,7 @@
     - Key functions and features
     - Visual representations (screenshots, diagrams)
 
-5. **Approaches to creating mobile applications with Jmix**
-    - Integration into an existing application
-    - Dedicated mobile Jmix application
-    - Mobile application with React and REST API
-    - Pros and cons of different approaches
-
-6. **Conclusion**
+5. **Conclusion**
     - Summary of key points
     - Call to action
 

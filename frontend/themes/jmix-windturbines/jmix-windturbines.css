@@ -34,14 +34,7 @@ html {
 .cut-overflow-text {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
-
-.cut-overflow-text-wrap {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 
 .jmix-main-view-drawer-toggle, .back-button {
     color: white !important;
@@ -87,4 +80,8 @@ html {
         linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
         linear-gradient(270deg, #FF9467 0%, #E35231 100%);
     box-shadow: none;
+}
+
+vaadin-radio-group.one-to-five-answer > vaadin-radio-button {
+    width: 20%;
 }

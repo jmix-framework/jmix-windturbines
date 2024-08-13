@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <actions>
+        <action id="editAction" icon="vaadin:pencil" />
+        <action id="readAction" icon="vaadin:search" />
+        <action id="removeAction" icon="vaadin:trash" />
+    </actions>
+    <content>
+        <vbox id="root" spacing="false" padding="false" width="100%"
+              classNames="p-s gap-m white-card cursor-pointer finding-card">
+            <hbox width="100%" alignItems="CENTER" classNames="p-s gap-m" padding="false">
+                <span id="title" classNames="cut-overflow-text inspection-finding-title" width="100%"/>
+                <hbox justifyContent="END" padding="false">
+                    <span id="severity" width="120px" themeNames="badge pill" />
+                </hbox>
+            </hbox>
+            <hbox width="100%" alignItems="STRETCH" classNames="p-s gap-m" padding="false">
+                <span id="description" classNames="cut-overflow-text" width="100%"/>
+                <hbox padding="false">
+                </hbox>
+            </hbox>
+            <hbox id="buttonsPanel" classNames="buttons-panel" width="100%">
+                <button id="editBtn" action="editAction" themeNames="tertiary-inline"/>
+                <button id="readBtn" action="readAction" themeNames="tertiary-inline" visible="false"/>
+                <button id="removeBtn" action="removeAction" themeNames="tertiary-inline error"/>
+            </hbox>
+        </vbox>
+    </content>
+</fragment>

@@ -47,8 +47,6 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
     @Autowired
     private Messages messages;
     @Autowired
-    private ViewNavigators viewNavigators;
-    @Autowired
     private Fragments fragments;
     @ViewComponent
     private H3 pageTitle;

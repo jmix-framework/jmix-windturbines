@@ -5,10 +5,12 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Span;
 import io.jmix.core.Messages;
 import io.jmix.flowui.DialogWindows;
+import io.jmix.flowui.Fragments;
 import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.action.DialogAction;
 import io.jmix.flowui.component.UiComponentUtils;
+import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.testassist.FlowuiTestAssistConfiguration;
 import io.jmix.flowui.testassist.UiTest;
@@ -34,8 +36,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,6 +54,8 @@ class InspectionFindingCardTest {
     UiComponents uiComponents;
     @Autowired
     Messages messages;
+    @Autowired
+    Fragments fragments;
     @Autowired
     ViewNavigators viewNavigators;
     @Autowired
@@ -463,19 +465,7 @@ class InspectionFindingCardTest {
     }
 
     private InspectionFindingCard renderComponent(InspectionDetailView detailView, InspectionFinding inspectionFinding) {
-        //noinspection JmixIncorrectCreateGuiComponent
-        return new InspectionFindingCard(
-                inspectionFinding,
-                uiComponents,
-                dialogs,
-                detailView.getDataContext(),
-                dialogWindows,
-                messages,
-                detailView.getFindingsDc(),
-                detailView.getRecommendationsDc(),
-                detailView,
-                detailView.isReadOnly()
-        );
+        return detailView.createInspectionFindingCard(inspectionFinding);
     }
 
     private <T> T findDialogByType(Class<T> viewClass) {
