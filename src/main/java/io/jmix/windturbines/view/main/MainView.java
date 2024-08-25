@@ -18,7 +18,11 @@ import io.jmix.flowui.kit.component.main.ListMenu;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.inspection.Inspection;
+import io.jmix.windturbines.view.DesktopRedirection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +33,7 @@ import java.util.Random;
 @ViewDescriptor("main-view.xml")
 public class MainView extends StandardMainView {
 
+    private static final Logger log = LoggerFactory.getLogger(MainView.class);
     @Autowired
     private ViewNavigators viewNavigators;
     @ViewComponent
@@ -41,12 +46,28 @@ public class MainView extends StandardMainView {
     private MessageBundle messageBundle;
     @Autowired
     private UiComponents uiComponents;
+    @Autowired
+    private DesktopRedirection desktopRedirection;
+
 
     private Tab turbineTab;
     private Tab inspectionsTab;
 
     @Subscribe
+    public void onInit(final InitEvent event) {
+        log.info("MainView::onInit");
+        desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+    }
+
+    @Subscribe
+    public void onQueryParametersChange(final QueryParametersChangeEvent event) {
+        log.info("MainView::onQueryParametersChange");
+        desktopRedirection.redirectConsideringSessionAndUrl();
+    }
+
+    @Subscribe
     public void onAttachEvent(final AttachEvent event) {
+        log.info("MainView::onAttachEvent");
         initMobileMenu();
         initSideMenu();
     }
@@ -121,8 +142,7 @@ public class MainView extends StandardMainView {
     private SvgIcon icon(String filename) {
         StreamResource iconResource = new StreamResource(filename,
                 () -> getClass().getResourceAsStream("/META-INF/resources/icons/%s".formatted(filename)));
-        SvgIcon icon = new SvgIcon(iconResource);
-        return icon;
+        return new SvgIcon(iconResource);
     }
 
     private Tab createTab(String title, String id, AbstractIcon icon) {
