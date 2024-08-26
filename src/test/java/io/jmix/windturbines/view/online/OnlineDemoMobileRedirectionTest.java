@@ -21,7 +21,7 @@ class OnlineDemoMobileRedirectionTest {
 
     @BeforeEach
     void setUp() {
-        browserInteraction = mock(TestBrowserInteraction.class);
+        browserInteraction = mock(BrowserInteraction.class);
         sessionData = mock(SessionData.class);
 
         onlineDemoMobileRedirection = new OnlineDemoMobileRedirection(
@@ -215,22 +215,5 @@ class OnlineDemoMobileRedirectionTest {
             consumer.accept(touchDevice);
             return null;
         }).when(browserInteraction).fetchTouchDevice(any());
-    }
-
-    static class TestBrowserInteraction extends BrowserInteraction {
-        private URL url;
-
-        @Override
-        public void fetchCurrentUrl(Consumer<URL> consumer) {
-            consumer.accept(url);
-        }
-
-        public void setUrl(String url) {
-            try {
-                this.url = URI.create(url).toURL();
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }
