@@ -1,13 +1,9 @@
-package io.jmix.windturbines.view;
+package io.jmix.windturbines.view.online;
 
 import io.jmix.core.session.SessionData;
-import io.jmix.flowui.testassist.FlowuiTestAssistConfiguration;
-import io.jmix.flowui.testassist.UiTest;
-import io.jmix.windturbines.JmixWindturbinesApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -17,18 +13,18 @@ import java.util.function.Consumer;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class DesktopRedirectionTest {
+class OnlineDemoMobileRedirectionTest {
 
     private BrowserInteraction browserInteraction;
     private SessionData sessionData;
-    private DesktopRedirection desktopRedirection;
+    private OnlineDemoMobileRedirection onlineDemoMobileRedirection;
 
     @BeforeEach
     void setUp() {
         browserInteraction = mock(TestBrowserInteraction.class);
         sessionData = mock(SessionData.class);
 
-        desktopRedirection = new DesktopRedirection(
+        onlineDemoMobileRedirection = new OnlineDemoMobileRedirection(
                 sessionData, browserInteraction
         );
     }
@@ -51,7 +47,7 @@ class DesktopRedirectionTest {
                 setupCurrentUrl("https://example.com?mobile=true");
 
                 // when
-                desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+                onlineDemoMobileRedirection.redirectIfRequiredByUrlParamsOnly();
 
                 // then
                 verify(sessionData, times(1)).setAttribute("mobile", true);
@@ -65,7 +61,7 @@ class DesktopRedirectionTest {
                 setupCurrentUrl("https://example.com");
 
                 // when
-                desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+                onlineDemoMobileRedirection.redirectIfRequiredByUrlParamsOnly();
 
                 // then
                 verify(browserInteraction, times(1)).redirectTo("icons/mobile-simulator/index.html");
@@ -78,7 +74,7 @@ class DesktopRedirectionTest {
                 setupCurrentUrl("https://example.com?mobile=false");
 
                 // when
-                desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+                onlineDemoMobileRedirection.redirectIfRequiredByUrlParamsOnly();
 
                 // then
                 verify(browserInteraction, times(1)).redirectTo("icons/mobile-simulator/index.html");
@@ -95,7 +91,7 @@ class DesktopRedirectionTest {
                 setupCurrentUrl("https://example.com?mobile=true");
 
                 // when
-                desktopRedirection.redirectConsideringSessionAndUrl();
+                onlineDemoMobileRedirection.redirectConsideringSessionAndUrl();
 
                 // then
                 verify(sessionData, times(1)).setAttribute("mobile", true);
@@ -110,7 +106,7 @@ class DesktopRedirectionTest {
                 when(sessionData.getAttribute("mobile")).thenReturn(true);
 
                 // when
-                desktopRedirection.redirectConsideringSessionAndUrl();
+                onlineDemoMobileRedirection.redirectConsideringSessionAndUrl();
 
                 // then
                 verify(browserInteraction, never()).redirectTo(anyString());
@@ -124,7 +120,7 @@ class DesktopRedirectionTest {
                 when(sessionData.getAttribute("mobile")).thenReturn(null);
 
                 // when
-                desktopRedirection.redirectConsideringSessionAndUrl();
+                onlineDemoMobileRedirection.redirectConsideringSessionAndUrl();
 
                 // then
                 verify(browserInteraction, times(1)).redirectTo("icons/mobile-simulator/index.html");
@@ -138,7 +134,7 @@ class DesktopRedirectionTest {
                 when(sessionData.getAttribute("mobile")).thenReturn(null);
 
                 // when
-                desktopRedirection.redirectConsideringSessionAndUrl();
+                onlineDemoMobileRedirection.redirectConsideringSessionAndUrl();
 
                 // then
                 verify(browserInteraction, times(1)).redirectTo("icons/mobile-simulator/index.html");
@@ -164,7 +160,7 @@ class DesktopRedirectionTest {
                 setupCurrentUrl("https://example.com");
 
                 // when
-                desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+                onlineDemoMobileRedirection.redirectIfRequiredByUrlParamsOnly();
 
                 // then
                 verify(browserInteraction, never()).redirectTo(anyString());
@@ -182,7 +178,7 @@ class DesktopRedirectionTest {
                 when(sessionData.getAttribute("mobile")).thenReturn(null);
 
                 // when
-                desktopRedirection.redirectConsideringSessionAndUrl();
+                onlineDemoMobileRedirection.redirectConsideringSessionAndUrl();
 
                 // then
                 verify(browserInteraction, never()).redirectTo(anyString());
@@ -197,7 +193,7 @@ class DesktopRedirectionTest {
                 when(sessionData.getAttribute("mobile")).thenReturn(true);
 
                 // when
-                desktopRedirection.redirectConsideringSessionAndUrl();
+                onlineDemoMobileRedirection.redirectConsideringSessionAndUrl();
 
                 // then
                 verify(browserInteraction, never()).redirectTo(anyString());

@@ -17,7 +17,7 @@ import io.jmix.flowui.kit.component.loginform.JmixLoginI18n;
 import io.jmix.flowui.view.*;
 import io.jmix.securityflowui.authentication.AuthDetails;
 import io.jmix.securityflowui.authentication.LoginViewSupport;
-import io.jmix.windturbines.view.DesktopRedirection;
+import io.jmix.windturbines.view.online.MobileSimulatorRedirection;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,7 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     private MessageTools messageTools;
 
     @Autowired
-    private DesktopRedirection desktopRedirection;
+    private MobileSimulatorRedirection mobileSimulatorRedirection;
 
     @ViewComponent
     private JmixLoginForm login;
@@ -68,7 +68,7 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
 
     @Subscribe
     public void onInit(final InitEvent event) {
-        desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+        mobileSimulatorRedirection.redirectIfRequiredByUrlParamsOnly();
         initLocales();
         initDefaultCredentials();
     }
@@ -76,7 +76,7 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
 
     @Subscribe
     public void onQueryParametersChange(final QueryParametersChangeEvent event) {
-        desktopRedirection.redirectConsideringSessionAndUrl();
+        mobileSimulatorRedirection.redirectConsideringSessionAndUrl();
     }
 
     protected void initLocales() {

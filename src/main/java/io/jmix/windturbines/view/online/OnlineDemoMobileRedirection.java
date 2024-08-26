@@ -1,4 +1,4 @@
-package io.jmix.windturbines.view;
+package io.jmix.windturbines.view.online;
 
 import com.vaadin.flow.router.QueryParameters;
 import io.jmix.core.session.SessionData;
@@ -12,9 +12,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-@Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION)
-public class DesktopRedirection {
+public class OnlineDemoMobileRedirection implements MobileSimulatorRedirection {
 
     private static final String MOBILE_SESSION_KEY = "mobile";
     private static final String REDIRECT_LOCATION = "icons/mobile-simulator/index.html";
@@ -22,11 +20,12 @@ public class DesktopRedirection {
     private final SessionData sessionData;
     private final BrowserInteraction browserInteraction;
 
-    public DesktopRedirection(SessionData sessionData, BrowserInteraction browserInteraction) {
+    public OnlineDemoMobileRedirection(SessionData sessionData, BrowserInteraction browserInteraction) {
         this.sessionData = sessionData;
         this.browserInteraction = browserInteraction;
     }
 
+    @Override
     public void redirectIfRequiredByUrlParamsOnly() {
         fetchMobileParam(mobileParam ->
                 mobileParam
@@ -38,6 +37,7 @@ public class DesktopRedirection {
         );
     }
 
+    @Override
     public void redirectConsideringSessionAndUrl() {
         fetchMobileParam(mobileParam ->
                 mobileParam

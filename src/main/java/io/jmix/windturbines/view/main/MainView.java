@@ -18,11 +18,10 @@ import io.jmix.flowui.kit.component.main.ListMenu;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.inspection.Inspection;
-import io.jmix.windturbines.view.DesktopRedirection;
+import io.jmix.windturbines.view.online.MobileSimulatorRedirection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +46,7 @@ public class MainView extends StandardMainView {
     @Autowired
     private UiComponents uiComponents;
     @Autowired
-    private DesktopRedirection desktopRedirection;
+    private MobileSimulatorRedirection mobileSimulatorRedirection;
 
 
     private Tab turbineTab;
@@ -55,19 +54,16 @@ public class MainView extends StandardMainView {
 
     @Subscribe
     public void onInit(final InitEvent event) {
-        log.info("MainView::onInit");
-        desktopRedirection.redirectIfRequiredByUrlParamsOnly();
+        mobileSimulatorRedirection.redirectIfRequiredByUrlParamsOnly();
     }
 
     @Subscribe
     public void onQueryParametersChange(final QueryParametersChangeEvent event) {
-        log.info("MainView::onQueryParametersChange");
-        desktopRedirection.redirectConsideringSessionAndUrl();
+        mobileSimulatorRedirection.redirectConsideringSessionAndUrl();
     }
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
-        log.info("MainView::onAttachEvent");
         initMobileMenu();
         initSideMenu();
     }
