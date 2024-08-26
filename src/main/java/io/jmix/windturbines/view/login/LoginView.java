@@ -10,12 +10,14 @@ import com.vaadin.flow.server.VaadinSession;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.security.AccessDeniedException;
+import io.jmix.core.session.SessionData;
 import io.jmix.flowui.component.loginform.JmixLoginForm;
 import io.jmix.flowui.kit.component.ComponentUtils;
 import io.jmix.flowui.kit.component.loginform.JmixLoginI18n;
 import io.jmix.flowui.view.*;
 import io.jmix.securityflowui.authentication.AuthDetails;
 import io.jmix.securityflowui.authentication.LoginViewSupport;
+import io.jmix.windturbines.view.online.MobileSimulatorRedirection;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +45,17 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     @Autowired
     private LoginViewSupport loginViewSupport;
 
+    @Autowired
+    private SessionData sessionData;
+
     @ViewComponent
     private MessageBundle messageBundle;
 
     @Autowired
     private MessageTools messageTools;
+
+    @Autowired
+    private MobileSimulatorRedirection mobileSimulatorRedirection;
 
     @ViewComponent
     private JmixLoginForm login;
@@ -60,8 +68,15 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
 
     @Subscribe
     public void onInit(final InitEvent event) {
+        mobileSimulatorRedirection.redirectIfRequiredByUrlParamsOnly();
         initLocales();
         initDefaultCredentials();
+    }
+
+
+    @Subscribe
+    public void onQueryParametersChange(final QueryParametersChangeEvent event) {
+        mobileSimulatorRedirection.redirectConsideringSessionAndUrl();
     }
 
     protected void initLocales() {
