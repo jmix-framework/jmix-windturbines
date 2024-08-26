@@ -217,34 +217,8 @@ class OnlineDemoMobileRedirectionTest {
         }).when(browserInteraction).fetchTouchDevice(any());
     }
 
-    @Test
-    void given_mobileParameterFalse_whenRedirectIfRequiredByUrlParamsOnly_thenRedirectsToSimulator() {
-        // Test logic goes here
-    }
-
-    @Test
-    void given_noMobileParameter_whenRedirectConsideringSessionAndUrl_thenUsesSessionForRedirect() {
-        // Test logic goes here
-    }
-
-    @Test
-    void given_sessionMobileTrue_whenRedirectConsideringSessionAndUrl_thenNoRedirectOccurs() {
-        // Test logic goes here
-    }
-
-    @Test
-    void given_mobileParameterAbsentAndSessionNull_whenRedirectConsideringSessionAndUrl_thenRedirectsToSimulator() {
-        // Test logic goes here
-    }
-
-    @Test
-    void given_touchDeviceTrue_whenCheckAndRedirectForDesktop_thenNoRedirectOccurs() {
-        // Test logic goes here
-    }
-
-    class TestBrowserInteraction extends BrowserInteraction {
+    static class TestBrowserInteraction extends BrowserInteraction {
         private URL url;
-
 
         @Override
         public void fetchCurrentUrl(Consumer<URL> consumer) {
