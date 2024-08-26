@@ -1,13 +1,12 @@
 package io.jmix.windturbines.view;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.QueryParameters;
 import io.jmix.core.session.SessionData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -17,56 +16,55 @@ import java.util.stream.Collectors;
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class DesktopRedirection {
 
-    private static final String MOBILE = "mobile";
+    private static final String MOBILE_SESSION_KEY = "mobile";
+    private static final String REDIRECT_LOCATION = "icons/mobile-simulator/index.html";
 
-    @Autowired
-    private SessionData sessionData;
+    private final SessionData sessionData;
+    private final BrowserInteraction browserInteraction;
+
+    public DesktopRedirection(SessionData sessionData, BrowserInteraction browserInteraction) {
+        this.sessionData = sessionData;
+        this.browserInteraction = browserInteraction;
+    }
 
     public void redirectIfRequiredByUrlParamsOnly() {
         fetchMobileParam(mobileParam ->
-                mobileParam.ifPresentOrElse(mobile -> {
-                            if (mobile) {
-                                sessionData.setAttribute(MOBILE, true);
-                            } else {
-                                checkAndRedirectForDesktop();
-                            }
-                        }, this::checkAndRedirectForDesktop
-                ));
+                mobileParam
+                        .filter(mobile -> mobile)
+                        .ifPresentOrElse(
+                                mobile -> markSessionAsMobile(),
+                                this::checkAndRedirectForDesktop
+                        )
+        );
     }
 
     public void redirectConsideringSessionAndUrl() {
-        fetchMobileParam(mobileParam -> {
-            if (mobileParam.isPresent()) {
-                if (mobileParam.get()) {
-                    sessionData.setAttribute(MOBILE, true);
-                } else {
-                    checkAndRedirectForDesktop();
-                }
-            } else {
-                handleSessionBasedRedirect();
-            }
-        });
+        fetchMobileParam(mobileParam ->
+                mobileParam
+                        .filter(mobile -> mobile)
+                        .ifPresentOrElse(
+                                mobile -> markSessionAsMobile(),
+                                () -> mobileParam.ifPresentOrElse(
+                                        mobile -> checkAndRedirectForDesktop(),
+                                        this::handleSessionBasedRedirect
+                                )
+                        )
+        );
     }
 
     private void fetchMobileParam(Consumer<Optional<Boolean>> consumer) {
-        UI.getCurrent().getPage().fetchCurrentURL(url -> {
-            String query = url.getQuery();
-            Optional<Boolean> mobileParam = Optional.empty();
-            if (query != null) {
-                Map<String, String> parameters = parseQueryParameters(query);
-                if (parameters.containsKey(MOBILE)) {
-                    mobileParam = Optional.of("true".equalsIgnoreCase(parameters.get(MOBILE)));
-                }
-            }
-            consumer.accept(mobileParam);
-        });
+        browserInteraction.fetchCurrentUrl(url -> consumer.accept(parseMobileParam(url)));
     }
 
-    private void handleSessionBasedRedirect() {
-        Boolean mobileFromSession = (Boolean) sessionData.getAttribute(MOBILE);
-        if (mobileFromSession == null || !mobileFromSession) {
-            checkAndRedirectForDesktop();
+    private Optional<Boolean> parseMobileParam(URL url) {
+        String query = url.getQuery();
+        if (query != null) {
+            Map<String, String> parameters = parseQueryParameters(query);
+            if (parameters.containsKey(MOBILE_SESSION_KEY)) {
+                return Optional.of("true".equalsIgnoreCase(parameters.get(MOBILE_SESSION_KEY)));
+            }
         }
+        return Optional.empty();
     }
 
     private Map<String, String> parseQueryParameters(String query) {
@@ -79,12 +77,26 @@ public class DesktopRedirection {
                 ));
     }
 
+
+    private void handleSessionBasedRedirect() {
+        Boolean mobileFromSession = (Boolean) sessionData.getAttribute(MOBILE_SESSION_KEY);
+        if (mobileFromSession == null || !mobileFromSession) {
+            checkAndRedirectForDesktop();
+        }
+    }
+
     private void checkAndRedirectForDesktop() {
-        UI ui = UI.getCurrent();
-        ui.getPage().retrieveExtendedClientDetails(details -> {
-            if (!details.isTouchDevice()) {
-                ui.getPage().setLocation("icons/mobile-simulator/index.html");
+        browserInteraction.fetchTouchDevice(isTouchDevice -> {
+            if (!isTouchDevice) {
+                browserInteraction.redirectTo(REDIRECT_LOCATION);
+            }
+            else {
+                markSessionAsMobile();
             }
         });
+    }
+
+    private void markSessionAsMobile() {
+        sessionData.setAttribute(MOBILE_SESSION_KEY, true);
     }
 }
