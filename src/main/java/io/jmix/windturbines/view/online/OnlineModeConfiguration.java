@@ -8,17 +8,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
-public class MobileSimulatorRedirectionConfig {
+public class OnlineModeConfiguration {
 
     @Bean("mobileSimulatorRedirection")
-    @Profile("online-demo")
+    @Profile("online")
     @Scope(value = WebApplicationContext.SCOPE_SESSION)
     public MobileSimulatorRedirection onlineDemoMobileRedirection(SessionData sessionData, BrowserInteraction browserInteraction) {
         return new OnlineDemoMobileRedirection(sessionData, browserInteraction);
     }
 
     @Bean("mobileSimulatorRedirection")
-    @Profile("!online-demo")
+    @Profile("!online")
     public MobileSimulatorRedirection noopMobileSimulatorRedirection() {
         return new NoopMobileSimulatorRedirection();
     }
