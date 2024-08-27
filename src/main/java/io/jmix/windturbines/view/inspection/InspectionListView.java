@@ -25,6 +25,7 @@ import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.User;
 import io.jmix.windturbines.entity.inspection.Inspection;
+import io.jmix.windturbines.online.OnlineDemoDataCreator;
 import io.jmix.windturbines.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,7 +46,15 @@ public class InspectionListView extends StandardListView<Inspection> {
     private JmixTabSheet contentTabSheet;
     @ViewComponent("contentTabSheet.myInspectionsTab")
     private Tab contentTabSheetMyInspectionsTab;
+    @Autowired
+    private Optional<OnlineDemoDataCreator> onlineDemoDataCreator;
 
+    @Subscribe
+    public void onReady(final ReadyEvent event) {
+        onlineDemoDataCreator.ifPresent(it -> {
+            it.createDemoData(() -> getViewData().loadAll());
+        });
+    }
 
     @Supply(to = "allInspectionsVirtualList", subject = "renderer")
     private Renderer<Inspection> allInspectionsVirtualListRenderer() {

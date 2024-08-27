@@ -1,7 +1,8 @@
-package io.jmix.windturbines.view.online;
+package io.jmix.windturbines.online;
 
 import com.vaadin.flow.router.QueryParameters;
 import io.jmix.core.session.SessionData;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
@@ -12,7 +13,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class OnlineDemoMobileRedirection implements MobileSimulatorRedirection {
+
+@Component
+@Profile("online")
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
+public class OnlineDemoMobileRedirection {
 
     private static final String MOBILE_SESSION_KEY = "mobile";
     private static final String REDIRECT_LOCATION = "icons/mobile-simulator/index.html";
@@ -25,7 +30,6 @@ public class OnlineDemoMobileRedirection implements MobileSimulatorRedirection {
         this.browserInteraction = browserInteraction;
     }
 
-    @Override
     public void redirectIfRequiredByUrlParamsOnly() {
         fetchMobileParam(mobileParam ->
                 mobileParam
@@ -37,7 +41,6 @@ public class OnlineDemoMobileRedirection implements MobileSimulatorRedirection {
         );
     }
 
-    @Override
     public void redirectConsideringSessionAndUrl() {
         fetchMobileParam(mobileParam ->
                 mobileParam

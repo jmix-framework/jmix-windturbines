@@ -24,7 +24,7 @@
                   <DataStoreSettingsV2>
                     <option name="generateDdlType" value="CREATE_AND_UPDATE" />
                     <option name="supportedTypes">
-                      <option value="postgres" />
+                      <option value="hsql" />
                     </option>
                   </DataStoreSettingsV2>
                 </value>
@@ -44,6 +44,22 @@
           <option name="dbmsVersion" />
           <option name="host" value=".jmix/hsqldb" />
           <option name="url" value="jdbc:hsqldb:file:.jmix/hsqldb/jmixwindturbines17" />
+          <option name="user" value="sa" />
+        </SavedDbProperties>
+        <SavedDbProperties>
+          <option name="databaseName" value="windturbines" />
+          <option name="dbType" value="postgres" />
+          <option name="dbmsVersion" />
+          <option name="host" value="localhost" />
+          <option name="pass" value="postgres" />
+          <option name="url" value="jdbc:postgresql://localhost/windturbines" />
+          <option name="user" value="postgres" />
+        </SavedDbProperties>
+        <SavedDbProperties>
+          <option name="databaseName" value="windturbines" />
+          <option name="dbType" value="hsqlinmem" />
+          <option name="dbmsVersion" />
+          <option name="url" value="jdbc:hsqldb:mem:windturbines" />
           <option name="user" value="sa" />
         </SavedDbProperties>
       </list>

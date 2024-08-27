@@ -1,14 +1,11 @@
 package io.jmix.windturbines.test_data;
 
-import io.jmix.core.security.Authenticated;
 import io.jmix.windturbines.entity.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import io.jmix.windturbines.test_data.entity.*;
 import net.datafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,24 +15,18 @@ import java.util.stream.IntStream;
 import static io.jmix.windturbines.test_data.RandomValues.*;
 
 @Component
-public class GenerateTestDataAtStartup {
+public class TestDataCreation {
 
-    private static final Logger log = LoggerFactory.getLogger(GenerateTestDataAtStartup.class);
+    private static final Logger log = LoggerFactory.getLogger(TestDataCreation.class);
     private final EntityTestData entityTestData;
     private final PasswordEncoder passwordEncoder;
 
-    public GenerateTestDataAtStartup(EntityTestData entityTestData, PasswordEncoder passwordEncoder) {
+    public TestDataCreation(EntityTestData entityTestData, PasswordEncoder passwordEncoder) {
         this.entityTestData = entityTestData;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Authenticated
-    @EventListener
-    public void onApplicationEvent(ApplicationStartedEvent event) {
-        generateAndSaveTestData();
-    }
-
-    private void generateAndSaveTestData() {
+    public void createData() {
 
         List<Manufacturer> manufacturers = entityTestData.loadAll(Manufacturer.class);
 

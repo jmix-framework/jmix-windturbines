@@ -10,14 +10,13 @@ import com.vaadin.flow.server.VaadinSession;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.security.AccessDeniedException;
-import io.jmix.core.session.SessionData;
 import io.jmix.flowui.component.loginform.JmixLoginForm;
 import io.jmix.flowui.kit.component.ComponentUtils;
 import io.jmix.flowui.kit.component.loginform.JmixLoginI18n;
 import io.jmix.flowui.view.*;
 import io.jmix.securityflowui.authentication.AuthDetails;
 import io.jmix.securityflowui.authentication.LoginViewSupport;
-import io.jmix.windturbines.view.online.MobileSimulatorRedirection;
+import io.jmix.windturbines.online.OnlineDemoMobileRedirection;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +28,7 @@ import org.springframework.security.authentication.LockedException;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -45,9 +45,6 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     @Autowired
     private LoginViewSupport loginViewSupport;
 
-    @Autowired
-    private SessionData sessionData;
-
     @ViewComponent
     private MessageBundle messageBundle;
 
@@ -55,7 +52,7 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     private MessageTools messageTools;
 
     @Autowired
-    private MobileSimulatorRedirection mobileSimulatorRedirection;
+    private Optional<OnlineDemoMobileRedirection> onlineDemoMobileRedirection;
 
     @ViewComponent
     private JmixLoginForm login;
@@ -68,7 +65,7 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
 
     @Subscribe
     public void onInit(final InitEvent event) {
-        mobileSimulatorRedirection.redirectIfRequiredByUrlParamsOnly();
+        onlineDemoMobileRedirection.ifPresent(OnlineDemoMobileRedirection::redirectIfRequiredByUrlParamsOnly);
         initLocales();
         initDefaultCredentials();
     }
@@ -76,7 +73,7 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
 
     @Subscribe
     public void onQueryParametersChange(final QueryParametersChangeEvent event) {
-        mobileSimulatorRedirection.redirectConsideringSessionAndUrl();
+        onlineDemoMobileRedirection.ifPresent(OnlineDemoMobileRedirection::redirectConsideringSessionAndUrl);
     }
 
     protected void initLocales() {

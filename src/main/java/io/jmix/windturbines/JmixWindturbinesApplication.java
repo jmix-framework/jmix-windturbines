@@ -14,6 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 
@@ -35,6 +36,7 @@ public class JmixWindturbinesApplication implements AppShellConfigurator {
     @Bean
     @Primary
     @ConfigurationProperties("main.datasource")
+    @Profile("!online")
     DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
@@ -42,6 +44,7 @@ public class JmixWindturbinesApplication implements AppShellConfigurator {
     @Bean
     @Primary
     @ConfigurationProperties("main.datasource.hikari")
+    @Profile("!online")
     DataSource dataSource(final DataSourceProperties dataSourceProperties) {
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }

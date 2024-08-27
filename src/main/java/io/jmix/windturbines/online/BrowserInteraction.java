@@ -1,4 +1,4 @@
-package io.jmix.windturbines.view.online;
+package io.jmix.windturbines.online;
 
 import com.vaadin.flow.component.UI;
 import org.springframework.stereotype.Component;
