@@ -18,7 +18,7 @@ import io.jmix.flowui.kit.component.main.ListMenu;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.Turbine;
 import io.jmix.windturbines.entity.inspection.Inspection;
-import io.jmix.windturbines.view.online.MobileSimulatorRedirection;
+import io.jmix.windturbines.online.OnlineDemoMobileRedirection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +46,19 @@ public class MainView extends StandardMainView {
     @Autowired
     private UiComponents uiComponents;
     @Autowired
-    private MobileSimulatorRedirection mobileSimulatorRedirection;
-
+    private Optional<OnlineDemoMobileRedirection> onlineDemoMobileRedirection;
 
     private Tab turbineTab;
     private Tab inspectionsTab;
 
     @Subscribe
     public void onInit(final InitEvent event) {
-        mobileSimulatorRedirection.redirectIfRequiredByUrlParamsOnly();
+        onlineDemoMobileRedirection.ifPresent(OnlineDemoMobileRedirection::redirectIfRequiredByUrlParamsOnly);
     }
 
     @Subscribe
     public void onQueryParametersChange(final QueryParametersChangeEvent event) {
-        mobileSimulatorRedirection.redirectConsideringSessionAndUrl();
+        onlineDemoMobileRedirection.ifPresent(OnlineDemoMobileRedirection::redirectConsideringSessionAndUrl);
     }
 
     @Subscribe

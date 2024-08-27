@@ -1,11 +1,12 @@
 package io.jmix.windturbines.view.online;
 
 import io.jmix.core.session.SessionData;
+import io.jmix.windturbines.online.BrowserInteraction;
+import io.jmix.windturbines.online.OnlineDemoMobileRedirection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.function.Consumer;
