@@ -41,7 +41,7 @@ Jmix Wind Turbines runs using:
 You can run the containerized application locally as follows:
 
 - Make sure you have Docker installed
-- Download [docker-compose.yml](https://github.com/jmix-framework/jmix-windturbines-2/blob/main/docker-compose.yml) file to a local folder
+- Download [docker-compose.yml](https://github.com/jmix-framework/jmix-windturbines/blob/main/docker-compose.yml) file to a local folder
 - Open a terminal in that directory and run
     ```shell
     docker-compose up
