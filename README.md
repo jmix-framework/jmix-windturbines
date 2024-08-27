@@ -57,17 +57,9 @@ Jmix Wind Turbines is an application that manages the inspection and maintenance
 
 The application shows a list of all pending inspection and maintenance tasks, categorized under different tabs for easier management. This allows technicians to efficiently manage their workload and prioritize tasks.
 
-### Wind Turbine Management
+#### Performing Inspections
 
-#### Search and Details
-
-Technicians can search for specific wind turbines by ID, location, or manufacturer using a single search input field. Detailed information about each turbine is available, including manufacturer details, installation date, last maintenance date, and operational status. The list and details are read-only, ensuring data integrity as the information is maintained by the back office.
-
-### Inspections
-
-#### Annual Inspection
-
-Technicians can perform annual inspections to ensure wind turbines are functioning correctly and safely. The process includes:
+Technicians can perform inspections to ensure wind turbines are functioning correctly and safely. The process includes:
 
 - **Inspection Details**: Enter or confirm basic information such as the inspection date, technician's name, and type of inspection.
 - **Checklist**: Complete a series of questions to ensure all critical aspects of the turbine are checked.
@@ -76,17 +68,12 @@ Technicians can perform annual inspections to ensure wind turbines are functioni
 - **Status Update**: Update the status of the inspection task from "in progress" to "completed".
 - **Signature Capture**: Capture a digital signature to confirm the completion of the inspection task.
 
-#### Repair
-
-Technicians can document and manage repair actions based on recommendations from inspections. The process includes:
-
-- **Repair Details**: Enter the date, technician's name, and select the related recommendation.
-- **Repair Actions**: Document the specific actions taken during the repair, including parts replaced and whether a security check was performed.
-- **Follow-Up**: Specify follow-up actions and set a follow-up date to ensure any additional required work is tracked.
-- **Status Update**: Update the status of the repair task from "in progress" to "completed".
-- **Signature Capture**: Capture a digital signature to confirm the completion of the repair task.
-
 This streamlined workflow helps maintain the safety and performance of wind turbines through detailed inspections and timely repairs.
+
+
+### Wind Turbine Management
+
+Technicians can search for specific wind turbines by ID, location, or manufacturer using a single search input field. Detailed information about each turbine is available, including manufacturer details, installation date, last maintenance date, and operational status. The list and details are read-only, ensuring data integrity as the information is maintained by the back office.
 
 ## Mobile Features
 
