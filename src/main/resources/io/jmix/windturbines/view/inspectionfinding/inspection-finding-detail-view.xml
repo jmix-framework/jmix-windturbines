@@ -22,12 +22,12 @@
     <layout>
         <formLayout id="form" dataContainer="inspectionFindingDc">
             <textField id="titleField" property="title"/>
-            <textArea id="descriptionField" height="7em" property="description"/>
+            <textArea id="descriptionField" height="5em" property="description"/>
             <select id="severityField" property="severity"/>
         </formLayout>
         <h5 text="msg://evidences"/>
         <vbox width="100%" padding="false">
-            <virtualList id="evidencesVirtualList" itemsContainer="evidencesDc" height="300px" />
+            <virtualList id="evidencesVirtualList" itemsContainer="evidencesDc" height="125px" />
             <fileStorageUploadField id="upload"
                                     uploadText="msg://uploadEvidence"
                                     classNames="upload-btn"

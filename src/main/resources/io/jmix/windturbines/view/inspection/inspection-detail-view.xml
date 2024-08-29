@@ -39,7 +39,7 @@
             <h3 classNames="page-title" text="msg://inspectionDetailView.title"/>
         </vbox>
 
-        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="100%"
+        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="75%"
                   classNames="content-tab-sheet">
             <tab id="detailsTab" label="msg://inspectionDetails">
                 <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">

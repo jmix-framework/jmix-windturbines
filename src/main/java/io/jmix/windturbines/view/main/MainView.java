@@ -31,12 +31,6 @@ import java.util.Random;
 @ViewController("MainView")
 @ViewDescriptor("main-view.xml")
 public class MainView extends StandardMainView {
-
-    private static final Logger log = LoggerFactory.getLogger(MainView.class);
-    @Autowired
-    private ViewNavigators viewNavigators;
-    @ViewComponent
-    private Tabs mainMenuTabs;
     @ViewComponent
     private JmixListMenu menu;
     @Autowired
@@ -47,9 +41,6 @@ public class MainView extends StandardMainView {
     private UiComponents uiComponents;
     @Autowired
     private Optional<OnlineDemoMobileRedirection> onlineDemoMobileRedirection;
-
-    private Tab turbineTab;
-    private Tab inspectionsTab;
 
     @Subscribe
     public void onInit(final InitEvent event) {
@@ -63,7 +54,6 @@ public class MainView extends StandardMainView {
 
     @Subscribe
     public void onAttachEvent(final AttachEvent event) {
-        initMobileMenu();
         initSideMenu();
     }
 
@@ -125,40 +115,9 @@ public class MainView extends StandardMainView {
                 .ifPresent(it -> it.setPrefixComponent(icon(iconFilename)));
     }
 
-    private void initMobileMenu() {
-        inspectionsTab = createTab("Inspections", "inspections", icon("inspection.svg"));
-        turbineTab = createTab("Turbines", "turbines", icon("turbine.svg"));
-        mainMenuTabs.add(
-                inspectionsTab,
-                turbineTab
-        );
-    }
-
     private SvgIcon icon(String filename) {
         StreamResource iconResource = new StreamResource(filename,
                 () -> getClass().getResourceAsStream("/META-INF/resources/icons/%s".formatted(filename)));
         return new SvgIcon(iconResource);
-    }
-
-    private Tab createTab(String title, String id, AbstractIcon icon) {
-        Tab tab = new Tab(icon, new Span(title));
-        tab.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
-        tab.setId(id);
-        return tab;
-    }
-
-    @Subscribe("mainMenuTabs")
-    public void onTabsSelectedChange(final Tabs.SelectedChangeEvent e) {
-        if (e.getSelectedTab() != null) {
-            Tab selectedTab = e.getSelectedTab();
-            if (selectedTab.equals(turbineTab)) {
-                viewNavigators.listView(this, Turbine.class)
-                        .navigate();
-            }
-            if (selectedTab.equals(inspectionsTab)) {
-                viewNavigators.listView(this, Inspection.class)
-                        .navigate();
-            }
-        }
     }
 }

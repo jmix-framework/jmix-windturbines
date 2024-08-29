@@ -43,33 +43,35 @@
     </facets>
     <layout spacing="false" padding="false">
         <vbox classNames="layout-header">
-            <hbox width="100%" alignItems="CENTER" expand="spacer" >
-
+            <hbox width="100%" alignItems="CENTER" expand="spacer">
                 <drawerToggle id="drawerToggle"
                               classNames="jmix-main-view-drawer-toggle"
                               themeNames="contrast"/>
-                <span id="spacer" />
+                <span id="spacer"/>
                 <svgIcon resource="icons/notification.svg"/>
             </hbox>
-            <h3 classNames="page-title" text="msg://turbineListView.title" />
+            <h3 classNames="page-title" text="msg://turbineListView.title"/>
             <textField id="searchField"
                        placeholder="msg://search"
                        clearButtonVisible="true">
                 <prefix>
-                    <icon icon="SEARCH" />
+                    <icon icon="SEARCH"/>
                 </prefix>
             </textField>
         </vbox>
-        <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
-                <vbox width="100%" classNames="light-background" padding="false">
+        <hbox width="100%" height="60%" spacing="false" padding="false">
+            <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
+                <vbox width="100%" height="100%" classNames="light-background" padding="false">
                     <scroller width="100%" height="100%">
-                    <virtualList id="turbinesVirtualList"
-                                 width="100%"
-                                 height="100%"
-                                 itemsContainer="turbinesDc"
-                                 alignSelf="CENTER"/>
+                        <virtualList id="turbinesVirtualList"
+                                     width="100%"
+                                     height="100%"
+                                     itemsContainer="turbinesDc"
+                                     alignSelf="CENTER"/>
                     </scroller>
                 </vbox>
-        </vbox>
+            </vbox>
+        </hbox>
+
     </layout>
 </view>

@@ -22,7 +22,13 @@ import javax.sql.DataSource;
 
 @Push
 @Theme(value = "jmix-windturbines")
-@PWA(name = "Windturbines", shortName = "Jmix WT", backgroundColor = "#235FD5", display = "standalone")
+@PWA(
+        name = "Windturbines",
+        shortName = "Windturbines",
+        backgroundColor = "#235FD5",
+        iconPath = "icons/icon-blue.png",
+        display = "standalone"
+)
 @SpringBootApplication
 public class JmixWindturbinesApplication implements AppShellConfigurator {
 

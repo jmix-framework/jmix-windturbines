@@ -5,11 +5,7 @@
         <action id="logout" type="logout"/>
     </actions>
     <appLayout>
-        <navigationBar touchOptimized="true">
-            <header id="header" classNames="jmix-main-view-header">
-                <tabs id="mainMenuTabs" width="100%" themeNames="equal-width-tabs hide-scroll-buttons minimal"
-                      classNames="main-menu-tabs"/>
-            </header>
+        <navigationBar>
         </navigationBar>
         <drawerLayout>
             <section id="section" classNames="jmix-main-view-section">
