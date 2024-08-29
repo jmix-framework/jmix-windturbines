@@ -38,8 +38,7 @@
             </hbox>
             <h3 classNames="page-title" text="msg://inspectionDetailView.title"/>
         </vbox>
-
-        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="75%"
+        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="65%"
                   classNames="content-tab-sheet">
             <tab id="detailsTab" label="msg://inspectionDetails">
                 <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
@@ -120,9 +119,9 @@
                 <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
                     <vbox width="100%" classNames="light-background" padding="false">
                         <scroller width="100%" height="100%">
-                            <vbox width="100%" padding="true">
-                                <vbox width="100%" classNames="white-card">
-                                    <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%"/>
+                            <vbox width="100%" padding="true" height="100%">
+                                <vbox width="100%" classNames="white-card" height="100%">
+                                    <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%" height="100%" />
                                     <button id="createFindingBtn" action="createFindingAction" classNames="blue-btn"
                                             width="100%"/>
                                 </vbox>
@@ -135,9 +134,10 @@
                 <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
                     <vbox width="100%" classNames="light-background" padding="false">
                         <scroller width="100%" height="100%">
-                            <vbox width="100%" padding="true">
-                                <vbox width="100%" classNames="white-card">
+                            <vbox width="100%" height="100%" padding="true">
+                                <vbox width="100%" height="100%" classNames="white-card">
                                     <virtualList id="recommendationsVirtualList" itemsContainer="recommendationsDc"
+                                                 height="100%"
                                                  width="100%"/>
                                     <button id="createRecommendationBtn" action="createRecommendationAction"
                                             classNames="blue-btn" width="100%"/>
