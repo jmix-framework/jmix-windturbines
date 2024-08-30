@@ -11,11 +11,9 @@ import io.jmix.flowui.Notifications;
 import io.jmix.flowui.component.tabsheet.JmixTabSheet;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
-import io.jmix.windturbines.online.OnlineDemoDataCreator;
+import io.jmix.windturbines.online.DemoDataCreator;
 import io.jmix.windturbines.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
 
 @Route(value = "inspections", layout = MainView.class)
 @ViewController("Inspection.list")
@@ -30,7 +28,7 @@ public class InspectionListView extends StandardListView<Inspection> {
     @ViewComponent("contentTabSheet.myInspectionsTab")
     private Tab contentTabSheetMyInspectionsTab;
     @Autowired
-    private Optional<OnlineDemoDataCreator> onlineDemoDataCreator;
+    private DemoDataCreator demoDataCreator;
     @ViewComponent
     private Notifications notifications;
     @ViewComponent
@@ -38,9 +36,7 @@ public class InspectionListView extends StandardListView<Inspection> {
 
     @Subscribe
     public void onReady(final ReadyEvent event) {
-        onlineDemoDataCreator.ifPresent(it -> {
-            it.createDemoData(() -> getViewData().loadAll());
-        });
+        demoDataCreator.createDemoData(() -> getViewData().loadAll());
     }
 
     @Supply(to = "allInspectionsVirtualList", subject = "renderer")

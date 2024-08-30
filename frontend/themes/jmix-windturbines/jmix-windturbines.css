@@ -6,6 +6,21 @@ html {
     --vaadin-focus-ring-width: 0px;
 }
 
+[overflow*="bottom"]:not([overflow*="top"]) {
+    box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--lumo-contrast-20pct);
+}
+[overflow*="top"]:not([overflow*="bottom"]) {
+    box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--lumo-contrast-20pct);
+}
+[overflow*="top"][overflow*="bottom"] {
+    box-shadow:
+            inset 0 10px 10px -10px rgba(0, 0, 0, 0.2),
+            inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--lumo-contrast-20pct);
+    border-top: 1px solid var(--lumo-contrast-20pct);
+}
 
 .white-card {
     background-color: white;
@@ -48,6 +63,7 @@ html {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     height: 100%;
+    overflow:hidden;
 }
 
 
