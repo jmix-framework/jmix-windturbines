@@ -67,8 +67,6 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
     @ViewComponent
     private CollectionPropertyContainer<InspectionFinding> findingsDc;
     @Autowired
-    private UiComponents uiComponents;
-    @Autowired
     private Messages messages;
     @Autowired
     private Dialogs dialogs;
@@ -113,19 +111,6 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
         signature.setHeight("200px");
         signaturePadWrapper.add(signature);
     }
-
-    @Subscribe
-    public void onValidation(final ValidationEvent event) {
-        if (signature.isEmpty()) {
-            ValidationErrors errors = ValidationErrors.of(messages.getMessage("operatorRepSignature.empty"));
-            event.addErrors(errors);
-        }
-        if (!operatorConfirmationField.getValue()) {
-            ValidationErrors errors = ValidationErrors.of(messages.getMessage("operatorConfirmation.required"));
-            event.addErrors(errors);
-        }
-    }
-
 
     @Subscribe
     public void onBeforeSave(final BeforeSaveEvent event) throws IOException {
@@ -173,7 +158,10 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
     @Subscribe("nextAction")
     public void onNextAction(final ActionPerformedEvent event) {
         if (currentTabIndex() < LAST_SECTION_INDEX) {
-            openTab(currentTabIndex() + 1);
+            ValidationErrors validationErrors = validateView();
+            if (validationErrors.isEmpty()) {
+                openTab(currentTabIndex() + 1);
+            }
         }
     }
 
@@ -201,6 +189,13 @@ public class InspectionDetailView extends StandardDetailView<Inspection> {
     public void onFinishAction(final ActionPerformedEvent event) {
 
         ValidationErrors validationErrors = validateView();
+        if (signature.isEmpty()) {
+            validationErrors.addAll(ValidationErrors.of(messages.getMessage("operatorRepSignature.empty")));
+        }
+        if (!operatorConfirmationField.getValue()) {
+            validationErrors.addAll(ValidationErrors.of(messages.getMessage("operatorConfirmation.required")));
+        }
+
         if (!validationErrors.isEmpty()) {
             viewValidation.showValidationErrors(validationErrors);
             viewValidation.focusProblemComponent(validationErrors);

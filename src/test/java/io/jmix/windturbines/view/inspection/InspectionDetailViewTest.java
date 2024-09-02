@@ -211,6 +211,12 @@ public class InspectionDetailViewTest {
             // when: to checklist panel
             next(detailView).click();
 
+            // and: filling out all fields
+            rotorBladesAnswerField(detailView).setValue(RotorBladesAnswer.YES);
+            gearboxOilLevelAnswerField(detailView).setValue(GearboxOilLevelAnswer.HIGH);
+            generatorCheckAnswerField(detailView).setValue(1);
+            controlSystemStatusField(detailView).setValue(YesNoAnswer.YES);
+
             // and: to findings panel
             next(detailView).click();
 
@@ -227,6 +233,32 @@ public class InspectionDetailViewTest {
             // and
             assertThat(finish(detailView).isVisible())
                     .isTrue();
+        }
+        @Test
+        void when_validationErrors_then_tabIsStillTheSame() {
+            // given
+            InspectionDetailView detailView = navigateTo(InspectionDetailView.class, inspection, Inspection.class);
+
+            // and: to checklist panel
+            next(detailView).click();
+
+            // and:
+            assertThat(currentTabSheetIndex(detailView))
+                    .isEqualTo(1);
+
+            // and: setting fields to null
+            rotorBladesAnswerField(detailView).setValue(null);
+            gearboxOilLevelAnswerField(detailView).setValue(null);
+            generatorCheckAnswerField(detailView).setValue(null);
+            controlSystemStatusField(detailView).setValue(null);
+
+            // when: to findings panel
+            next(detailView).click();
+
+            // then: it is still showing checklist panel
+            assertThat(currentTabSheetIndex(detailView))
+                    .isEqualTo(1);
+
         }
 
         @Test
