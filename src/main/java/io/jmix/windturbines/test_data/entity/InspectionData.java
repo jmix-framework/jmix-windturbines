@@ -35,7 +35,7 @@ public class InspectionData implements TestDataProvider<Inspection> {
         inspection.setTurbine(turbine);
         inspection.setTechnician(technician);
         inspection.setInspectionDate(LocalDate.now());
-        inspection.setTaskStatus(faker.options().option(TaskStatus.values()));
+        inspection.setTaskStatus(TaskStatus.COMPLETED);
 
         inspection.setRotorBladesAnswer(faker.options().option(RotorBladesAnswer.values()));
         inspection.setRotorBladesComment(faker.lorem().sentence());

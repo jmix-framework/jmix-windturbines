@@ -23,7 +23,7 @@
             </hbox>
             <hbox width="100%" classNames="gap-m p-s">
                 <hbox alignItems="CENTER" width="100%">
-                    <svgIcon resource="/icons/location.svg"/>
+                    <svgIcon resource="/windturbines/icons/location.svg"/>
                     <span id="location"
                           width="100%"
                           classNames="cut-overflow-text"/>
