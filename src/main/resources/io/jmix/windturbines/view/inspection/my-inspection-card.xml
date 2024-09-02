@@ -16,13 +16,13 @@
             </hbox>
             <hbox width="100%" classNames="p-s gap-m">
                 <hbox alignItems="CENTER" width="100%">
-                    <svgIcon resource="/icons/location.svg"/>
+                    <svgIcon resource="icons/location.svg"/>
                     <span id="location"
                           width="100%"
                           classNames="cut-overflow-text"/>
                 </hbox>
                 <hbox padding="false" justifyContent="END">
-                    <button action="detailsAction" themeNames="tertiary-inline"/>
+                    <button action="detailsAction" themeNames="tertiary-inline" classNames="cursor-pointer"/>
                 </hbox>
             </hbox>
         </vbox>

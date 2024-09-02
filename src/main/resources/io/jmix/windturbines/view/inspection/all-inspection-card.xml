@@ -6,7 +6,7 @@
         <vbox id="root"
               padding="false"
               spacing="false"
-              classNames="m-m white-card cursor-pointer turbine-list-white-card">
+              classNames="m-m white-card turbine-list-white-card">
             <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
                 <icon icon="vaadin:calendar-o" classNames="mr-s"/>
                 <span id="inspectionDate"/>
@@ -16,9 +16,15 @@
             </hbox>
             <hbox width="100%" classNames="p-s gap-m">
                 <span id="secondRowText" width="100%"/>
-                <hbox padding="false" justifyContent="END">
-                    <button action="assignAction" themeNames="tertiary-inline outlined"/>
+                <hbox alignItems="CENTER" width="100%">
+                    <svgIcon resource="/windturbines/icons/location.svg"/>
+                    <span id="location"
+                          width="100%"
+                          classNames="cut-overflow-text"/>
                 </hbox>
+            </hbox>
+            <hbox width="100%" classNames="p-s gap-m">
+                    <button id="assignBtn" action="assignAction" themeNames="primary" width="100%" classNames="cursor-pointer"/>
             </hbox>
         </vbox>
     </content>

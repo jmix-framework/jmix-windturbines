@@ -14,9 +14,11 @@ import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.kit.action.ActionVariant;
+import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.view.MessageBundle;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.ViewComponent;
+import io.jmix.windturbines.entity.TaskStatus;
 import io.jmix.windturbines.entity.User;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +49,13 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
     private Span statusBadge;
     @ViewComponent
     private Span secondRowText;
+    @ViewComponent
+    private Span location;
 
     private Inspection inspection;
     private Consumer<Inspection> afterAssignmentPerformedHandler;
+    @ViewComponent
+    private JmixButton assignBtn;
 
 
     public void setInspection(Inspection inspection) {
@@ -57,7 +63,9 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
         inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
         statusBadge.setText(messages.getMessage(inspection.getTaskStatus()));
         statusBadge.getElement().getThemeList().add(inspection.getTaskStatus().getBadgeThemeName());
-        secondRowText.setText(inspection.technicianName());
+        secondRowText.setText("%s - %s".formatted(inspection.getTurbine().getManufacturer().getName(), inspection.getTurbine().getModel()));
+        location.setText(inspection.getTurbine().getLocation());
+        assignBtn.setEnabled(!TaskStatus.COMPLETED.equals(inspection.getTaskStatus()));
     }
 
     @Subscribe("assignAction")
