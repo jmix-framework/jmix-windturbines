@@ -59,7 +59,7 @@
                 </prefix>
             </textField>
         </vbox>
-        <hbox width="100%" height="60%" spacing="false" padding="false">
+        <hbox width="100%" height="65%" spacing="false" padding="false">
             <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">
                 <vbox width="100%" height="100%" classNames="light-background" padding="false">
                     <scroller width="100%" height="100%">
@@ -72,6 +72,5 @@
                 </vbox>
             </vbox>
         </hbox>
-
     </layout>
 </view>

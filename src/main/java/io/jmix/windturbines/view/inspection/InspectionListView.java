@@ -29,10 +29,6 @@ public class InspectionListView extends StandardListView<Inspection> {
     private Tab contentTabSheetMyInspectionsTab;
     @Autowired
     private DemoDataCreator demoDataCreator;
-    @ViewComponent
-    private Notifications notifications;
-    @ViewComponent
-    private MessageBundle messageBundle;
 
     @Subscribe
     public void onReady(final ReadyEvent event) {
@@ -60,12 +56,5 @@ public class InspectionListView extends StandardListView<Inspection> {
             card.setOriginView(this);
             return card;
         });
-    }
-
-    @Subscribe(id = "notificationsIcon", subject = "clickListener")
-    public void onNotificationsClick(final ClickEvent<SvgIcon> event) {
-        notifications.create(messageBundle.getMessage("notImplemented"))
-                .withType(Notifications.Type.WARNING)
-                .show();
     }
 }
