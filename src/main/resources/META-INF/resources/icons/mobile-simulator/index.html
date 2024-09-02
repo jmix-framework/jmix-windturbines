@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jmix Windturbines</title>
+    <link rel="icon" href="icon.png" type="image/png">
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             background-color: #fafaff;
             margin: 0;
             padding: 20px;
@@ -19,23 +19,27 @@
         .container {
             display: flex;
             width: 100%;
-            max-width: 1200px;
+            max-width: 100%;
+            height: 80vh;
             justify-content: space-between;
             align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
         .mobile-frame-container {
-            width: 65%;
             display: flex;
             justify-content: center;
             align-items: center;
-            transform: scale(0.8);
-            transform-origin: top center;
-            margin-top: 200px;
+            flex-grow: 1;
+            max-width: 50%;
         }
         .mobile-frame {
             position: relative;
-            width: 430px;
-            height: 932px;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            max-height: 100%;
+            aspect-ratio: 430 / 932;
             border: 16px solid black;
             border-radius: 36px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -54,22 +58,22 @@
             background: #333;
             border-radius: 10px;
         }
-        .mobile-frame:after {
-            content: none; /* Entfernt den Kreis unten */
-        }
         iframe {
-            width: 100%;
-            height: 100%;
+            transform: scale(1.2);
+            transform-origin: top left;
+            width: calc(100% / 1.2);
+            height: calc(100% / 1.2);
             border: none;
         }
         .side-text {
-            width: 35%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-left: 20px;
             box-sizing: border-box;
+            flex-grow: 1;
+            max-width: 40%;
+            padding: 20px;
         }
         .card {
             background: white;
@@ -77,17 +81,16 @@
             border-radius: 10px;
             padding: 20px;
             width: 100%;
-            max-width: 400px;
             text-align: center;
         }
         .card h1 {
             color: #342a98;
-            font-size: 2em;
+            font-size: 1.8em;
             margin-bottom: 10px;
         }
         .card img.logo {
             margin-top: 20px;
-            width: 100px;
+            width: 80px;
         }
         .cta {
             margin-top: 20px;
@@ -96,15 +99,80 @@
             align-items: center;
         }
         .cta img.qr {
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             margin-top: 10px;
         }
         .cta span {
-            font-size: 1em;
+            font-size: 0.9em;
             color: #17124b;
             margin-top: 10px;
             text-align: center;
+        }
+
+        @media (min-width: 1500px) {
+            .container {
+                max-width: 80%;
+            }
+            .mobile-frame {
+                margin-top: 100px;
+                max-width: 50%;
+            }
+
+            iframe {
+                transform: scale(1);
+                width: calc(100% / 1);
+                height: calc(100% / 1);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 90%;
+                height: 75vh;
+            }
+            .mobile-frame {
+                border: 12px solid black;
+                border-radius: 24px;
+            }
+            .mobile-frame-container {
+                margin-top: 100px;
+                max-width: 30%;
+            }
+            iframe {
+                transform: scale(0.75);
+                width: calc(100% / 0.75);
+                height: calc(100% / 0.75);
+            }
+            .side-text {
+                max-width: 45%;
+            }
+            .card h1 {
+                font-size: 1.5em;
+            }
+            .cta img.qr {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-frame-container {
+                max-width: 50%;
+            }
+            .side-text {
+                max-width: 50%;
+            }
+            .mobile-frame {
+                max-width: 280px;
+            }
+            .card h1 {
+                font-size: 1.5em;
+            }
+            .cta img.qr {
+                width: 110px;
+                height: 110px;
+            }
         }
     </style>
 </head>

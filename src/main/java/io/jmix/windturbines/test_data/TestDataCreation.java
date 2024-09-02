@@ -36,19 +36,6 @@ public class TestDataCreation {
         }
 
 
-        User mike = entityTestData.saveWithDefaults(new TechnicianData("Mike", "Smith"), it -> {
-            it.setUsername("mike");
-            it.setPassword(passwordEncoder.encode("mike"));
-        });
-        entityTestData.saveWithDefaults(new TechnicianRoleData(mike));
-
-        User tom = entityTestData.saveWithDefaults(new TechnicianData("Tom", "Delany"), it -> {
-            it.setUsername("tom");
-            it.setPassword(passwordEncoder.encode("tom"));
-        });
-        entityTestData.saveWithDefaults(new TechnicianRoleData(tom));
-
-
         Manufacturer vestas = entityTestData.saveWithDefaults(new ManufacturerData("Vestas"));
         Manufacturer siemens = entityTestData.saveWithDefaults(new ManufacturerData("Siemens"));
         Manufacturer ge = entityTestData.saveWithDefaults(new ManufacturerData("GE"));
@@ -120,7 +107,7 @@ public class TestDataCreation {
 
         List<User> users = entityTestData.loadAll(User.class);
 
-        IntStream.range(0, faker().number().numberBetween(3, 10))
+        IntStream.range(0, faker().number().numberBetween(10, 40))
                 .forEach(i -> {
                             User technician = withLikelihoodOf(0.2, () -> randomOfList(users)).orElse(null);
                             withLikelihoodOf(0.3, () -> completedInspection(turbine, technician))

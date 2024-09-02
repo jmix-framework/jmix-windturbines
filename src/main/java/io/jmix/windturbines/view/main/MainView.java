@@ -31,8 +31,6 @@ import java.util.Random;
 @ViewController("MainView")
 @ViewDescriptor("main-view.xml")
 public class MainView extends StandardMainView {
-
-    private static final Logger log = LoggerFactory.getLogger(MainView.class);
     @Autowired
     private ViewNavigators viewNavigators;
     @ViewComponent

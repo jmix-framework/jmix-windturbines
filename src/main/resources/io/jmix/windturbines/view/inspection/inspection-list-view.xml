@@ -36,11 +36,11 @@
                               classNames="jmix-main-view-drawer-toggle"
                               themeNames="contrast"/>
                 <span id="spacer"/>
-                <svgIcon resource="icons/notification.svg"/>
+                <svgIcon id="notificationsIcon" resource="icons/notification.svg"/>
             </hbox>
             <h3 classNames="page-title" text="msg://inspectionsListView.title"/>
         </vbox>
-        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="100%"
+        <tabSheet id="contentTabSheet" width="100%" themeNames="minimal equal-width-tabs" height="75%"
                   classNames="content-tab-sheet">
             <tab id="myInspectionsTab" label="msg://myInspections">
                 <vbox classNames="layout-body" width="100%" height="100%" padding="false" spacing="false">

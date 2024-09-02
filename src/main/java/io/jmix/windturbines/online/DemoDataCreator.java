@@ -9,18 +9,16 @@ import io.jmix.flowui.backgroundtask.BackgroundWorker;
 import io.jmix.flowui.backgroundtask.TaskLifeCycle;
 import io.jmix.windturbines.test_data.TestDataCreation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * In online demo mode, generates demo data in a background task.
+ * Generates demo data in a background task.
  */
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-@Profile("online")
-public class OnlineDemoDataCreator {
+public class DemoDataCreator {
 
     @Autowired
     private TestDataCreation testDataCreation;

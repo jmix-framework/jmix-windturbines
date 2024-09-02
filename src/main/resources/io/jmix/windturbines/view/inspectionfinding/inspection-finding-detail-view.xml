@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
-      title="msg://inspectionFindingDetailView.title"
-      focusComponent="form">
+      title="msg://inspectionFindingDetailView.title">
     <data>
         <instance id="inspectionFindingDc"
                   class="io.jmix.windturbines.entity.inspection.InspectionFinding">
@@ -20,25 +19,30 @@
         <action id="closeAction" type="detail_close"/>
     </actions>
     <layout>
-        <formLayout id="form" dataContainer="inspectionFindingDc">
-            <textField id="titleField" property="title"/>
-            <textArea id="descriptionField" height="7em" property="description"/>
-            <select id="severityField" property="severity"/>
-        </formLayout>
-        <h5 text="msg://evidences"/>
-        <vbox width="100%" padding="false">
-            <virtualList id="evidencesVirtualList" itemsContainer="evidencesDc" height="300px" />
-            <fileStorageUploadField id="upload"
-                                    uploadText="msg://uploadEvidence"
-                                    classNames="upload-btn"
-                                    dropAllowed="false"
-                                    acceptedFileTypes=".png,.jpg,.jpeg"
-                                    maxFileSize="100000000"
-                                    uploadIcon="PICTURE"
-                                    clearButtonVisible="false"
-                                    fileStoragePutMode="MANUAL"
-            />
-        </vbox>
+        <scroller width="100%" height="100%">
+            <vbox width="100%" padding="false" spacing="false" height="100%">
+                <formLayout id="form" dataContainer="inspectionFindingDc">
+                    <textField id="titleField" property="title"/>
+                    <textArea id="descriptionField" height="5em" property="description"/>
+                    <select id="severityField" property="severity"/>
+                </formLayout>
+                <h5 text="msg://evidences"/>
+                <vbox width="100%" padding="false">
+                    <fileStorageUploadField id="upload"
+                                            uploadText="msg://uploadEvidence"
+                                            classNames="upload-btn"
+                                            dropAllowed="false"
+                                            acceptedFileTypes=".png,.jpg,.jpeg"
+                                            maxFileSize="100000000"
+                                            uploadIcon="PICTURE"
+                                            clearButtonVisible="false"
+                                            fileStoragePutMode="MANUAL"
+                    />
+                    <virtualList id="evidencesVirtualList" itemsContainer="evidencesDc" height="125px" />
+                </vbox>
+            </vbox>
+
+        </scroller>
         <hbox id="detailActions" width="100%" spacing="true" padding="false">
             <button id="closeBtn" action="closeAction" classNames="blue-btn"/>
             <button id="saveAndCloseBtn" action="saveAction" classNames="orange-btn"/>

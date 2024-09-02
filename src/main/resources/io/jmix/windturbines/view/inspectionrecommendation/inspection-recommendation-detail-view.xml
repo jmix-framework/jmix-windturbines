@@ -21,9 +21,9 @@
             <select id="priorityField" property="priority"/>
             <select id="relatedFindingField" property="relatedFinding" emptySelectionAllowed="true" />
         </formLayout>
-        <hbox id="detailActions">
-            <button id="saveAndCloseBtn" action="saveAction"/>
-            <button id="closeBtn" action="closeAction"/>
+        <hbox id="detailActions" width="100%" spacing="true" padding="false">
+            <button id="closeBtn" action="closeAction" classNames="blue-btn"/>
+            <button id="saveAndCloseBtn" action="saveAction" classNames="orange-btn"/>
         </hbox>
     </layout>
 </view>
