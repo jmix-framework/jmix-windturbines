@@ -1,5 +1,8 @@
 /*
- Example of
+ Example of styling a Jmix / Vaadin component via its shadow DOM parts / states.
+ See also:
+ - https://docs.jmix.io/jmix/flow-ui/themes/styling-ui-components.html
+ - https://vaadin.com/docs/latest/components/tabs/styling#tabsheet
  */
 jmix-tabsheet.content-tab-sheet::part(tabs-container) {
     background-color: var(--dark-blue);
