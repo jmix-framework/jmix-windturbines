@@ -7,6 +7,7 @@ import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
+import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.View;
 import io.jmix.flowui.view.ViewComponent;
@@ -17,42 +18,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TurbineCard extends Fragment<VerticalLayout> {
 
     @Autowired
-    private Messages messages;
-    @Autowired
     private ViewNavigators viewNavigators;
 
     @ViewComponent
-    private Span turbineId;
-    @ViewComponent
     private Span statusBadge;
-    @ViewComponent
-    private Span model;
-    @ViewComponent
-    private Span manufacturerName;
-    @ViewComponent
-    private Span location;
 
     private View<?> originView;
-    private Turbine turbine;
+    @ViewComponent
+    private InstanceContainer<Turbine> turbineDc;
 
-    @Subscribe
-    public void onReady(final ReadyEvent event) {
-        getContent().addClickListener(e -> navigateToDetailView(turbine));
+    public void setOriginView(View<?> originView) {
+        this.originView = originView;
     }
 
     public void setTurbine(Turbine turbine) {
-        this.turbine = turbine;
-        turbineId.setText(turbine.getTurbineId());
-        statusBadge.setText(messages.getMessage(turbine.getStatus()));
+        turbineDc.setItem(turbine);
         statusBadge.getElement().getThemeList().add(turbine.getStatus().getBadgeThemeName());
-        manufacturerName.setText(turbine.getManufacturer().getName());
-        model.setText(turbine.getModel());
-        location.setText(turbine.getLocation());
+    }
+
+    @Subscribe
+    public void onReady(final ReadyEvent event) {
+        getContent().addClickListener(e -> navigateToDetailView(turbineDc.getItem()));
     }
 
     @Subscribe("detailsAction")
     public void onDetailsAction(final ActionPerformedEvent event) {
-        navigateToDetailView(turbine);
+        navigateToDetailView(turbineDc.getItem());
     }
 
     private void navigateToDetailView(Turbine turbine) {
@@ -60,9 +51,5 @@ public class TurbineCard extends Fragment<VerticalLayout> {
                 .withReadOnly(true)
                 .editEntity(turbine)
                 .navigate();
-    }
-
-    public void setOriginView(View<?> originView) {
-        this.originView = originView;
     }
 }

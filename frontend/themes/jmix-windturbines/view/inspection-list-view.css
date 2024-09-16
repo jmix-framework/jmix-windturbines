@@ -1,5 +1,5 @@
 #searchField::part(input-field) {
-    background: #1D3982;
+    background: var(--dark-blue);
     padding: 5px;
     border-radius: 15px;
 }

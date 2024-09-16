@@ -1,0 +1,26 @@
+/*
+ Example of
+ */
+jmix-tabsheet.content-tab-sheet::part(tabs-container) {
+    background-color: var(--dark-blue);
+    border-radius: 15px;
+    padding: 5px;
+    margin: 4px 16px 16px;
+    height: 36px;
+}
+
+jmix-tabsheet.content-tab-sheet vaadin-tab {
+    color: var(--lumo-base-color);
+}
+
+jmix-tabsheet.content-tab-sheet vaadin-tab[selected] {
+    background: linear-gradient(180deg, #EBF2FC 0%, #DBE8FD 100%);
+    color: var(--dark-blue);
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+jmix-tabsheet.content-tab-sheet::part(content) {
+    padding: 0 !important;
+}

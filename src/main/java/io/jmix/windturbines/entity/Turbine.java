@@ -2,9 +2,7 @@ package io.jmix.windturbines.entity;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.OnDelete;
-import io.jmix.core.metamodel.annotation.Composition;
-import io.jmix.core.metamodel.annotation.InstanceName;
-import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

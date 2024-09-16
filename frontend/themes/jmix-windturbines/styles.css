@@ -1,7 +1,24 @@
-@import url('./jmix-windturbines.css');
+/*
+ This file is used to include all CSS definitions and embed them into the application.
+ */
+
+/*
+ shared directory is used for styles that are used across multiple views
+ or that define or override global styles.
+ */
+@import url('./shared/vaadin-lumo-defaults.css');
+@import url('./shared/variables.css');
+@import url('./shared/cursor.css');
+@import url('./shared/text.css');
+@import url('./shared/background.css');
+@import url('./shared/buttons.css');
+@import url('./shared/tabsheet.css');
+
+/*
+ view specific files contain styles that are only used in particular views
+ */
 @import url('./view/main-view.css');
 @import url('./view/login-view.css');
-@import url('./view/tabsheet.css');
 @import url('./view/turbines-list-view.css');
 @import url('./view/turbine-detail-view.css');
 @import url('./view/inspection-list-view.css');

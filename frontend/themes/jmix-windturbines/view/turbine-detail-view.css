@@ -1,3 +1,11 @@
 .status-field-form-item  {
     align-self: start;
 }
+
+.call-button {
+    margin: 0;
+    height: auto;
+    padding: 0;
+    line-height: inherit;
+    font-size: inherit;
+}

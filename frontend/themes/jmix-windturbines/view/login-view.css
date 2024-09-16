@@ -7,9 +7,8 @@ vaadin-login-form-wrapper {
 }
 
 .jmix-login-main-layout vaadin-button[slot="submit"][theme~="primary"] {
-    background: linear-gradient(270deg, #FF9467 0%, #E35231 100%);
-    box-shadow: 0px 1px 1.63px 0px #B936032E;
-    box-shadow: 0px 5px 10px 0px #B936035C;
+    background: var(--orange-btn-background);
+    box-shadow: var(--orange-btn-box-shadow);
     color:white;
     border-radius: 20px;
 }

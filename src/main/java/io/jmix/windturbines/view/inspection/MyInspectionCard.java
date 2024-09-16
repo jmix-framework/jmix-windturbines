@@ -8,6 +8,7 @@ import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
+import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.View;
 import io.jmix.flowui.view.ViewComponent;
@@ -19,33 +20,21 @@ import java.util.function.Consumer;
 
 @FragmentDescriptor("my-inspection-card.xml")
 public class MyInspectionCard extends Fragment<VerticalLayout> {
-    @Autowired
-    private Messages messages;
-    @Autowired
-    private DatatypeFormatter datatypeFormatter;
+
     @Autowired
     private ViewNavigators viewNavigators;
 
     @ViewComponent
-    private Span inspectionDate;
-    @ViewComponent
     private Span statusBadge;
     @ViewComponent
     private Span location;
+    @ViewComponent
+    private InstanceContainer<Inspection> inspectionDc;
 
-    private Inspection inspection;
     private View<?> originView;
 
-    @Subscribe
-    public void onReady(final ReadyEvent event) {
-        getContent().addClickListener(e -> navigateToDetailView(inspection));
-    }
-
-
     public void setInspection(Inspection inspection) {
-        this.inspection = inspection;
-        inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
-        statusBadge.setText(messages.getMessage(inspection.getTaskStatus()));
+        inspectionDc.setItem(inspection);
         statusBadge.getElement().getThemeList().add(inspection.getTaskStatus().getBadgeThemeName());
 
         location.setText(inspection.getTurbine().getLocation());
@@ -55,9 +44,14 @@ public class MyInspectionCard extends Fragment<VerticalLayout> {
         this.originView = originView;
     }
 
+    @Subscribe
+    public void onReady(final ReadyEvent event) {
+        getContent().addClickListener(e -> navigateToDetailView(inspectionDc.getItem()));
+    }
+
     @Subscribe("detailsAction")
     public void onDetailsAction(final ActionPerformedEvent event) {
-        navigateToDetailView(inspection);
+        navigateToDetailView(inspectionDc.getItem());
     }
 
     private void navigateToDetailView(Inspection inspection) {

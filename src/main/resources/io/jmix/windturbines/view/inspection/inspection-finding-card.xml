@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <data>
+        <instance id="inspectionFindingDc"
+                  class="io.jmix.windturbines.entity.inspection.InspectionFinding" />
+    </data>
     <actions>
         <action id="editAction" icon="vaadin:pencil" />
         <action id="readAction" icon="vaadin:search" />
@@ -9,13 +13,13 @@
         <vbox id="root" spacing="false" padding="false" width="100%"
               classNames="p-s gap-m white-card cursor-pointer finding-card">
             <hbox width="100%" alignItems="CENTER" classNames="p-s gap-m" padding="false">
-                <span id="title" classNames="cut-overflow-text inspection-finding-title" width="100%"/>
+                <span id="title" dataContainer="inspectionFindingDc" property="title" classNames="cut-overflow-text inspection-finding-title" width="100%"/>
                 <hbox justifyContent="END" padding="false">
-                    <span id="severity" width="120px" themeNames="badge pill" />
+                    <span id="severity" dataContainer="inspectionFindingDc" property="severity" width="120px" themeNames="badge pill" />
                 </hbox>
             </hbox>
             <hbox width="100%" alignItems="STRETCH" classNames="p-s gap-m" padding="false">
-                <span id="description" classNames="cut-overflow-text" width="100%"/>
+                <span id="description" dataContainer="inspectionFindingDc" property="description" classNames="cut-overflow-text" width="100%"/>
                 <hbox padding="false">
                 </hbox>
             </hbox>

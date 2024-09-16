@@ -1,4 +1,8 @@
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <data>
+        <instance id="inspectionDc"
+                  class="io.jmix.windturbines.entity.inspection.Inspection" />
+    </data>
     <actions>
         <action id="detailsAction" icon="vaadin:chevron-right" />
     </actions>
@@ -9,9 +13,9 @@
               classNames="m-m white-card cursor-pointer turbine-list-white-card">
             <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
                 <icon icon="vaadin:calendar-o" classNames="mr-s"/>
-                <span id="inspectionDate"/>
+                <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
                 <hbox id="statusLayout" width="100%" padding="false" justifyContent="END">
-                    <span id="statusBadge" width="100px" classNames="task-status" themeNames="badge pill"/>
+                    <span id="statusBadge" width="100px" dataContainer="inspectionDc" property="taskStatus" classNames="task-status" themeNames="badge pill"/>
                 </hbox>
             </hbox>
             <hbox width="100%" classNames="p-s gap-m">
