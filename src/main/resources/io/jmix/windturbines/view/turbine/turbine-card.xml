@@ -11,7 +11,7 @@
         <vbox id="root"
               padding="false"
               spacing="false"
-              classNames="white-card cursor-pointer turbine-list-white-card m-m">
+              classNames="white-card cursor-pointer width-auto m-m">
             <hbox width="100%" classNames="gap-m p-s">
                 <span id="turbineId" dataContainer="turbineDc" property="turbineId" classNames="font-bold"/>
                 <hbox justifyContent="END" width="100%">

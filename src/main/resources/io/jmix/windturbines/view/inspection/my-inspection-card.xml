@@ -10,7 +10,7 @@
         <vbox id="root"
               padding="false"
               spacing="false"
-              classNames="m-m white-card cursor-pointer turbine-list-white-card">
+              classNames="m-m white-card cursor-pointer width-auto">
             <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
                 <icon icon="vaadin:calendar-o" classNames="mr-s"/>
                 <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
@@ -18,7 +18,7 @@
                     <span id="statusBadge" width="100px" dataContainer="inspectionDc" property="taskStatus" classNames="task-status" themeNames="badge pill"/>
                 </hbox>
             </hbox>
-            <hbox width="100%" classNames="p-s gap-m">
+            <hbox id="secondRowBox" width="100%">
                 <hbox alignItems="CENTER" width="100%">
                     <svgIcon resource="icons/location.svg"/>
                     <span id="location"

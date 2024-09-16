@@ -1,7 +1,10 @@
 package io.jmix.windturbines.view.inspection;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import io.jmix.core.Messages;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import io.jmix.flowui.ViewNavigators;
@@ -10,6 +13,7 @@ import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.Subscribe;
+import io.jmix.flowui.view.Target;
 import io.jmix.flowui.view.View;
 import io.jmix.flowui.view.ViewComponent;
 import io.jmix.windturbines.entity.TaskStatus;
@@ -30,8 +34,21 @@ public class MyInspectionCard extends Fragment<VerticalLayout> {
     private Span location;
     @ViewComponent
     private InstanceContainer<Inspection> inspectionDc;
+    @ViewComponent
+    private HorizontalLayout secondRowBox;
 
     private View<?> originView;
+
+    @Subscribe
+    public void onReady(final ReadyEvent event) {
+        // example on how to add Vaadin Utility class names programmatically
+        secondRowBox.addClassNames(
+                LumoUtility.Padding.SMALL,
+                LumoUtility.Gap.MEDIUM
+        );
+
+        getContent().addClickListener(e -> navigateToDetailView(inspectionDc.getItem()));
+    }
 
     public void setInspection(Inspection inspection) {
         inspectionDc.setItem(inspection);
@@ -44,10 +61,6 @@ public class MyInspectionCard extends Fragment<VerticalLayout> {
         this.originView = originView;
     }
 
-    @Subscribe
-    public void onReady(final ReadyEvent event) {
-        getContent().addClickListener(e -> navigateToDetailView(inspectionDc.getItem()));
-    }
 
     @Subscribe("detailsAction")
     public void onDetailsAction(final ActionPerformedEvent event) {

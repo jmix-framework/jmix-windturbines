@@ -10,7 +10,7 @@
         <vbox id="root"
               padding="false"
               spacing="false"
-              classNames="m-m bg-base shadow-s p-s rounded-s turbine-list-white-card">
+              classNames="m-m bg-base shadow-s p-s rounded-s width-auto">
             <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
                 <icon icon="vaadin:calendar-o" classNames="mr-s"/>
                 <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
