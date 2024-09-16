@@ -6,7 +6,7 @@
 
 Jmix Wind Turbines is a mobile example application built with [Jmix](https://jmix.io/) - a full-stack framework for business applications. It showcases the operations of a maintenance company responsible for inspecting and maintaining wind turbines at a wind farm.
 
-![Jmix Wind Turbines - Overview](img/1-inspection-list.jpeg)
+ <img src="img/1-inspection-list.jpeg" width="200px">
 
 The online demo of the Jmix Wind Turbines application is available at <https://demo.jmix.io/windturbines>.
 
