@@ -43,9 +43,9 @@ public class TestDialogs extends DialogsImpl {
     class TestOptionDialogBuilder extends OptionDialogBuilderImpl {
 
         @Override
-        public void open() {
+        public Dialog open() {
             optionDialogs.add(new TestOptionDialog(dialog, Arrays.stream(actions).toList()));
-            super.open();
+            return super.open();
         }
     }
 
