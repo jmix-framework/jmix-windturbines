@@ -93,16 +93,6 @@ public class TurbineDetailView extends StandardDetailView<Turbine> implements Ha
         return btn;
     }
 
-    @Supply(to = "inspectionsVirtualList", subject = "renderer")
-    private Renderer<Inspection> inspectionsVirtualListRenderer() {
-        return new ComponentRenderer<>(inspection -> {
-            MyInspectionCard card = fragments.create(this, MyInspectionCard.class);
-            card.setInspection(inspection);
-            card.setOriginView(this);
-            return card;
-        });
-    }
-
     @Subscribe("back")
     public void onBack(final ActionPerformedEvent event) {
         closeWithDiscard();

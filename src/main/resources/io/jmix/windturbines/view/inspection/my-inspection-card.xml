@@ -1,10 +1,10 @@
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
     <data>
         <instance id="inspectionDc"
-                  class="io.jmix.windturbines.entity.inspection.Inspection" />
+                  class="io.jmix.windturbines.entity.inspection.Inspection"/>
     </data>
     <actions>
-        <action id="detailsAction" icon="vaadin:chevron-right" />
+        <action id="detailsAction" icon="vaadin:chevron-right"/>
     </actions>
     <content>
         <vbox id="root"
@@ -12,10 +12,17 @@
               spacing="false"
               classNames="m-m white-card cursor-pointer width-auto">
             <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
-                <icon icon="vaadin:calendar-o" classNames="mr-s"/>
-                <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
+                <div classNames="flex flex-col sm:flex-row gap-m md:items-baseline"
+                     css="justify-content: space-between; width: 100%">
+                    <hbox spacing="true">
+                        <icon icon="vaadin:calendar-o" classNames="mr-s"/>
+                        <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
+                    </hbox>
+                    <span dataContainer="inspectionDc" property="turbine"/>
+                </div>
                 <hbox id="statusLayout" width="100%" padding="false" justifyContent="END">
-                    <span id="statusBadge" width="100px" dataContainer="inspectionDc" property="taskStatus" classNames="task-status" themeNames="badge pill"/>
+                    <span id="statusBadge" width="100px" dataContainer="inspectionDc" property="taskStatus"
+                          classNames="task-status" themeNames="badge pill"/>
                 </hbox>
             </hbox>
             <hbox id="secondRowBox" width="100%">

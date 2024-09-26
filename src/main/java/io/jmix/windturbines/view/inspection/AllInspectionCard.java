@@ -46,13 +46,12 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
     private Span secondRowText;
     @ViewComponent
     private Span location;
-
-    private Consumer<Inspection> afterAssignmentPerformedHandler;
     @ViewComponent
     private JmixButton assignBtn;
     @ViewComponent
     private InstanceContainer<Inspection> inspectionDc;
 
+    private Consumer<Inspection> afterAssignmentPerformedHandler;
 
     public void setInspection(Inspection inspection) {
         inspectionDc.setItem(inspection);
