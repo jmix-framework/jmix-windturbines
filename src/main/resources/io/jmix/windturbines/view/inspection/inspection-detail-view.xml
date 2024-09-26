@@ -45,7 +45,6 @@
                     <vbox width="100%" classNames="light-background" padding="false">
                         <scroller width="100%" height="100%">
                             <vbox width="100%" padding="true">
-
                                 <vbox width="100%" classNames="white-card">
                                     <formLayout id="detailsForm" dataContainer="inspectionDc">
                                         <entityPicker id="turbineField" property="turbine" readOnly="true">
@@ -55,7 +54,7 @@
                                             </actions>
                                         </entityPicker>
                                         <datePicker id="inspectionDateField" property="inspectionDate"/>
-                                        <entityPicker id="technicianField" property="technician" readOnly="true" />
+                                        <entityPicker id="technicianField" property="technician" readOnly="true"/>
                                     </formLayout>
                                 </vbox>
                             </vbox>
@@ -75,7 +74,10 @@
                                                 property="rotorBladesAnswer"
                                                 themeNames="helper-above-field"
                                                 helperText="msg://rotorBladesQuestion"/>
-                                        <textArea label="msg://empty" height="4em" id="rotorBladesCommentField"
+                                        <textArea helperText="msg://commentHelperText"
+                                                  themeNames="helper-above-field"
+                                                  height="10em"
+                                                  id="rotorBladesCommentField"
                                                   property="rotorBladesComment"/>
                                     </formLayout>
                                 </vbox>
@@ -85,7 +87,10 @@
                                                 themeNames="helper-above-field"
                                                 helperText="msg://gearboxOilLevelQuestion"
                                                 property="gearboxOilLevelAnswer"/>
-                                        <textArea label="msg://empty" height="4em" id="gearboxOilLevelCommentField"
+                                        <textArea helperText="msg://commentHelperText"
+                                                  themeNames="helper-above-field"
+                                                  height="10em"
+                                                  id="gearboxOilLevelCommentField"
                                                   property="gearboxOilLevelComment"/>
                                     </formLayout>
                                 </vbox>
@@ -96,8 +101,12 @@
                                                           classNames="one-to-five-answer"
                                                           helperText="msg://generatorCheckQuestion"
                                                           property="generatorCheckAnswer"/>
-                                        <textArea label="msg://empty" height="4em" id="generatorCheckCommentField"
-                                                  property="generatorCheckComment"/>
+                                        <textArea
+                                                helperText="msg://commentHelperText"
+                                                themeNames="helper-above-field"
+                                                height="10em"
+                                                id="generatorCheckCommentField"
+                                                property="generatorCheckComment"/>
                                     </formLayout>
                                 </vbox>
                                 <vbox width="100%" classNames="white-card">
@@ -106,7 +115,11 @@
                                                 themeNames="helper-above-field"
                                                 helperText="msg://controlSystemStatusQuestion"
                                                 property="controlSystemStatus"/>
-                                        <textArea label="msg://empty" height="4em" id="controlSystemCommentField"
+                                        <textArea
+                                                helperText="msg://commentHelperText"
+                                                themeNames="helper-above-field"
+                                                height="10em"
+                                                id="controlSystemCommentField"
                                                   property="controlSystemComment"/>
                                     </formLayout>
                                 </vbox>
@@ -121,7 +134,8 @@
                         <scroller width="100%" height="100%">
                             <vbox width="100%" padding="true" height="100%">
                                 <vbox width="100%" classNames="white-card" height="100%">
-                                    <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%" height="100%" />
+                                    <virtualList id="findingsVirtualList" itemsContainer="findingsDc" width="100%"
+                                                 height="100%"/>
                                     <button id="createFindingBtn" action="createFindingAction" classNames="blue-btn"
                                             width="100%"/>
                                 </vbox>
@@ -155,8 +169,10 @@
                                 <vbox width="100%" classNames="white-card">
 
                                     <formLayout dataContainer="inspectionDc">
-                                        <formItem label="msg://io.jmix.windturbines.entity.inspection/Inspection.operatorRepSignature">
-                                            <vbox id="signaturePadWrapper" width="100%" padding="false" spacing="false"/>
+                                        <formItem
+                                                label="msg://io.jmix.windturbines.entity.inspection/Inspection.operatorRepSignature">
+                                            <vbox id="signaturePadWrapper" width="100%" padding="false"
+                                                  spacing="false"/>
                                         </formItem>
                                     </formLayout>
                                     <vbox id="signatureDetails" padding="false" spacing="false">

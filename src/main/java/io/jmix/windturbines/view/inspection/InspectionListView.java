@@ -1,13 +1,10 @@
 package io.jmix.windturbines.view.inspection;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.router.Route;
 import io.jmix.flowui.Fragments;
-import io.jmix.flowui.Notifications;
 import io.jmix.flowui.component.tabsheet.JmixTabSheet;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.inspection.Inspection;
@@ -44,16 +41,6 @@ public class InspectionListView extends StandardListView<Inspection> {
                 contentTabSheet.setSelectedTab(contentTabSheetMyInspectionsTab);
                 getViewData().loadAll();
             });
-            return card;
-        });
-    }
-
-    @Supply(to = "myInspectionsVirtualList", subject = "renderer")
-    private Renderer<Inspection> myInspectionsVirtualListRenderer() {
-        return new ComponentRenderer<>(inspection -> {
-            MyInspectionCard card = fragments.create(this, MyInspectionCard.class);
-            card.setInspection(inspection);
-            card.setOriginView(this);
             return card;
         });
     }

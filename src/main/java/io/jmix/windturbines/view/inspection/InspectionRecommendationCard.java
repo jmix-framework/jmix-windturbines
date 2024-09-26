@@ -10,6 +10,7 @@ import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.model.DataContext;
+import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.ViewComponent;
 import io.jmix.windturbines.entity.inspection.InspectionRecommendation;
@@ -40,40 +41,18 @@ public class InspectionRecommendationCard extends Fragment<VerticalLayout> {
     private Consumer<InspectionRecommendation> editActionHandler;
     private Consumer<InspectionRecommendation> readActionHandler;
     private Consumer<InspectionRecommendation> removeActionHandler;
-    private InspectionRecommendation recommendation;
+    @ViewComponent
+    private InstanceContainer<InspectionRecommendation> inspectionRecommendationDc;
 
     public void setInspectionRecommendation(InspectionRecommendation recommendation) {
-        this.recommendation = recommendation;
+        inspectionRecommendationDc.setItem(recommendation);
         Optional.ofNullable(recommendation.getRelatedFinding())
                 .ifPresent(finding -> title.setText("Finding: %s".formatted(finding.getTitle())));
-        priority.setText(messages.getMessage(recommendation.getPriority()));
         priority.getElement().getThemeList().add(recommendation.getPriority().getBadgeThemeName());
-        description.setText(recommendation.getDescription());
-    }
-
-    @Subscribe("editAction")
-    public void onEditAction(final ActionPerformedEvent event) {
-        editActionHandler.accept(recommendation);
-    }
-
-    @Subscribe("readAction")
-    public void onReadAction(final ActionPerformedEvent event) {
-        readActionHandler.accept(recommendation);
-    }
-
-    @Subscribe("removeAction")
-    public void onRemoveAction(final ActionPerformedEvent event) {
-        removeActionHandler.accept(recommendation);
     }
 
     public void setEditActionHandler(Consumer<InspectionRecommendation> editActionHandler) {
         this.editActionHandler = editActionHandler;
-    }
-
-    public void setReadOnly(boolean readOnly) {
-        readBtn.setVisible(readOnly);
-        editBtn.setVisible(!readOnly);
-        removeBtn.setEnabled(!readOnly);
     }
 
     public void setReadActionHandler(Consumer<InspectionRecommendation> readActionHandler) {
@@ -83,4 +62,27 @@ public class InspectionRecommendationCard extends Fragment<VerticalLayout> {
     public void setRemoveActionHandler(Consumer<InspectionRecommendation> removeActionHandler) {
         this.removeActionHandler = removeActionHandler;
     }
+
+
+    @Subscribe("editAction")
+    public void onEditAction(final ActionPerformedEvent event) {
+        editActionHandler.accept(inspectionRecommendationDc.getItem());
+    }
+
+    @Subscribe("readAction")
+    public void onReadAction(final ActionPerformedEvent event) {
+        readActionHandler.accept(inspectionRecommendationDc.getItem());
+    }
+
+    @Subscribe("removeAction")
+    public void onRemoveAction(final ActionPerformedEvent event) {
+        removeActionHandler.accept(inspectionRecommendationDc.getItem());
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        readBtn.setVisible(readOnly);
+        editBtn.setVisible(!readOnly);
+        removeBtn.setEnabled(!readOnly);
+    }
+
 }

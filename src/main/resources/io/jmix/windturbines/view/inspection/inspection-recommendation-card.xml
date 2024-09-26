@@ -1,4 +1,8 @@
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <data>
+        <instance id="inspectionRecommendationDc"
+                  class="io.jmix.windturbines.entity.inspection.InspectionRecommendation" />
+    </data>
     <actions>
         <action id="editAction" icon="vaadin:pencil" />
         <action id="readAction" icon="vaadin:search" />
@@ -10,11 +14,11 @@
             <hbox width="100%" alignItems="CENTER" classNames="p-s gap-m" padding="false">
                 <span id="title" classNames="cut-overflow-text inspection-finding-title" width="100%"/>
                 <hbox justifyContent="END" padding="false">
-                    <span id="priority" width="120px" themeNames="badge pill" />
+                    <span id="priority" dataContainer="inspectionRecommendationDc" property="priority" width="120px" themeNames="badge pill" />
                 </hbox>
             </hbox>
             <hbox width="100%" alignItems="STRETCH" classNames="p-s gap-m" padding="false">
-                <span id="description" classNames="cut-overflow-text" width="100%"/>
+                <span id="description" dataContainer="inspectionRecommendationDc" property="description" classNames="cut-overflow-text" width="100%"/>
                 <hbox padding="false">
                 </hbox>
             </hbox>
