@@ -18,15 +18,19 @@
                     <span id="statusBadge" width="100px" dataContainer="inspectionDc" property="taskStatus" classNames="task-status" themeNames="badge pill"/>
                 </hbox>
             </hbox>
-            <hbox width="100%" classNames="p-s gap-m">
-                <span id="secondRowText" width="100%"/>
+            <vbox width="100%" classNames="p-s gap-m">
+                <hbox width="100%">
+                    <span id="manufacturerName" dataContainer="inspectionDc" property="turbine.manufacturer.name" />
+                    <span text="msg://-"/>
+                    <span id="manufacturerName" dataContainer="inspectionDc" property="turbine.model" />
+                </hbox>
                 <hbox alignItems="CENTER" width="100%">
                     <svgIcon resource="/windturbines/icons/location.svg"/>
                     <span id="location"
                           width="100%"
-                          classNames="cut-overflow-text"/>
+                          classNames="cut-overflow-text" dataContainer="inspectionDc" property="turbine.location"/>
                 </hbox>
-            </hbox>
+            </vbox>
             <hbox width="100%" classNames="p-s gap-m">
                     <button id="assignBtn" action="assignAction" themeNames="primary" width="100%" classNames="cursor-pointer"/>
             </hbox>

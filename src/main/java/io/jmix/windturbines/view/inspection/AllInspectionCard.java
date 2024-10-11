@@ -43,10 +43,6 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
     @ViewComponent
     private Span statusBadge;
     @ViewComponent
-    private Span secondRowText;
-    @ViewComponent
-    private Span location;
-    @ViewComponent
     private JmixButton assignBtn;
     @ViewComponent
     private InstanceContainer<Inspection> inspectionDc;
@@ -56,8 +52,6 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
     public void setInspection(Inspection inspection) {
         inspectionDc.setItem(inspection);
         statusBadge.getElement().getThemeList().add(inspection.getTaskStatus().getBadgeThemeName());
-        secondRowText.setText("%s - %s".formatted(inspection.getTurbine().getManufacturer().getName(), inspection.getTurbine().getModel()));
-        location.setText(inspection.getTurbine().getLocation());
         assignBtn.setEnabled(!TaskStatus.COMPLETED.equals(inspection.getTaskStatus()));
     }
 

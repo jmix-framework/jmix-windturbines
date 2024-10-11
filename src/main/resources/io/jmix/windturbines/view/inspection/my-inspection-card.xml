@@ -30,7 +30,7 @@
                     <svgIcon resource="icons/location.svg"/>
                     <span id="location"
                           width="100%"
-                          classNames="cut-overflow-text"/>
+                          classNames="cut-overflow-text" dataContainer="inspectionDc" property="turbine.location"/>
                 </hbox>
                 <hbox padding="false" justifyContent="END">
                     <button action="detailsAction" themeNames="tertiary-inline" classNames="cursor-pointer"/>

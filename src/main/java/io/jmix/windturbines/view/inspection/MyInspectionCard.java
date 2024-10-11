@@ -29,8 +29,6 @@ public class MyInspectionCard extends FragmentRenderer<VerticalLayout, Inspectio
     @ViewComponent
     private Span statusBadge;
     @ViewComponent
-    private Span location;
-    @ViewComponent
     private InstanceContainer<Inspection> inspectionDc;
     @ViewComponent
     private HorizontalLayout secondRowBox;
@@ -38,7 +36,6 @@ public class MyInspectionCard extends FragmentRenderer<VerticalLayout, Inspectio
     @Subscribe(id = "inspectionDc", target = Target.DATA_CONTAINER)
     public void onInspectionDcItemChange(final InstanceContainer.ItemChangeEvent<Inspection> event) {
         statusBadge.getElement().getThemeList().add(inspectionDc.getItem().getTaskStatus().getBadgeThemeName());
-        location.setText(inspectionDc.getItem().getTurbine().getLocation());
     }
 
     @Subscribe
