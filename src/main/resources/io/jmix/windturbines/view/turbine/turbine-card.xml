@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
+    <data>
+        <instance id="turbineDc"
+                  class="io.jmix.windturbines.entity.Turbine"/>
+    </data>
     <actions>
-        <action id="detailsAction" />
+        <action id="detailsAction"/>
     </actions>
     <content>
         <vbox id="root"
               padding="false"
               spacing="false"
-              classNames="white-card cursor-pointer turbine-list-white-card m-m">
+              classNames="white-card cursor-pointer width-auto m-m">
             <hbox width="100%" classNames="gap-m p-s">
-                <span id="turbineId" classNames="font-bold"/>
+                <span id="turbineId" dataContainer="turbineDc" property="turbineId" classNames="font-bold"/>
                 <hbox justifyContent="END" width="100%">
                     <span id="statusBadge"
                           width="120px"
+                          dataContainer="turbineDc"
+                          property="status"
                           themeNames="badge pill"
                           classNames="turbine-status"/>
                 </hbox>
             </hbox>
             <hbox width="100%" classNames="gap-xl p-s">
-                <span id="manufacturerName"/>
-                <span id="model"/>
+                <span dataContainer="turbineDc" property="manufacturer" id="manufacturerName"/>
+                <span dataContainer="turbineDc" property="model" id="model"/>
             </hbox>
             <hbox width="100%" classNames="gap-m p-s">
                 <hbox alignItems="CENTER" width="100%">
                     <svgIcon resource="/windturbines/icons/location.svg"/>
                     <span id="location"
+                          dataContainer="turbineDc"
+                          property="location"
                           width="100%"
                           classNames="cut-overflow-text"/>
                 </hbox>

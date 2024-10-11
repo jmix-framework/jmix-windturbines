@@ -125,7 +125,9 @@
                                     <virtualList id="inspectionsVirtualList"
                                                  itemsContainer="inspectionsDc"
                                                  height="100%"
-                                                 width="100%"/>
+                                                 width="100%">
+                                        <fragmentRenderer class="io.jmix.windturbines.view.inspection.MyInspectionCard" />
+                                    </virtualList>
                         </scroller>
                     </vbox>
                 </vbox>

@@ -19,11 +19,9 @@ public class TestDataCreation {
 
     private static final Logger log = LoggerFactory.getLogger(TestDataCreation.class);
     private final EntityTestData entityTestData;
-    private final PasswordEncoder passwordEncoder;
 
-    public TestDataCreation(EntityTestData entityTestData, PasswordEncoder passwordEncoder) {
+    public TestDataCreation(EntityTestData entityTestData) {
         this.entityTestData = entityTestData;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public void createData() {

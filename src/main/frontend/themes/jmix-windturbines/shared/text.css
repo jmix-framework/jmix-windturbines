@@ -1,0 +1,4 @@
+.cut-overflow-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,11 @@
+/*
+ Example on how to override Lumo theme variables to globally influence and change
+ the appearance of the Vaadin Lumo theme.
+ */
+html {
+    --lumo-primary-text-color: rgb(35, 95, 213);
+    --lumo-primary-color-50pct: rgba(35, 95, 213, 0.5);
+    --lumo-primary-color-10pct: rgba(35, 95, 213, 0.1);
+    --lumo-primary-color: #235FD5;
+    --vaadin-focus-ring-width: 0;
+}

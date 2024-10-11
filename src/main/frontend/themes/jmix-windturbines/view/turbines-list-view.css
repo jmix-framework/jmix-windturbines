@@ -1,5 +1,5 @@
 #searchField::part(input-field) {
-    background: #1D3982;
+    background: var(--dark-blue);
     padding: 5px;
     border-radius: 15px;
 }
@@ -13,27 +13,28 @@
 }
 
 
-.inspection-list-white-card {
+.width-auto {
     width: auto !important;
 }
 
-.my-inspections-filter  {
-    border-radius: 10px;
-    background-color: white;
-}
 
 
-span.task-status[theme~="scheduled"] {
+span.turbine-status[theme~="idle"] {
     background: #E3F0FB;
     color: #235FD5;
 }
 
-span.task-status[theme~="deferred"] {
+span.turbine-status[theme~="maintenance"] {
     background: #FFEED0;
     color: #BF6F00;
 }
 
-span.task-status[theme~="completed"] {
+span.turbine-status[theme~="operating"] {
     background: #DAF1F6;
     color: #297B84;
+}
+
+span.turbine-status[theme~="out-of-service"] {
+    background: #ffd0d0;
+    color: #bf0000;
 }

@@ -1,0 +1,9 @@
+/*
+ Example of custom CSS variables that can be used in multiple places.
+ */
+html {
+    --orange-btn-background: linear-gradient(270deg, #FF9467 0%, #E35231 100%);
+    --orange-btn-box-shadow: 0 1px 2px 0 #B936032E, 0 5px 10px 0 #B936035C;
+    --blue-btn-background: linear-gradient(270deg, #1A60CC 0%, #154287 100%);
+    --dark-blue: #1D3982;
+}

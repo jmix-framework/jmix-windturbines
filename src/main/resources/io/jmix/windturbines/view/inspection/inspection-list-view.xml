@@ -71,7 +71,9 @@
                                      width="100%"
                                      height="100%"
                                      itemsContainer="myInspectionsDc"
-                                     alignSelf="CENTER"/>
+                                     alignSelf="CENTER">
+                            <fragmentRenderer class="io.jmix.windturbines.view.inspection.MyInspectionCard" />
+                        </virtualList>
                     </vbox>
                 </vbox>
             </tab>

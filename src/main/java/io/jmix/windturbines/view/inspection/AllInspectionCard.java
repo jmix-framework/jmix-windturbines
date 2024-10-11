@@ -15,6 +15,7 @@ import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.kit.action.ActionVariant;
 import io.jmix.flowui.kit.component.button.JmixButton;
+import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.MessageBundle;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.ViewComponent;
@@ -29,10 +30,6 @@ import java.util.function.Consumer;
 @FragmentDescriptor("all-inspection-card.xml")
 public class AllInspectionCard extends Fragment<VerticalLayout> {
     @Autowired
-    private Messages messages;
-    @Autowired
-    private DatatypeFormatter datatypeFormatter;
-    @Autowired
     private Dialogs dialogs;
     @Autowired
     private CurrentAuthentication currentAuthentication;
@@ -44,27 +41,17 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
     @ViewComponent
     private MessageBundle messageBundle;
     @ViewComponent
-    private Span inspectionDate;
-    @ViewComponent
     private Span statusBadge;
     @ViewComponent
-    private Span secondRowText;
-    @ViewComponent
-    private Span location;
-
-    private Inspection inspection;
-    private Consumer<Inspection> afterAssignmentPerformedHandler;
-    @ViewComponent
     private JmixButton assignBtn;
+    @ViewComponent
+    private InstanceContainer<Inspection> inspectionDc;
 
+    private Consumer<Inspection> afterAssignmentPerformedHandler;
 
     public void setInspection(Inspection inspection) {
-        this.inspection = inspection;
-        inspectionDate.setText(datatypeFormatter.formatLocalDate(inspection.getInspectionDate()));
-        statusBadge.setText(messages.getMessage(inspection.getTaskStatus()));
+        inspectionDc.setItem(inspection);
         statusBadge.getElement().getThemeList().add(inspection.getTaskStatus().getBadgeThemeName());
-        secondRowText.setText("%s - %s".formatted(inspection.getTurbine().getManufacturer().getName(), inspection.getTurbine().getModel()));
-        location.setText(inspection.getTurbine().getLocation());
         assignBtn.setEnabled(!TaskStatus.COMPLETED.equals(inspection.getTaskStatus()));
     }
 
@@ -77,12 +64,12 @@ public class AllInspectionCard extends Fragment<VerticalLayout> {
                         new DialogAction(DialogAction.Type.OK)
                                 .withVariant(ActionVariant.PRIMARY)
                                 .withHandler(e -> {
-                                    inspection.setTechnician(currentUser());
-                                    dataManager.save(inspection);
+                                    inspectionDc.getItem().setTechnician(currentUser());
+                                    dataManager.save(inspectionDc.getItem());
                                     notifications.create(messageBundle.getMessage("inspectionAssigned"))
                                             .withType(Notifications.Type.SUCCESS)
                                             .show();
-                                    afterAssignmentPerformedHandler.accept(inspection);
+                                    afterAssignmentPerformedHandler.accept(inspectionDc.getItem());
                                 }),
                         new DialogAction(DialogAction.Type.CANCEL)
                 )
