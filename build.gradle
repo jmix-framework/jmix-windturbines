@@ -1,5 +1,5 @@
 plugins {
-    id 'io.jmix' version '2.3.2'
+    id 'io.jmix' version '2.4.0-RC1'
     id 'java'
 }
 
@@ -7,7 +7,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'com.vaadin'
 
 jmix {
-    bomVersion = '2.3.2'
+    bomVersion = '2.4.0-RC1'
 }
 
 group = 'io.jmix'
@@ -21,10 +21,25 @@ repositories {
     maven {
         url 'https://global.repo.jmix.io/repository/public'
     }
+    maven {
+        url = 'https://global.repo.jmix.io/repository/premium'
+        credentials {
+            username(rootProject.hasProperty('premiumRepoUser') ?
+                    rootProject['premiumRepoUser'] : System.getenv('PREMIUM_REPO_USER'))
+            password(rootProject.hasProperty('premiumRepoPass') ?
+                    rootProject['premiumRepoPass'] : System.getenv('PREMIUM_REPO_PASS'))
+        }
+    }
+}
+
+configurations.implementation {
+    exclude group: 'com.vaadin', module: 'hilla'
+    exclude group: 'com.vaadin', module: 'hilla-dev'
 }
 
 dependencies {
     implementation 'io.jmix.core:jmix-core-starter'
+    implementation 'io.jmix.gridexport:jmix-gridexport-flowui-starter'
     implementation 'io.jmix.data:jmix-eclipselink-starter'
     implementation 'io.jmix.security:jmix-security-starter'
     implementation 'io.jmix.security:jmix-security-flowui-starter'
@@ -35,6 +50,11 @@ dependencies {
     implementation 'io.jmix.flowui:jmix-flowui-themes'
     implementation 'io.jmix.datatools:jmix-datatools-starter'
     implementation 'io.jmix.datatools:jmix-datatools-flowui-starter'
+    implementation 'io.jmix.kanban:jmix-kanban-flowui-starter'
+    implementation 'io.jmix.uiconstraints:jmix-uiconstraints-starter'
+    implementation 'io.jmix.fullcalendar:jmix-fullcalendar-flowui-starter'
+    implementation 'io.jmix.pivottable:jmix-pivottable-flowui-starter'
+    implementation 'io.jmix.restds:jmix-restds-starter'
 
     implementation 'de.f0rce.signaturepad:signature-widget:3.1.0'
 
