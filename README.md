@@ -24,10 +24,6 @@ The online demo of the Jmix Wind Turbines application is available at <https://d
         + [Annual Inspection](#annual-inspection)
         + [Repair](#repair)
 
-## TODO
-
-* https://github.com/jmix-framework/jmix/issues/3469
-* 
 
 ## About the Example
 

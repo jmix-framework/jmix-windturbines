@@ -2,8 +2,6 @@ package io.jmix.windturbines.view.inspection;
 
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.tabs.TabSheet;
-import io.jmix.core.DataManager;
 import io.jmix.core.Id;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.action.DialogAction;
@@ -17,6 +15,7 @@ import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.testassist.FlowuiTestAssistConfiguration;
 import io.jmix.flowui.testassist.UiTest;
 import io.jmix.flowui.testassist.UiTestUtils;
+import io.jmix.flowui.testassist.dialog.DialogInfo;
 import io.jmix.flowui.view.View;
 import io.jmix.windturbines.JmixWindturbinesApplication;
 import io.jmix.windturbines.entity.*;
@@ -30,8 +29,6 @@ import io.jmix.windturbines.test_data.entity.OperatorData;
 import io.jmix.windturbines.test_data.entity.ScheduledInspectionData;
 import io.jmix.windturbines.test_data.entity.TurbineData;
 import io.jmix.windturbines.test_support.DatabaseCleanup;
-import io.jmix.windturbines.test_support.TestDialogsConfiguration;
-import io.jmix.windturbines.test_support.jmix.TestDialogs;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -51,22 +48,17 @@ import static org.assertj.core.api.Assertions.within;
         properties = {"spring.main.allow-bean-definition-overriding=true"},
         classes = {
                 JmixWindturbinesApplication.class,
-                FlowuiTestAssistConfiguration.class,
-                TestDialogsConfiguration.class
+                FlowuiTestAssistConfiguration.class
         })
 public class InspectionDetailViewTest {
 
     private final LocalDate MAINTENANCE_TASK_DATE = LocalDate.now();
-    @Autowired
-    DataManager dataManager;
     @Autowired
     DatabaseCleanup databaseCleanup;
     @Autowired
     EntityTestData entityTestData;
     @Autowired
     ViewNavigators viewNavigators;
-    @Autowired
-    TestDialogs dialogs;
 
     private Turbine vestasV150;
     private Manufacturer vestas;
@@ -99,8 +91,6 @@ public class InspectionDetailViewTest {
             it.setTaskStatus(TaskStatus.SCHEDULED);
         });
 
-
-        dialogs.clear();
     }
 
     @Test
@@ -279,8 +269,9 @@ public class InspectionDetailViewTest {
             finish(detailView).click();
 
             // then: no confirmation dialog is shown, as there are supposed to be validation errors
-            assertThat(dialogs.getOptionDialogs())
-                    .isEmpty();
+            DialogInfo dialogInfo = UiTestUtils.getLastOpenedDialog();
+            assertThat(dialogInfo)
+                    .isNull();
 
             // and
             ValidationErrors validationErrors = UiTestUtils.validateView(detailView);
@@ -322,7 +313,7 @@ public class InspectionDetailViewTest {
             finish(detailView).click();
 
             // then
-            dialogs.openedOptionDialog().closeWith(DialogAction.Type.YES);
+            closeOpenedDialogWith(DialogAction.Type.YES);
 
             // and
             Inspection savedInspection = entityTestData.reload(Id.of(inspection));
@@ -355,6 +346,16 @@ public class InspectionDetailViewTest {
         private static int currentTabSheetIndex(InspectionDetailView detailView) {
             return tabSheet(detailView).getSelectedIndex();
         }
+    }
+
+    private void closeOpenedDialogWith(DialogAction.Type type) {
+        DialogInfo dialog = UiTestUtils.getLastOpenedDialog();
+        dialog.getButtons().stream()
+                .filter(button -> type.getId().equals(button.getId().orElseThrow()))
+                .findAny()
+                .orElseThrow()
+                .click();
+
     }
 
     private static JmixTabSheet tabSheet(InspectionDetailView detailView) {

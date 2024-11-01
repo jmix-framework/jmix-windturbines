@@ -1,13 +1,19 @@
 plugins {
-    id 'io.jmix' version '2.4.0-M1'
+    id 'io.jmix' version '2.4.0'
     id 'java'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.9'
 }
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.vaadin'
 
 jmix {
-    bomVersion = '2.4.999-SNAPSHOT'
+    bomVersion = '2.4.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 group = 'io.jmix'
@@ -20,9 +26,6 @@ repositories {
     }
     maven {
         url 'https://global.repo.jmix.io/repository/public'
-    }
-    maven {
-        url 'https://nexus.jmix.io/repository/public'
     }
 }
 
@@ -44,7 +47,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
 
-    implementation 'net.datafaker:datafaker:2.2.2'
+    implementation 'net.datafaker:datafaker:2.4.1'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -54,8 +57,19 @@ dependencies {
     implementation 'org.hsqldb:hsqldb'
 }
 
+configurations.implementation {
+    exclude group: 'com.vaadin', module: 'hilla'
+    exclude group: 'com.vaadin', module: 'hilla-dev'
+}
+
 test {
     useJUnitPlatform()
+}
+
+idea {
+    module {
+        excludeDirs.addAll(files '.jmix', 'node_modules', 'src/main/frontend/generated/', 'src/main/bundles')
+    }
 }
 
 vaadin {
