@@ -1,0 +1,7 @@
+.inspection-finding-title {
+    font-weight: bold;
+}
+
+vaadin-radio-group.one-to-five-answer > vaadin-radio-button {
+    width: 20%;
+}

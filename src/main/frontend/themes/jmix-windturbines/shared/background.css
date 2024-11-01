@@ -1,0 +1,25 @@
+html {
+    background-color: #eee;
+}
+
+/*
+ CSS class that combines and references --lumo-* theme variables.
+ This allows to create aggregation CSS classes in CSS instead of XML / Java code
+
+ See https://vaadin.com/docs/latest/styling/lumo/lumo-style-properties for all
+ Vaadin Lumo style properties
+ */
+.white-card {
+    background-color: var(--lumo-base-color);
+    border-radius: var(--lumo-border-radius-l);
+    box-shadow: var(--lumo-box-shadow-s);
+    padding: 10px;
+}
+
+.light-background {
+    background: linear-gradient(180deg, #EBF2FC 0%, #DBE8FD 100%);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 100%;
+    overflow:hidden;
+}

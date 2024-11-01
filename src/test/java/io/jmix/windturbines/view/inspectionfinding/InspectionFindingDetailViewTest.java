@@ -4,7 +4,6 @@ import io.jmix.core.DataManager;
 import io.jmix.core.FileRef;
 import io.jmix.core.FileStorage;
 import io.jmix.flowui.ViewNavigators;
-import io.jmix.flowui.component.image.JmixImage;
 import io.jmix.flowui.component.upload.FileStorageUploadField;
 import io.jmix.flowui.component.upload.receiver.FileTemporaryStorageBuffer;
 import io.jmix.flowui.kit.component.upload.event.FileUploadSucceededEvent;
@@ -23,7 +22,6 @@ import io.jmix.windturbines.entity.inspection.InspectionFindingEvidence;
 import io.jmix.windturbines.test_data.EntityTestData;
 import io.jmix.windturbines.test_data.entity.*;
 import io.jmix.windturbines.test_support.DatabaseCleanup;
-import io.jmix.windturbines.test_support.TestDialogsConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         properties = {"spring.main.allow-bean-definition-overriding=true"},
         classes = {
                 JmixWindturbinesApplication.class,
-                FlowuiTestAssistConfiguration.class,
-                TestDialogsConfiguration.class
+                FlowuiTestAssistConfiguration.class
         })
 class InspectionFindingDetailViewTest {
 
@@ -86,7 +83,7 @@ class InspectionFindingDetailViewTest {
     }
 
     @Test
-    void when_openDetail_then_evidenceImagesAreRendered() throws IOException {
+    void when_openDetail_then_evidenceImagesAreRendered() {
         // given
         InspectionFindingDetailView detailView = navigateTo(InspectionFindingDetailView.class, inspectionFinding, InspectionFinding.class);
 
@@ -102,7 +99,7 @@ class InspectionFindingDetailViewTest {
     }
 
     @Test
-    void when_performUpload_then_evidenceImagesAreReRendered() throws IOException {
+    void when_performUpload_then_evidenceImagesAreReRendered() {
         // given
         InspectionFindingDetailView detailView = navigateTo(InspectionFindingDetailView.class, inspectionFinding, InspectionFinding.class);
 

@@ -10,11 +10,11 @@ import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.action.DialogAction;
 import io.jmix.flowui.component.UiComponentUtils;
-import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.testassist.FlowuiTestAssistConfiguration;
 import io.jmix.flowui.testassist.UiTest;
 import io.jmix.flowui.testassist.UiTestUtils;
+import io.jmix.flowui.testassist.dialog.DialogInfo;
 import io.jmix.flowui.view.View;
 import io.jmix.windturbines.JmixWindturbinesApplication;
 import io.jmix.windturbines.entity.Manufacturer;
@@ -27,8 +27,6 @@ import io.jmix.windturbines.entity.inspection.Severity;
 import io.jmix.windturbines.test_data.EntityTestData;
 import io.jmix.windturbines.test_data.entity.*;
 import io.jmix.windturbines.test_support.DatabaseCleanup;
-import io.jmix.windturbines.test_support.TestDialogsConfiguration;
-import io.jmix.windturbines.test_support.jmix.*;
 import io.jmix.windturbines.view.inspectionfinding.InspectionFindingDetailView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -45,8 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         properties = {"spring.main.allow-bean-definition-overriding=true"},
         classes = {
                 JmixWindturbinesApplication.class,
-                FlowuiTestAssistConfiguration.class,
-                TestDialogsConfiguration.class
+                FlowuiTestAssistConfiguration.class
         })
 class InspectionFindingCardTest {
 
@@ -60,8 +57,6 @@ class InspectionFindingCardTest {
     ViewNavigators viewNavigators;
     @Autowired
     DatabaseCleanup databaseCleanup;
-    @Autowired
-    TestDialogs dialogs;
     @Autowired
     private EntityTestData entityTestData;
     @Autowired
@@ -78,8 +73,6 @@ class InspectionFindingCardTest {
         Operator operator = entityTestData.saveWithDefaults(new OperatorData());
         Turbine turbine = entityTestData.saveWithDefaults(new TurbineData(manufacturer, operator));
         inspection = entityTestData.saveWithDefaults(new ScheduledInspectionData(turbine, null));
-
-        dialogs.clear();
     }
 
     @Nested
@@ -248,7 +241,7 @@ class InspectionFindingCardTest {
                 removeBtn(inspectionFindingCard).click();
 
                 // and
-                dialogs.openedOptionDialog().closeWith(DialogAction.Type.OK);
+                closeOpenedDialogWith(DialogAction.Type.OK);
 
                 // then
                 assertThat(detailView.getFindingsDc().getMutableItems())
@@ -276,7 +269,7 @@ class InspectionFindingCardTest {
                 removeBtn(inspectionFindingCard).click();
 
                 // and
-                dialogs.openedOptionDialog().closeWith(DialogAction.Type.OK);
+                closeOpenedDialogWith(DialogAction.Type.OK);
 
                 // then
                 assertThat(detailView.getRecommendationsDc().getMutableItems())
@@ -300,7 +293,7 @@ class InspectionFindingCardTest {
                 removeBtn(inspectionFindingCard).click();
 
                 // and
-                dialogs.openedOptionDialog().closeWith(DialogAction.Type.CANCEL);
+                closeOpenedDialogWith(DialogAction.Type.CANCEL);
 
                 // then
                 assertThat(detailView.getFindingsDc().getMutableItems())
@@ -473,5 +466,15 @@ class InspectionFindingCardTest {
                 .stream().map(d -> (T) d)
                 .findFirst()
                 .orElse(null);
+    }
+
+    private void closeOpenedDialogWith(DialogAction.Type type) {
+        DialogInfo dialog = UiTestUtils.getLastOpenedDialog();
+        dialog.getButtons().stream()
+                .filter(button -> type.getId().equals(button.getId().orElseThrow()))
+                .findAny()
+                .orElseThrow()
+                .click();
+
     }
 }

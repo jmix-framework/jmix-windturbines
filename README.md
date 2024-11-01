@@ -24,6 +24,7 @@ The online demo of the Jmix Wind Turbines application is available at <https://d
         + [Annual Inspection](#annual-inspection)
         + [Repair](#repair)
 
+
 ## About the Example
 
 The Jmix Wind Turbines example application demonstrates the mobile capabilities Jmix provides for application developers. Compared to the [Jmix Petclinic](https://github.com/jmix-framework/jmix-petclinic-2) example application, the Wind Turbines application is focuses on a mobile first view of the application.

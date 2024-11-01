@@ -1,12 +1,13 @@
 package io.jmix.windturbines.test_data;
 
 import net.datafaker.Faker;
-import net.datafaker.providers.base.DateAndTime;
 import net.datafaker.providers.base.Number;
+import net.datafaker.providers.base.TimeAndDate;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -69,18 +70,22 @@ public class RandomValues {
     }
 
     public static LocalDateTime randomFutureLocalDateTime(int upUntilInDays) {
-        DateAndTime date = new Faker().date();
+        TimeAndDate date = new Faker().timeAndDate();
         Number number = new Faker().number();
         int hour = number.numberBetween(8, 18);
         int minute = number.numberBetween(0, 60);
 
         return date.future(upUntilInDays, TimeUnit.DAYS)
+                .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
                 .withHour(hour)
                 .withMinute(minute);
     }
     public static LocalDate randomPastLocalDate(int atMostInDays) {
-        return new Faker().date().past(atMostInDays, TimeUnit.DAYS).toLocalDateTime().toLocalDate();
+        return new Faker().timeAndDate().past(atMostInDays, TimeUnit.DAYS)
+                .atOffset(ZoneOffset.UTC)
+                .toLocalDateTime()
+                .toLocalDate();
     }
 
     public static <T> Optional<T> withLikelihoodOf(double probability, Supplier<T> valueIfTrue) {

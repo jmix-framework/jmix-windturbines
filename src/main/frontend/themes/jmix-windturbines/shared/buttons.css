@@ -1,0 +1,45 @@
+/*
+ Example of a custom button class as an alternative to Vaadin button predefined styles.
+ See also:
+  - https://vaadin.com/docs/latest/components/button#styles
+ */
+vaadin-button.blue-btn {
+    background: var(--blue-btn-background);
+    box-shadow: 0 1px 2px 0 #1542872E, 0 5px 10px 0 #1542875C;
+    color: white;
+    border-radius: 20px;
+    flex: 1;
+}
+
+/*
+ Vaadin button states can be styled by using the different states via the attribute selector.
+ See also:
+  - Vaadin button states: https://vaadin.com/docs/latest/components/button/styling#states
+  - CSS attribute selector: https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
+*/
+vaadin-button.blue-btn[disabled] {
+    background:
+            linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+            var(--blue-btn-background);
+    box-shadow: none;
+}
+
+vaadin-button.orange-btn {
+    background: var(--orange-btn-background);
+    box-shadow: var(--orange-btn-box-shadow);
+    color: white;
+    border-radius: 20px;
+    flex: 1;
+}
+
+vaadin-button.orange-btn[disabled] {
+    background:
+        linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+        var(--orange-btn-background);
+    box-shadow: none;
+}
+
+.jmix-main-view-drawer-toggle, .back-button {
+    color: var(--lumo-base-color) !important;
+    margin-left: -13px;
+}
