@@ -11,10 +11,6 @@ jmix {
     bomVersion = '2.4.0'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
 
 group = 'io.jmix'
 version = '0.0.1-SNAPSHOT'

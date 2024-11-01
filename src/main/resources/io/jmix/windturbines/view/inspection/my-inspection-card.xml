@@ -12,14 +12,8 @@
               spacing="false"
               classNames="m-m white-card cursor-pointer width-auto">
             <hbox width="100%" classNames="p-s gap-m" padding="false" alignItems="STRETCH">
-                <div classNames="flex flex-col sm:flex-row gap-m md:items-baseline"
-                     css="justify-content: space-between; width: 100%">
-                    <hbox spacing="true">
-                        <icon icon="vaadin:calendar-o" classNames="mr-s"/>
-                        <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
-                    </hbox>
-                    <span dataContainer="inspectionDc" property="turbine"/>
-                </div>
+                <icon icon="vaadin:calendar-o" classNames="mr-s"/>
+                <span id="inspectionDate" dataContainer="inspectionDc" property="inspectionDate"/>
                 <hbox id="statusLayout" width="100%" padding="false" justifyContent="END">
                     <span id="statusBadge" width="100px" dataContainer="inspectionDc" property="taskStatus"
                           classNames="task-status" themeNames="badge pill"/>
