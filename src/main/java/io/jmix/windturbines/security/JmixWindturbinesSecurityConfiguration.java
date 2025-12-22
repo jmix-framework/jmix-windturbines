@@ -1,17 +1,11 @@
 package io.jmix.windturbines.security;
 
 import io.jmix.core.JmixSecurityFilterChainOrder;
-import io.jmix.security.util.JmixHttpSecurityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 
 /**
@@ -48,6 +42,17 @@ public class JmixWindturbinesSecurityConfiguration {
     SecurityFilterChain iconsFilterChain(HttpSecurity http) throws Exception {
         http.securityMatcher("/icons/**")
                 .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/icons/**").permitAll());
+        return http.build();
+    }
+
+    @Bean
+    @Order(JmixSecurityFilterChainOrder.CUSTOM)
+    SecurityFilterChain publicFilterChain(HttpSecurity http) throws Exception {
+        http.securityMatcher("/healthcheck")
+                .authorizeHttpRequests(authorize ->
+                        authorize.anyRequest().permitAll()
+                );
+
         return http.build();
     }
 }
