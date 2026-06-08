@@ -57,14 +57,14 @@
                                                 labelPosition="TOP"
                                                 label="msg://taskStatusFilter"
                                                 width="100%"
-                                />
+                                                operationTextVisible="false"/>
                                 <propertyFilter property="inspectionDate"
                                                 operation="EQUAL"
                                                 dataLoader="myInspectionsDl"
                                                 labelPosition="TOP"
                                                 label="msg://inspectionDateFilter"
                                                 width="100%"
-                                />
+                                                operationTextVisible="false"/>
                             </details>
                         </vbox>
                         <virtualList id="myInspectionsVirtualList"

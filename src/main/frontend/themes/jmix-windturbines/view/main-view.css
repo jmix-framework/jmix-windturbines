@@ -109,11 +109,11 @@ h3.page-title {
     margin:0;
 }
 
-.jmix-list-menu .jmix-menu-item-link {
+.jmix-list-menu .jmix-menu-item {
     font-size: var(--lumo-font-size-xl) !important;
 }
 
-.jmix-list-menu a[highlight][class*='jmix-menu-item-link'] {
+.jmix-list-menu a[highlight][class*='jmix-menu-item'] {
     background-color: #DBE8FD;
     color: black;
 }

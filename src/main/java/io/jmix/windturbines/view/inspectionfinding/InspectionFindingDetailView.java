@@ -13,6 +13,7 @@ import io.jmix.flowui.kit.component.upload.event.FileUploadSucceededEvent;
 import io.jmix.flowui.model.CollectionPropertyContainer;
 import io.jmix.flowui.model.DataContext;
 import io.jmix.flowui.upload.TemporaryStorage;
+import io.jmix.flowui.upload.TemporaryStorage.FileInfo;
 import io.jmix.flowui.view.*;
 import io.jmix.windturbines.entity.inspection.InspectionFinding;
 import io.jmix.windturbines.entity.inspection.InspectionFindingEvidence;
@@ -66,7 +67,7 @@ public class InspectionFindingDetailView extends StandardDetailView<InspectionFi
     }
 
     @Subscribe("upload")
-    public void onUploadFileUploadSucceeded(final FileUploadSucceededEvent<FileStorageUploadField> event) {
+    public void onUploadFileUploadSucceeded(final FileUploadSucceededEvent<FileStorageUploadField, FileInfo> event) {
         if (event.getReceiver() instanceof FileTemporaryStorageBuffer buffer) {
 
             TemporaryStorageFileData fileData = buffer.getFileData();
