@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 public class IframeCustomSecurity extends FlowuiVaadinWebSecurity {
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+    protected void configureJmixSpecifics(HttpSecurity http) throws Exception {
+        super.configureJmixSpecifics(http);
 
         http.headers(headers -> {
             headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);

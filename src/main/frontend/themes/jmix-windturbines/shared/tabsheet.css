@@ -25,5 +25,7 @@ jmix-tabsheet.content-tab-sheet vaadin-tab[selected] {
 }
 
 jmix-tabsheet.content-tab-sheet::part(content) {
-    padding: 0 !important;
+    padding: 0px !important;
+    --vaadin-scroller-padding-block: 0px !important;
+    --vaadin-scroller-padding-inline: 0px !important;
 }
